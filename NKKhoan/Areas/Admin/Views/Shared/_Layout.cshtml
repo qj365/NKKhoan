@@ -1,0 +1,368 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Shop</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/fontawesome-free/css/all.min.css">
+
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/summernote/summernote-bs4.min.css">
+
+    <link href="~/Areas/Admin/Data/plugins/summernote/summernote-bs4.min.css" rel="stylesheet" />
+
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/Areas/Admin/Data/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Areas/Admin/Data/dist/css/adminlte.min.css">
+
+    <link href="~/Areas/Admin/Data/addition.css" rel="stylesheet" />
+
+    @Scripts.Render("~/bundles/adminlte")
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/signalr/hubs"></script>
+
+    <style>
+
+        .label-form {
+            margin-left: 5px;
+            font-weight: 400 !important;
+        }
+
+        #reason-error, #textOther-error {
+            color: red;
+        }
+
+        .warning-user {
+            color: red;
+            position: relative;
+            bottom: 8px;
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        @*<div class="preloader flex-column justify-content-center align-items-center">
+                <img class="animation__shake" src="~/Areas/Admin/Data/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+            </div>*@
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="/Admin/Dashboard" class="nav-link">Home</a>
+                </li>
+
+            </ul>
+            @{string classTree = "";
+                string classActive = "";
+            }
+            @if (ViewContext.RouteData.Values["Controller"].ToString() == "Delivery"
+                || ViewContext.RouteData.Values["Controller"].ToString() == "Order")
+            {
+                classTree = "menu-is-opening menu-open";
+                classActive = "active";
+            }
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+                <li class="nav-item">
+
+                    <div class="navbar-search-block">
+                        <form class="form-inline">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link noti" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-danger navbar-badge count-noti" hidden>&nbsp;</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right noti--content" id="notiContent" style="min-height:auto;max-height:278px; overflow-y:auto">
+                        <img src="~/Areas/Admin/Data/img/notify.png " style="display: block; margin: 20px auto 10px; width: 30%;" alt="Alternate Text" class="img-noti" />
+                        <p style="font-size: 14px; font-weight: 600; text-align: center; margin-bottom: 20px">Không có thông báo nào</p>
+                    </div>
+                </li>
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index3.html" class="brand-link">
+                <img src="~/Areas/Admin/Data/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="~/Areas/Admin/Data/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Xin chào, </a>
+                    </div>
+                </div>
+
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="~/Admin/Dashboard" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Dashboard" ? "active" : "")">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Tổng quan
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Admin/Task" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Task" ? "active" : "")">
+                                <i class="nav-icon fas fa-tasks"></i>
+                                <p>
+                                    Khoán
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Admin/Product" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Product" ? "active" : "")">
+                                <i class="nav-icon fab fa-product-hunt"></i>
+                                <p>
+                                    Sản phẩm
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Admin/Job" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Job" ? "active" : "")">
+                                <i class="nav-icon fas fa-hand-holding-usd"></i>
+                                <p>
+                                    Công việc
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Admin/Employee" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Employee" ? "active" : "")">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Công nhân
+                                </p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="/Admin/Manage/ChangePassword" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Manage" ? "active" : "")">
+                                <i class="nav-icon fas fa-unlock"></i>
+                                <p>
+                                    Đổi mật khẩu
+                                </p>
+                            </a>
+                        </li>
+
+
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-item" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <li class="nav-item">
+                                <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">
+                                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                                    <p>
+                                        Đăng xuất
+                                    </p>
+                                </a>
+                            </li>
+                        }
+
+
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 3.1.0
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    @*<script>
+
+            var newNoti1 = '<a href="#" class="dropdown-item linkInfo">' +
+                '<div class="media">' +
+                '<img src="https://placebear.com/128/128" alt="User Avatar" class="img-size-50 img-circle mr-3">' +
+                '<div class="media-body">' +
+                '<h3 class="dropdown-item-title">Có đơn hàng mới' +
+                '</h3> ' +
+                '<p class="text-sm">'+
+
+                '</p>' +
+
+                '</div>' +
+                '</div>' +
+                '</a>';
+            $(function () {
+                $('a.noti').click(function (e) {
+                    e.stopPropagation();
+                    $('.noti--content').show();
+                    var count = 0;
+                    count = parseInt($('span.count-noti').html()) || 0;
+                    //only load notification if not already loaded
+
+                        updateNotification();
+
+                    $("span.count-noti").attr("hidden", true);
+                    $('span.count-noti', this).html('&nbsp;');
+                })
+                // hide notifications
+                $('html').click(function () {
+                    $('.noti--content').hide();
+                })
+
+
+                function updateNotification() {
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Dashboard/GetNotificationOrders',
+                        success: function (response) {
+                            if (response.length != 0) {
+                                $('#notiContent').empty();
+                            }
+                            $.each(response, function (index, value) {
+                                $('#notiContent').append('<a href="/Admin/Delivery/Info/'+ value.Id +'" class="dropdown-item linkInfo">' +
+                                    '<div class="media">' +
+                                    '<img src="https://placebear.com/128/128" alt="User Avatar" class="img-size-50 img-circle mr-3">' +
+                                    '<div class="media-body">' +
+                                    '<h3 class="dropdown-item-title">Có đơn hàng mới' +
+                                    '</h3> ' +
+                                    '<p class="text-sm"># ' + value.Id +
+                                    '</p>' +
+                                    '<p class="text-sm text-muted">Thành tiền: ' + value.TotalPrice + '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</a>' +
+                                    '<div class="dropdown-divider"></div>'
+                                )
+
+                            });
+                            if (response.length != 0) {
+                                $('#notiContent').append('<a href="#" class="dropdown-item dropdown-footer" id="deleteAll">Xoá tất cả</a>')
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                }
+
+                function updateNotificationCount() {
+                    $('span.count-noti').removeAttr("hidden")
+                    var count = 0;
+                    count = parseInt($('span.count-noti').html()) || 0;
+                    count++;
+                    $('span.count-noti').html(count);
+                }
+
+                // signalr js code for start hub and send receive notification
+                var notificationHub = $.connection.notificationHub;
+                $.connection.hub.start().done(function () {
+                    console.log('Notification hub started');
+                });
+                //signalr method for push server message to client
+                notificationHub.client.notify = function (message) {
+                    if (message && message.toLowerCase() == "added") {
+                        updateNotificationCount();
+                    }
+                }
+            })
+        </script>*@
+
+
+
+
+
+</body>
+</html>
