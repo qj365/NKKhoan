@@ -183,6 +183,10 @@
     <Compile Include="Migrations\202110240941264_init.Designer.cs">
       <DependentUpon>202110240941264_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110241142120_add-password.cs" />
+    <Compile Include="Migrations\202110241142120_add-password.Designer.cs">
+      <DependentUpon>202110241142120_add-password.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -280,6 +284,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202110240941264_init.resx">
       <DependentUpon>202110240941264_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110241142120_add-password.resx">
+      <DependentUpon>202110241142120_add-password.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

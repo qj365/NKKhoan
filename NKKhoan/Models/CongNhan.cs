@@ -36,6 +36,9 @@ namespace NKKhoan.Models
         [StringLength(50)]
         public string GioiTinh { get; set; }
 
+        [StringLength(100)]
+        public string MatKhau { get; set; }
+
         public decimal? LuongHopDong { get; set; }
 
         public decimal? LuongBaoHiem { get; set; }
