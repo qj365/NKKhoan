@@ -17,9 +17,11 @@ namespace NKKhoan.Models
         }
 
         [Key]
+        [Display(Name ="Mã khoán")]
         public int MaNKSLK { get; set; }
 
         [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime NgayThucHienKhoan { get; set; }
 
         public TimeSpan? GioBatDau { get; set; }
