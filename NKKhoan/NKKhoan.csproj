@@ -183,9 +183,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110241158274_init2.cs" />
-    <Compile Include="Migrations\202110241158274_init2.Designer.cs">
-      <DependentUpon>202110241158274_init2.cs</DependentUpon>
+    <Compile Include="Migrations\202110301435167_decimal-to-int.cs" />
+    <Compile Include="Migrations\202110301435167_decimal-to-int.Designer.cs">
+      <DependentUpon>202110301435167_decimal-to-int.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -218,6 +218,9 @@
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -286,8 +289,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110241158274_init2.resx">
-      <DependentUpon>202110241158274_init2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202110301435167_decimal-to-int.resx">
+      <DependentUpon>202110301435167_decimal-to-int.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

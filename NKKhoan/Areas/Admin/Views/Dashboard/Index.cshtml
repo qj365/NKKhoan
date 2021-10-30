@@ -1,4 +1,4 @@
-﻿
+﻿ 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -23,14 +23,14 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3></h3>
+                        <h3>20</h3>
 
-                        <p>Đơn hàng mới</p>
+                        <p>Công việc</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="fas fa-hand-holding-usd"></i>
                     </div>
-                    <a href="/Admin/Delivery" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/Admin/Job" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -38,14 +38,14 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>k</h3>
+                        <h3>10</h3>
 
-                        <p>Đầu sách</p>
+                        <p>Sản phẩm</p>
                     </div>
                     <div class="icon">
-                        <i class="fas fa-book"></i>
+                        <i class="fab fa-product-hunt"></i>
                     </div>
-                    <a href="/Admin/Book" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/Admin/Product" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -53,14 +53,14 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3></h3>
+                        <h3>70</h3>
 
-                        <p>Khách hàng</p>
+                        <p>Công nhân</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="/Admin/Customer" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/Admin/Employee" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -68,9 +68,9 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3></h3>
+                        <h3>5</h3>
 
-                        <p>Đơn huỷ</p>
+                        <p>Đi muộn</p>
                     </div>
                     <div class="icon">
                         <i class="far fa-times-circle"></i>
@@ -83,7 +83,7 @@
             <div class="col-md-6">
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Đơn hàng Thành công/Huỷ</h3>
+                        <h3 class="card-title">Định mức khoán</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -104,7 +104,7 @@
             <div class="col-md-6">
                 <div class="card card-success">
                     <div class="card-header">
-                        <h3 class="card-title">Top sách bán nhiều nhất</h3>
+                        <h3 class="card-title">Top nhân viên năng suất nhất</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -120,8 +120,8 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Tên sách</th>
-                                    <th>Đã bán</th>
+                                    <th>Tên nhân viên</th>
+                                    <th>Số giờ làm</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -157,12 +157,13 @@
     var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
     var pieData        = {
         labels: [
-            'Hoàn thành',
-            'Huỷ'
+            'Thiếu',
+            'Hoàn thành'
+            
         ],
         datasets: [
             {
-                data: [, ],
+                data: [5,10],
                 backgroundColor: ['#dc3545', '#00a65a'],
             }
         ]

@@ -27,5 +27,18 @@ namespace NKKhoan.Areas.Admin.Controllers
             var task = _context.NKSLK.ToList();
             return View(task);
         }
+
+        public ViewResult Create()
+        {
+            return View();
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var nkslk = _context.NKSLK.SingleOrDefault(c => c.MaNKSLK == id);
+            if (nkslk == null)
+                return HttpNotFound();
+            return View(nkslk);
+        }
     }
 }

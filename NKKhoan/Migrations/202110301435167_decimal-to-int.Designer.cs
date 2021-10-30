@@ -6,14 +6,14 @@ namespace NKKhoan.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class init2 : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class decimaltoint : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(init2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(decimaltoint));
         
         string IMigrationMetadata.Id
         {
-            get { return "202110241158274_init2"; }
+            get { return "202110301435167_decimal-to-int"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,4 +1,4 @@
-namespace NKKhoan.Models
+﻿namespace NKKhoan.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,15 +17,18 @@ namespace NKKhoan.Models
         }
 
         [Key]
-        [Display(Name ="M� kho�n")]
+        [Display(Name ="Mã khoán")]
         public int MaNKSLK { get; set; }
 
         [Column(TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Ngày thực hiện")]
         public DateTime NgayThucHienKhoan { get; set; }
 
+        [Display(Name = "Giờ bắt đầu")]
         public TimeSpan? GioBatDau { get; set; }
 
+        [Display(Name = "Giờ kết thúc")]
         public TimeSpan? GioKetThuc { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
