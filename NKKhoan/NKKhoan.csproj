@@ -187,6 +187,10 @@
     <Compile Include="Migrations\202110301435167_decimal-to-int.Designer.cs">
       <DependentUpon>202110301435167_decimal-to-int.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110311623018_change-employee.cs" />
+    <Compile Include="Migrations\202110311623018_change-employee.Designer.cs">
+      <DependentUpon>202110311623018_change-employee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -221,6 +225,7 @@
     <Content Include="Areas\Admin\Views\Task\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -291,6 +296,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202110301435167_decimal-to-int.resx">
       <DependentUpon>202110301435167_decimal-to-int.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110311623018_change-employee.resx">
+      <DependentUpon>202110311623018_change-employee.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

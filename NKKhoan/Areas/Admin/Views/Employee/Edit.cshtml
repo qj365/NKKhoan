@@ -28,6 +28,7 @@
                             @using (Html.BeginForm("Save", "Employee", FormMethod.Post, new { style = "display: flex; width: 100%;" }))
                             {
                                 @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.MaNhanCong)
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.HoTen, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -45,7 +46,7 @@
                                             <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="col-5">
                                             @Html.ValidationMessageFor(model => model.NgayNamSinh, "", new { @class = "text-danger" })
@@ -140,7 +141,7 @@
         $("#reservationdatetime1").on("change.datetimepicker", function (e) {
             $('#reservationdatetime2').datetimepicker('minDate', e.date);
         });
-        
+
     })
 </script>
 

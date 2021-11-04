@@ -21,22 +21,28 @@
 
         [StringLength(50)]
         [Display(Name = "Họ tên")]
+        [Required(ErrorMessage = "Vui lòng nhập họ tên")]
         public string HoTen { get; set; }
 
         [Column(TypeName = "date")]
         [Display(Name = "Ngày sinh")]
+        [Required(ErrorMessage = "Vui lòng nhập ngày sinh")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? NgayNamSinh { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Vui lòng nhập phòng ban")]
         [Display(Name = "Phòng ban")]
         public string PhongBan { get; set; }
 
         [StringLength(50)]
         [Display(Name = "Chức vụ")]
+        [Required(ErrorMessage = "Vui lòng nhập chức vụ")]
         public string ChucVu { get; set; }
 
         [StringLength(50)]
         [Display(Name = "Quê quán")]
+        [Required(ErrorMessage = "Vui lòng nhập quê quán")]
         public string QueQuan { get; set; }
 
         [StringLength(50)]
@@ -48,9 +54,13 @@
         public string MatKhau { get; set; }
 
         [Display(Name = "Lương hợp đồng")]
+        [Required(ErrorMessage = "Vui lòng nhập lương hợp đồng")]
+        [Range(0,int.MaxValue,ErrorMessage = "Vui lòng nhập giá trị lớn hơn 0")]
         public int? LuongHopDong { get; set; }
 
         [Display(Name = "Lương bảo hiểm")]
+        [Required(ErrorMessage = "Vui lòng nhập lương bảo hiểm")]
+        [Range(0, int.MaxValue, ErrorMessage = "Vui lòng nhập giá trị lớn hơn 0")]
         public int? LuongBaoHiem { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
