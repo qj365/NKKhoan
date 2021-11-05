@@ -13,7 +13,7 @@ namespace NKKhoan.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202111051335112_init"; }
+            get { return "202111051348097_init"; }
         }
         
         string IMigrationMetadata.Source
