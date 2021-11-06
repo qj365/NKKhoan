@@ -1,0 +1,117 @@
+﻿@model NKKhoan.Models.SanPham
+
+@{
+    ViewBag.Title = "Edit";
+
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Sửa sản phẩm</h1>
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            @using (Html.BeginForm("Save", "Product", FormMethod.Post, new { style = "display: flex; width: 100%;" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.MaSanPham)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TenSanPham, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.TenSanPham, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.TenSanPham, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.SoDangKy, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.SoDangKy, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.SoDangKy, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.QuyCach, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.QuyCach, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.QuyCach, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                            <a href="~/Admin/Product/Index" class="btn btn-warning">Huỷ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col=md-6" style="width: 100%">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NgayDangKy, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10 input-group date" id="reservationdatetime1" data-target-input="nearest">
+
+                                            @Html.EditorFor(model => model.NgayDangKy, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-5">
+                                            @Html.ValidationMessageFor(model => model.NgayDangKy, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.HanSuDung, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.HanSuDung, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.HanSuDung, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+
+    $(function () {
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) || moment(value, "DD/MM/YYYY", true).isValid();
+        }
+
+        $('#reservationdatetime1').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            locale: 'vi',
+            format: 'DD/MM/yyyy'
+        });
+
+        $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+            $('#reservationdatetime2').datetimepicker('minDate', e.date);
+        });
+
+    })
+</script>

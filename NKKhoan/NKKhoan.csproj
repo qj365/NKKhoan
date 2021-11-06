@@ -172,6 +172,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -186,6 +187,10 @@
     <Compile Include="Migrations\202111051348097_init.cs" />
     <Compile Include="Migrations\202111051348097_init.Designer.cs">
       <DependentUpon>202111051348097_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111060241060_init2.cs" />
+    <Compile Include="Migrations\202111060241060_init2.Designer.cs">
+      <DependentUpon>202111060241060_init2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -222,6 +227,9 @@
     <Content Include="Areas\Admin\Views\Task\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -292,6 +300,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202111051348097_init.resx">
       <DependentUpon>202111051348097_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111060241060_init2.resx">
+      <DependentUpon>202111060241060_init2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
