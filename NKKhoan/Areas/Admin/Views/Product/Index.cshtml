@@ -160,6 +160,11 @@
 
 
       });
+
+      if (document.location.search.length) {
+          var urlParams = new URLSearchParams(document.location.search);
+          $('#Select').val(urlParams.get('Select'));
+      }
   });
 </script>
 
