@@ -216,6 +216,24 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="~/Admin/Department" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Department" ? "active" : "")">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Phòng ban
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="~/Admin/Position" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Position" ? "active" : "")">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Chức vụ
+                                </p>
+                            </a>
+                        </li>
+
 
                         <li class="nav-item">
                             <a href="/Admin/Manage/ChangePassword" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Manage" ? "active" : "")">
