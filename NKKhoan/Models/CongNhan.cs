@@ -31,16 +31,6 @@
         public DateTime? NgayNamSinh { get; set; }
 
         [StringLength(50)]
-        [Required(ErrorMessage = "Vui lòng nhập phòng ban")]
-        [Display(Name = "Phòng ban")]
-        public string PhongBan { get; set; }
-
-        [StringLength(50)]
-        [Display(Name = "Chức vụ")]
-        [Required(ErrorMessage = "Vui lòng nhập chức vụ")]
-        public string ChucVu { get; set; }
-
-        [StringLength(50)]
         [Display(Name = "Quê quán")]
         [Required(ErrorMessage = "Vui lòng nhập quê quán")]
         public string QueQuan { get; set; }
@@ -65,5 +55,8 @@
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietNhanCongKhoan> ChiTietNhanCongKhoan { get; set; }
+        public virtual PhongBan PhongBan { get; set; }
+        public virtual ChucVu ChucVu { get; set; }
+
     }
 }

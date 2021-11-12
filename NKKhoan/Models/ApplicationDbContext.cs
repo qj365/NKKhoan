@@ -14,6 +14,10 @@ namespace NKKhoan.Models
         public virtual DbSet<ChiTietNhanCongKhoan> ChiTietNhanCongKhoan { get; set; }
         public virtual DbSet<NKSLK> NKSLK { get; set; }
         public virtual DbSet<SanPham> SanPham { get; set; }
+        public virtual DbSet<PhongBan> PhongBan { get; set; }
+        public virtual DbSet<ChucVu> ChucVu { get; set; }
+
+
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
