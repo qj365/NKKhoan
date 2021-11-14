@@ -20,11 +20,6 @@
         [Display(Name = "Mã công việc")]
         public int MaCongViec { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Display(Name = "Sản phẩm áp dụng")]
-        public int SanPhamApDung { get; set; }
 
         [Display(Name = "Sản lượng thực tế")]
         public int? SanLuongThucTe { get; set; }
@@ -37,6 +32,6 @@
 
         public virtual NKSLK NKSLK { get; set; }
 
-        public virtual SanPham SanPham { get; set; }
+
     }
 }

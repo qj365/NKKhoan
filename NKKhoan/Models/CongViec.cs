@@ -41,5 +41,7 @@
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietCongViec> ChiTietCongViec { get; set; }
+
+        public virtual SanPham SanPham { get; set; }
     }
 }

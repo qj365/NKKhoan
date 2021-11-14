@@ -10,10 +10,7 @@
     public partial class SanPham
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SanPham()
-        {
-            ChiTietCongViec = new HashSet<ChiTietCongViec>();
-        }
+        
 
         [Key]
         [Display(Name ="Mã sản phẩm")]
@@ -45,7 +42,8 @@
         [Required(ErrorMessage = "Vui lòng nhập ngày đăng ký")]
         public DateTime? NgayDangKy { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietCongViec> ChiTietCongViec { get; set; }
+        public virtual ICollection<CongViec> CongViec { get; set; }
+
+
     }
 }

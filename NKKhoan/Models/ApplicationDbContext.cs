@@ -48,11 +48,6 @@ namespace NKKhoan.Models
                 .WithRequired(e => e.NKSLK)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<SanPham>()
-                .HasMany(e => e.ChiTietCongViec)
-                .WithRequired(e => e.SanPham)
-                .HasForeignKey(e => e.SanPhamApDung)
-                .WillCascadeOnDelete(false);
         }
 
         public static ApplicationDbContext Create()

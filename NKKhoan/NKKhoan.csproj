@@ -203,6 +203,10 @@
     <Compile Include="Migrations\202111121609567_themchưcvu.Designer.cs">
       <DependentUpon>202111121609567_themchưcvu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111140228474_sua-sp-cv.cs" />
+    <Compile Include="Migrations\202111140228474_sua-sp-cv.Designer.cs">
+      <DependentUpon>202111140228474_sua-sp-cv.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -327,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111121609567_themchưcvu.resx">
       <DependentUpon>202111121609567_themchưcvu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111140228474_sua-sp-cv.resx">
+      <DependentUpon>202111140228474_sua-sp-cv.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
