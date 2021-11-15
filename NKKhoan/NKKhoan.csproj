@@ -177,6 +177,7 @@
     <Compile Include="Areas\Admin\Controllers\PositionController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
+    <Compile Include="Areas\Admin\ViewModel\EmployeeViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -206,6 +207,10 @@
     <Compile Include="Migrations\202111140228474_sua-sp-cv.cs" />
     <Compile Include="Migrations\202111140228474_sua-sp-cv.Designer.cs">
       <DependentUpon>202111140228474_sua-sp-cv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111150323338_them-foreignkey.cs" />
+    <Compile Include="Migrations\202111150323338_them-foreignkey.Designer.cs">
+      <DependentUpon>202111150323338_them-foreignkey.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -242,14 +247,13 @@
     <Content Include="Areas\Admin\Views\Employee\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Employee\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Employee\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -334,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111140228474_sua-sp-cv.resx">
       <DependentUpon>202111140228474_sua-sp-cv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111150323338_them-foreignkey.resx">
+      <DependentUpon>202111150323338_them-foreignkey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

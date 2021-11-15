@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using System.Data.Entity;
+using NKKhoan.Areas.Admin.ViewModel;
 
 namespace NKKhoan.Areas.Admin.Controllers
 {
@@ -22,15 +25,47 @@ namespace NKKhoan.Areas.Admin.Controllers
         }
 
         // GET: Admin/Employee
-        public ActionResult Index()
+        public ActionResult Index(int? spb = null, int? scv = null, int? maxage = null, int? minage = null, string sgt = null,string sb = null)
         {
-            var employee = _context.CongNhan.ToList();
+            
+            ViewBag.PhongBan = _context.PhongBan.ToList();
+            ViewBag.ChucVu = _context.ChucVu.ToList();
+            var employeeQuery = _context.CongNhan.Include(c => c.PhongBan).Include(c => c.ChucVu);
+
+            if (!String.IsNullOrWhiteSpace(sb))
+                employeeQuery = employeeQuery.Where(c => c.HoTen.Contains(sb));
+
+            if (!String.IsNullOrWhiteSpace(sgt))
+                employeeQuery = employeeQuery.Where(c => c.GioiTinh == sgt);
+
+            if (spb != null)
+                employeeQuery = employeeQuery.Where(c => c.PhongBan.MaPhongBan == spb);
+
+            if (scv != null)
+                employeeQuery = employeeQuery.Where(c => c.ChucVu.MaChucVu == scv);
+
+            if (minage != null)                       
+                employeeQuery = employeeQuery.Where(c => DbFunctions.DiffDays(c.NgayNamSinh, DateTime.Now) / 365 >= minage);            
+
+            if (maxage != null)
+                employeeQuery = employeeQuery.Where(c => DbFunctions.DiffDays(c.NgayNamSinh, DateTime.Now) / 365 <= maxage);
+
+            var employee = employeeQuery.ToList();
             return View(employee);
         }
 
         public ViewResult Create()
         {
-            return View();
+            var pb = _context.PhongBan.ToList();
+            var cv = _context.ChucVu.ToList();
+
+            var viewModel = new EmployeeViewModel
+            {
+                PhongBans = pb,
+                ChucVus = cv
+            };
+
+            return View("EmployeeForm",viewModel);
         }
 
         public ActionResult Edit(int id)
@@ -38,7 +73,16 @@ namespace NKKhoan.Areas.Admin.Controllers
             var employee = _context.CongNhan.SingleOrDefault(c => c.MaNhanCong == id);
             if (employee == null)
                 return HttpNotFound();
-            return View(employee);
+
+            var pb = _context.PhongBan.ToList();
+            var cv = _context.ChucVu.ToList();
+
+            var viewModel = new EmployeeViewModel(employee)
+            {
+                PhongBans = pb,
+                ChucVus = cv
+            };
+            return View("EmployeeForm",viewModel);
         }
 
         public ActionResult Delete(int id)

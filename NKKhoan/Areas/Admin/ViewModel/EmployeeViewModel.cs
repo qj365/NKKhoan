@@ -1,18 +1,38 @@
-﻿namespace NKKhoan.Models
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+﻿using NKKhoan.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Spatial;
 
-    [Table("CongNhan")]
-    public partial class CongNhan
+namespace NKKhoan.Areas.Admin.ViewModel
+{
+    public class EmployeeViewModel
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CongNhan()
+        public string Title
         {
-            ChiTietNhanCongKhoan = new HashSet<ChiTietNhanCongKhoan>();
+            get
+            {
+                return MaNhanCong == 0 ? "Thêm công nhân" : "Sửa công nhân";
+            }
+        }
+
+        public EmployeeViewModel()
+        {
+            MaNhanCong = 0;
+        }
+
+        public EmployeeViewModel(CongNhan congNhan)
+        {
+            HoTen = congNhan.HoTen;
+            NgayNamSinh = congNhan.NgayNamSinh;
+            MaChucVu = congNhan.MaChucVu;
+            MaNhanCong = congNhan.MaNhanCong;
+            MaPhongBan = congNhan.MaPhongBan;
+            QueQuan = congNhan.QueQuan;
+            GioiTinh = congNhan.GioiTinh;
+            LuongBaoHiem = congNhan.LuongBaoHiem;
+            LuongHopDong = congNhan.LuongHopDong;
         }
 
         [Key]
@@ -45,7 +65,7 @@
 
         [Display(Name = "Lương hợp đồng")]
         [Required(ErrorMessage = "Vui lòng nhập lương hợp đồng")]
-        [Range(0,int.MaxValue,ErrorMessage = "Vui lòng nhập giá trị lớn hơn 0")]
+        [Range(0, int.MaxValue, ErrorMessage = "Vui lòng nhập giá trị lớn hơn 0")]
         public int? LuongHopDong { get; set; }
 
         [Display(Name = "Lương bảo hiểm")]
@@ -53,20 +73,19 @@
         [Range(0, int.MaxValue, ErrorMessage = "Vui lòng nhập giá trị lớn hơn 0")]
         public int? LuongBaoHiem { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietNhanCongKhoan> ChiTietNhanCongKhoan { get; set; }
-
         [Display(Name = "Phòng ban")]
         [Required]
         public int? MaPhongBan { get; set; }
         [ForeignKey("MaPhongBan")]
-        public virtual PhongBan PhongBan { get; set; }
+        
 
         [Display(Name = "Chức vụ")]
         [Required]
         public int? MaChucVu { get; set; }
         [ForeignKey("MaChucVu")]
-        public virtual ChucVu ChucVu { get; set; }
+        
 
+        public IEnumerable<PhongBan> PhongBans { get; set; }
+        public IEnumerable<ChucVu> ChucVus { get; set; }
     }
 }
