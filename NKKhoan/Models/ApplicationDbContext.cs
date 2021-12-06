@@ -41,12 +41,12 @@ namespace NKKhoan.Models
             modelBuilder.Entity<NKSLK>()
                 .HasMany(e => e.ChiTietCongViec)
                 .WithRequired(e => e.NKSLK)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<NKSLK>()
                 .HasMany(e => e.ChiTietNhanCongKhoan)
                 .WithRequired(e => e.NKSLK)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
         }
 

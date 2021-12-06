@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NKKhoan.Models.NKSLK>
+﻿@model IEnumerable<NKKhoan.Areas.Admin.ViewModels.TaskViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="col-sm-2">
-                            <a href="./Task/Create" class="btn btn-primary">
+                            <a href="~/Admin/Task/Create" class="btn btn-primary">
                                 Thêm mới
                             </a>
                         </div>
@@ -37,16 +37,22 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.MaNKSLK)
+                                        @Html.DisplayNameFor(model => model.nkslk.MaNKSLK)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.NgayThucHienKhoan)
+                                        @Html.DisplayNameFor(model => model.nkslk.NgayThucHienKhoan)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.GioBatDau)
+                                        @Html.DisplayNameFor(model => model.nkslk.GioBatDau)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.GioKetThuc)
+                                        @Html.DisplayNameFor(model => model.nkslk.GioKetThuc)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.congnhan.FirstOrDefault().HoTen)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.congviec.FirstOrDefault().TenCongViec)
                                     </th>
                                     <th>Chức năng</th>
                                 </tr>
@@ -56,27 +62,47 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.MaNKSLK)
+                                        @Html.DisplayFor(modelItem => item.nkslk.MaNKSLK)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.NgayThucHienKhoan)
+                                        @Html.DisplayFor(modelItem => item.nkslk.NgayThucHienKhoan)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.GioBatDau)
+                                        @Html.DisplayFor(modelItem => item.nkslk.GioBatDau)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.GioKetThuc)
+                                        @Html.DisplayFor(modelItem => item.nkslk.GioKetThuc)
                                     </td>
                                     <td>
-
-                                        <a class="btn-edit" href="~/Admin/Task/Edit/@item.MaNKSLK">
+                                        @{
+                                            var hotenList = new List<string>();
+                                            foreach (var item1 in item.congnhan)
+                                            {
+                                                hotenList.Add(item1.HoTen);
+                                            };
+                                            var hotenstring = String.Join(", ", hotenList);
+                                        }
+                                        @Html.DisplayFor(modelItem => hotenstring)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var tencongviecList = new List<string>();
+                                            foreach (var item1 in item.congviec)
+                                            {
+                                                tencongviecList.Add(item1.TenCongViec);
+                                            }
+                                            var tencongviecstring = String.Join(", ", tencongviecList);
+                                        }
+                                        @Html.DisplayFor(modelItem => tencongviecstring)
+                                    </td>
+                                    <td>
+                                        <a class="btn-edit" href="~/Admin/Task/Edit/@item.nkslk.MaNKSLK">
                                             <i class="far fa-edit icon-edit"></i>
                                         </a>
 
-                                        <a class="js-delete" href="~/Admin/Task/Delete/@item.MaNKSLK">
+                                        <a class="js-delete" href="~/Admin/Task/Delete/@item.nkslk.MaNKSLK">
                                             <i class="far fa-trash-alt icon-delete"></i>
                                         </a>
-
                                     </td>
                                 </tr>
                             }
@@ -87,26 +113,29 @@
         </div>
     </div>
 </section>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-      $("#example1").on("click", ".js-delete", function (event) {
-          var button = $(this);
+        $("#example1").on("click", ".js-delete", function (event) {
+            var button = $(this);
 
-          event.preventDefault();
+            event.preventDefault();
 
-          bootbox.confirm("Bạn chắc chắn muốn xoá mục này?", function (r) {
-              if (r) {
-                  window.location = button.attr('href');
-              }
-          })
+            bootbox.confirm("Bạn chắc chắn muốn xoá mục này?", function (r) {
+                if (r) {
+                    window.location = button.attr('href');
+                }
+            })
+        });
 
-
-      });
-  });
+        if (document.location.search.length) {
+            var urlParams = new URLSearchParams(document.location.search);
+            $('#Select').val(urlParams.get('Select'));
+        }
+    });
 </script>

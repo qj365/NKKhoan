@@ -1,0 +1,9 @@
+﻿@model NKKhoan.Areas.Admin.ViewModels.JobListBoxViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.jobName, htmlAttributes: new { @class = "control-label col-md-3" })
+    <div class="col-md-10 input-group date" id="reservationdatetime3" data-target-input="nearest">
+
+        @Html.ListBoxFor(model => model.selectedjob, Model.jobs, new { @class = "form-control selectpicker", data_live_search = "true" })
+    </div>
+</div>
