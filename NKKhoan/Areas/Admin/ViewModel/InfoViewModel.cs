@@ -50,10 +50,10 @@ namespace NKKhoan.Areas.Admin.ViewModel
 
         public virtual NKSLK NKSLK { get; set; }
 
-        [Display(Name = "Lương sản phầm")]
-        public int LuongSP { get; set; }
+        [Display(Name = "Lương sản phẩm")]
+        public int? LuongSP { get; set; }
 
         [Display(Name = "Ngày công")]
-        public float NgayCong { get; set; }
+        public float? NgayCong { get; set; }
     }
 }
