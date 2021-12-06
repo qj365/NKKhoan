@@ -178,6 +178,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Areas\Admin\ViewModel\EmployeeViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\InfoViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -211,6 +212,10 @@
     <Compile Include="Migrations\202111150323338_them-foreignkey.cs" />
     <Compile Include="Migrations\202111150323338_them-foreignkey.Designer.cs">
       <DependentUpon>202111150323338_them-foreignkey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112060800357_themspvaocv.cs" />
+    <Compile Include="Migrations\202112060800357_themspvaocv.Designer.cs">
+      <DependentUpon>202112060800357_themspvaocv.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -254,6 +259,7 @@
     <Content Include="Areas\Admin\Views\Job\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\Info.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -341,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111150323338_them-foreignkey.resx">
       <DependentUpon>202111150323338_them-foreignkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112060800357_themspvaocv.resx">
+      <DependentUpon>202112060800357_themspvaocv.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

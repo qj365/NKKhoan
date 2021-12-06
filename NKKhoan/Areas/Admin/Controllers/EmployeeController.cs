@@ -120,5 +120,23 @@ namespace NKKhoan.Areas.Admin.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index", "Employee");
         }
+
+        public ActionResult Info(int id)
+        {
+            var infos = _context.ChiTietNhanCongKhoan.Where(c => c.MaNhanCong == id).ToList();
+            if (infos.Count() == 0)
+                return HttpNotFound();
+            var newInfos = new List<InfoViewModel>();
+            foreach (var info in infos)
+            {
+                var InfoViewModel = new InfoViewModel(info);
+                var q = _context.Database.SqlQuery<int>("select dbo.TienLuongSanPhamCongNhan({0}, '{1}', '{2}')", new object[] { 1, "2021-09-23", "2021-09-24" }).First();
+                InfoViewModel.LuongSP = (int)q;
+                InfoViewModel.NgayCong = 0;
+
+                newInfos.Add(InfoViewModel);
+            }
+            return View (newInfos);
+        }
     }
 }
