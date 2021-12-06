@@ -217,6 +217,10 @@
     <Compile Include="Migrations\202112060800357_themspvaocv.Designer.cs">
       <DependentUpon>202112060800357_themspvaocv.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112060805527_themanh.cs" />
+    <Compile Include="Migrations\202112060805527_themanh.Designer.cs">
+      <DependentUpon>202112060805527_themanh.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -350,6 +354,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112060800357_themspvaocv.resx">
       <DependentUpon>202112060800357_themspvaocv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112060805527_themanh.resx">
+      <DependentUpon>202112060805527_themanh.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
