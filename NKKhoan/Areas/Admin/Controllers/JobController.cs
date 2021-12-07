@@ -64,6 +64,8 @@ namespace NKKhoan.Areas.Admin.Controllers
                 jobInDb.DonViKhoan = job.DonViKhoan;
                 jobInDb.HeSoKhoan = job.HeSoKhoan;
                 jobInDb.DinhMucLaoDong = job.DinhMucLaoDong;
+                int? dongia =(int?)( 126360 * jobInDb.HeSoKhoan * jobInDb.DinhMucLaoDong / jobInDb.DinhMucKhoan);
+                jobInDb.DonGia = dongia;
             }
 
             _context.SaveChanges();
