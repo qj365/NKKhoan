@@ -42,6 +42,9 @@
         [Required(ErrorMessage = "Vui lòng nhập ngày đăng ký")]
         public DateTime? NgayDangKy { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng upload ảnh")]
+        public string Anh { get; set; }
+
         public virtual ICollection<CongViec> CongViec { get; set; }
 
 
