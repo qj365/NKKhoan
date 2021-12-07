@@ -175,7 +175,7 @@ namespace NKKhoan.Areas.Admin.Controllers
                 {
                      luong = _context.Database.SqlQuery<int>("select dbo.TienLuongSanPhamCongNhan({0}, {1}, {2})", new object[] { id, info.NKSLK.NgayThucHienKhoan, info.NKSLK.NgayThucHienKhoan }).First();
                      ngaycong = _context.Database.SqlQuery<double>("select dbo.NhatKyLamViec({0}, {1}, {2})", new object[] { id, info.NKSLK.NgayThucHienKhoan, info.NKSLK.NgayThucHienKhoan }).First();
-                    tongluong+= luong;
+                    tongluong += luong;
                     tongngaycong += ngaycong;
                 }
                 catch { }              
