@@ -13,7 +13,7 @@
             </div>
 
         </div>
-    </div><!-- /.container-fluid -->
+    </div>
 </section>
 
 <section class="content">
@@ -29,7 +29,6 @@
                         </div>
 
                     </div>
-                    <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
@@ -67,31 +66,32 @@
         </div>
     </div>
 </section>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-      $("#example1").on("click", ".js-delete", function (event) {
-          var button = $(this);
+        $("#example1").on("click", ".js-delete", function (event) {
+            var button = $(this);
 
-          event.preventDefault();
+            event.preventDefault();
 
-          bootbox.confirm("Bạn chắc chắn muốn xoá mục này?", function (r) {
-              if (r) {
-                  window.location = button.attr('href');
-              }
-          })
+            bootbox.confirm("Bạn chắc chắn muốn xoá mục này?", function (r) {
+                if (r) {
+                    window.location = button.attr('href');
+                }
+            })
 
 
-      });
+        });
 
-      if (document.location.search.length) {
-          var urlParams = new URLSearchParams(document.location.search);
-          $('#Select').val(urlParams.get('Select'));
-      }
-  });
+        if (document.location.search.length) {
+            var urlParams = new URLSearchParams(document.location.search);
+            $('#Select').val(urlParams.get('Select'));
+        }
+    });
 </script>
