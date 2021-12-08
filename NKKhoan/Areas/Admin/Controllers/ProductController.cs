@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -51,7 +52,8 @@ namespace NKKhoan.Areas.Admin.Controllers
             SqlCommand.Append(" sp.SoDangKy SoDangKy, ");
             SqlCommand.Append(" sp.HanSuDung HanSuDung, ");
             SqlCommand.Append(" sp.QuyCach QuyCach, ");
-            SqlCommand.Append(" sp.NgayDangKy NgayDangKy ");
+            SqlCommand.Append(" sp.NgayDangKy NgayDangKy, ");
+            SqlCommand.Append(" sp.Anh Anh ");
             SqlCommand.Append(" FROM SanPham sp ");
             SqlCommand.Append(" WHERE 1=1 ");
 
@@ -143,12 +145,34 @@ namespace NKKhoan.Areas.Admin.Controllers
             }
         }
 
+        public ActionResult Info(int id)
+        {
+            var product = _context.SanPham.SingleOrDefault(c => c.MaSanPham == id);
+            if (product == null)
+                return HttpNotFound();
+            return View(product);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(SanPham product)
+        public ActionResult Save(SanPham product, HttpPostedFileBase photo)
         {
             if (product.MaSanPham == 0)
+            {
+                if (photo != null && photo.ContentLength > 0)
+                {
+                    var path = Path.Combine(Server.MapPath("~/Areas/Admin/Data/ProductImage/"),
+                                            System.IO.Path.GetFileName(photo.FileName));
+                    photo.SaveAs(path);
+
+                    product.Anh = photo.FileName;
+                }
+                else
+                    product.Anh = "NoImage.png";
                 _context.SanPham.Add(product);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Product");
+            }               
             else
             {
                 var productInDb = _context.SanPham.Single(c => c.MaSanPham == product.MaSanPham);
@@ -157,9 +181,22 @@ namespace NKKhoan.Areas.Admin.Controllers
                 productInDb.QuyCach = product.QuyCach;
                 productInDb.NgayDangKy = product.NgayDangKy;
                 productInDb.HanSuDung = product.HanSuDung;
-            }
-            _context.SaveChanges();
-            return RedirectToAction("Index", "Product");    
+                string photoBefore = productInDb.Anh;
+                if (photo != null && photo.ContentLength > 0)
+                {
+                    var path = Path.Combine(Server.MapPath("~/Areas/Admin/Data/ProductImage/"),
+                                            System.IO.Path.GetFileName(photo.FileName));
+                    photo.SaveAs(path);
+
+                    productInDb.Anh = photo.FileName;                   
+                }
+                else if(photo == null)
+                {
+                    productInDb.Anh = photoBefore;
+                }
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Product");
+            }             
         }
     }
 }

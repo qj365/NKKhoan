@@ -11,7 +11,6 @@
             <div class="col-sm-6">
                 <h1>Sản phẩm</h1>
             </div>
-
         </div>
     </div>
 </section>
@@ -32,8 +31,6 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        @using (Html.BeginForm("Index", "Product", FormMethod.Get))
-                        {
                             @*<div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -71,7 +68,13 @@
                                         <label for="searchTuNDK">
                                             Ngày đăng ký: Từ
                                         </label>
-                                        <input id="searchTuNDK" value="@ViewBag.SearchTuNDK" name="searchTuNDK" class="date-picker form-control" type="date">
+                                        @*<input id="searchTuNDK" value="@ViewBag.SearchTuNDK" name="searchTuNDK" class="date-picker form-control" type="date">*@
+                                        <div class="col-12 input-group date" id="reservationdatetime1" data-target-input="nearest">
+                                            <input id="searchTuNDK" value="@ViewBag.SearchTuNDK" name="searchTuNDK" class="form-control datetimepicker-input text-box single-line valid" data-target="#reservationdatetime1">
+                                            <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -80,8 +83,14 @@
                                         <label for="searchDenNDK">
                                             Đến
                                         </label>
-                                        <div>
+                                        @*<div>
                                             <input id="searchDenNDK" value="@ViewBag.SearchDenNDK" name="searchDenNDK" class="date-picker form-control" type="date">
+                                        </div>*@
+                                        <div class="col-12 input-group date" id="reservationdatetime2" data-target-input="nearest">
+                                            <input id="searchDenNDK" value="@ViewBag.SearchDenNDK" name="searchDenNDK" class="form-control datetimepicker-input text-box single-line valid" data-target="#reservationdatetime1">
+                                            <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +105,6 @@
                                     </div>
                                 </div>
                             </div>
-                        }
                     </div>
                 </div>
             </div>
@@ -137,6 +145,9 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.NgayDangKy)
                                     </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Anh)
+                                    </th>
                                     <th>Chức năng</th>
                                 </tr>
                             </thead>
@@ -160,13 +171,20 @@
                                         @Html.DisplayFor(modelItem => item.NgayDangKy)
                                     </td>
                                     <td>
+                                       <img width="100px" src="~/Areas/Admin/Data/ProductImage/@item.Anh" />
+                                    </td>
+                                    <td>
 
                                         <a class="btn-edit" href="~/Admin/Product/Edit/@item.MaSanPham">
                                             <i class="far fa-edit icon-edit"></i>
                                         </a>
 
                                         <a class="js-delete" href="~/Admin/Product/Delete/@item.MaSanPham">
-                                            <i class="far fa-trash-alt icon-delete"></i>
+                                            <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
+                                        </a>
+
+                                        <a class="info" href="~/Admin/Product/Info/@item.MaSanPham">
+                                            <i class="fas fa-info-circle"></i>
                                         </a>
 
                                     </td>
@@ -204,24 +222,47 @@
       if (document.location.search.length) {
           var urlParams = new URLSearchParams(document.location.search);
           $('#Select').val(urlParams.get('Select'));
+
+          var s1 = urlParams.get('searchTuNDK').split('/');
+          var date1 = new Date(s1[2], s1[1] - 1, s1[0]);
+
+          var s2 = urlParams.get('searchDenNDK').split('/');
+          var date2 = new Date(s2[2], s2[1] - 1, s2[0]);
+
+          $('#reservationdatetime1').datetimepicker({
+              icons: { time: 'far fa-clock' },
+              format: 'DD/MM/yyyy',
+              locale: 'vi',
+              defaultDate: date1
+          });
+          $('#reservationdatetime2').datetimepicker({
+              useCurrent: false,
+              format: 'DD/MM/yyyy',
+              locale: 'vi',
+              icons: { time: 'far fa-clock' },
+              defaultDate: date2
+          });
       }
 
-      $.validator.methods.date = function (value, element) {
-          return this.optional(element) || moment(value, "DD/MM/YYYY", true).isValid();
+      else {
+          $('#reservationdatetime1').datetimepicker({
+              icons: { time: 'far fa-clock' },
+              format: 'DD/MM/yyyy',
+              locale: 'vi'
+          });
+          $('#reservationdatetime2').datetimepicker({
+              useCurrent: false,
+              format: 'DD/MM/yyyy',
+              locale: 'vi',
+              icons: { time: 'far fa-clock' }
+          });
       }
-
-      $('#reservationdatetime1').datetimepicker({
-          icons: { time: 'far fa-clock' },
-          locale: 'vi',
-          format: 'DD/MM/yyyy'
-      });
 
       $("#reservationdatetime1").on("change.datetimepicker", function (e) {
           $('#reservationdatetime2').datetimepicker('minDate', e.date);
       });
-
-      $('#button').click({
-          format: 'DD/MM/YYYY'
+      $("#reservationdatetime2").on("change.datetimepicker", function (e) {
+          $('#reservationdatetime1').datetimepicker('maxDate', e.date);
       });
   });
 </script>
