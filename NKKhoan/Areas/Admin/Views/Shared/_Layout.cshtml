@@ -83,15 +83,7 @@
                 </li>
 
             </ul>
-            @{string classTree = "";
-                string classActive = "";
-            }
-            @if (ViewContext.RouteData.Values["Controller"].ToString() == "Delivery"
-                || ViewContext.RouteData.Values["Controller"].ToString() == "Order")
-            {
-                classTree = "menu-is-opening menu-open";
-                classActive = "active";
-            }
+            
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -232,6 +224,40 @@
                                     Chức vụ
                                 </p>
                             </a>
+                        </li>
+
+                        @{string classTree = "";
+                            string classActive = "";
+                        }
+                        @if (ViewContext.RouteData.Values["Controller"].ToString() == "Delivery"
+                            || ViewContext.RouteData.Values["Controller"].ToString() == "Order")
+                        {
+                            classTree = "menu-is-opening menu-open";
+                            classActive = "active";
+                        }
+
+                        <li class="nav-item @classTree">
+                            <a href="#" class="nav-link @classActive">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    Thống kê
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="~/Admin/Delivery" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Delivery" ? "active" : "")">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Lương sản phẩm</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="~/Admin/Order" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Order" ? "active" : "")">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tất cả</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
 

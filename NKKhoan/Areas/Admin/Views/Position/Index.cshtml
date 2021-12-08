@@ -1,17 +1,15 @@
-﻿@model IEnumerable<NKKhoan.Models.CongViec>
+﻿@model IEnumerable<NKKhoan.Models.ChucVu>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Công việc</h1>
+                <h1>Chức vụ</h1>
             </div>
 
         </div>
@@ -25,7 +23,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="col-sm-2">
-                            <a href="~/Admin/Job/Create" class="btn btn-primary">
+                            <a href="~/Admin/Position/Create" class="btn btn-primary">
                                 Thêm mới
                             </a>
                         </div>
@@ -37,54 +35,25 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.TenCongViec)
+                                        @Html.DisplayNameFor(model => model.TenChucVu)
                                     </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.DinhMucKhoan)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.DonViKhoan)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.HeSoKhoan)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.DinhMucLaoDong)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.DonGia)
-                                    </th>
-                                    <th></th>
+                                    <th>Chức năng</th>
                                 </tr>
                             </thead>
+
                             @foreach (var item in Model)
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TenCongViec)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DinhMucKhoan)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DonViKhoan)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.HeSoKhoan)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DinhMucLaoDong)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DonGia)
+                                        @Html.DisplayFor(modelItem => item.TenChucVu)
                                     </td>
                                     <td>
 
-                                        <a class="btn-edit" href="~/Admin/Job/Edit/@item.MaCongViec">
+                                        <a class="btn-edit" href="~/Admin/Position/Edit/@item.MaChucVu">
                                             <i class="far fa-edit icon-edit"></i>
                                         </a>
 
-                                        <a class="js-delete" href="~/Admin/Job/Delete/@item.MaCongViec">
+                                        <a class="js-delete" href="~/Admin/Position/Delete/@item.MaChucVu">
                                             <i class="far fa-trash-alt icon-delete"></i>
                                         </a>
 
@@ -119,5 +88,11 @@
 
 
       });
+
+      if (document.location.search.length) {
+          var urlParams = new URLSearchParams(document.location.search);
+          $('#Select').val(urlParams.get('Select'));
+      }
   });
 </script>
+

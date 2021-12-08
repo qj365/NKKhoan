@@ -1,0 +1,238 @@
+﻿@model IEnumerable<NKKhoan.Areas.Admin.ViewModel.InfoViewModel >
+
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin công nhân</h1>
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="card card-default collapsed-card" id="card-id">
+
+            <div class="card-header">
+                <h3 class="card-title">Thông tin cá nhân</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-plus" id="button-collapse"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            @Html.DisplayNameFor(model => model.CongNhan.HoTen): @Html.DisplayFor(model => model.First().CongNhan.HoTen)
+                        </p>
+                        <p>
+                            @Html.DisplayNameFor(model => model.CongNhan.GioiTinh): @Html.DisplayFor(model => model.First().CongNhan.GioiTinh)
+                        </p>
+                        <p>
+                            @Html.DisplayNameFor(model => model.CongNhan.NgayNamSinh): @Html.DisplayFor(model => model.First().CongNhan.NgayNamSinh)
+                        </p>
+                        <p>
+                            @Html.DisplayNameFor(model => model.CongNhan.QueQuan): @Html.DisplayFor(model => model.First().CongNhan.QueQuan)
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            @Html.DisplayNameFor(model => model.CongNhan.PhongBan.TenPhongBan): @Html.DisplayFor(model => model.First().CongNhan.PhongBan.TenPhongBan)
+                        </p>
+                        <p>
+                            @Html.DisplayNameFor(model => model.CongNhan.ChucVu.TenChucVu): @Html.DisplayFor(model => model.First().CongNhan.ChucVu.TenChucVu)
+                        </p>
+                        <p>
+                            @Html.DisplayNameFor(model => model.CongNhan.LuongHopDong): @Html.DisplayFor(model => model.First().CongNhan.LuongHopDong)
+                        </p>
+                        <p>
+                            @Html.DisplayNameFor(model => model.CongNhan.LuongBaoHiem): @Html.DisplayFor(model => model.First().CongNhan.LuongBaoHiem)
+                        </p>
+                    </div>
+                </div>
+                
+                
+
+            </div>
+
+        </div>
+        @*table*@
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        
+                        <div class="row">
+                            <h3 class="card-title" style=" margin-top: 8px;">Thông tin làm việc</h3>
+                            <div class="col-1"></div>
+                            @using (Html.BeginForm("Info", "Employee", FormMethod.Get, new { style = "display:contents" }))
+                            {
+                                <div class="col-3 input-group date" id="reservationdatetime1" data-target-input="nearest">
+                                    <input name="ngaybatdau" class="form-control datetimepicker-input text-box single-line valid" data-target="#reservationdatetime1">
+                                    <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                                <div class="col-1"></div>
+
+                                <div class="col-3 input-group date" id="reservationdatetime2" data-target-input="nearest">
+                                    <input name="ngayketthuc" class="form-control datetimepicker-input text-box single-line" data-target="#reservationdatetime2">
+                                    <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-1"></div>
+                                <button type="submit" class="btn btn-sm btn-default">
+                                    <i class="fa fa-search"></i>
+                                    Tìm kiếm
+                                </button>
+                            }
+
+                        </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.NKSLK.MaNKSLK)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.NgayThucHienKhoan)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.GioBatDau)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.GioKetThuc)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.LuongSP)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.NgayCong)
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+
+                            @foreach (var item in Model)
+                            {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NKSLK.MaNKSLK)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayThucHienKhoan)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GioBatDau)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GioKetThuc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LuongSP)
+                            </td>
+                            <td>
+                                @{ 
+                                    var nc = String.Format("{0:0.00}", item.NgayCong);
+                                }
+                                @nc
+                            </td>
+                            
+                        </tr>
+                            }
+                        </table>
+                        <div class="row">
+                            <div class="col-md-8">
+                            </div>
+                            <div class="col">
+                                <p style="font-weight:700">Tổng lương sản phẩm: @ViewBag.tongluong</p>
+                                <p style="font-weight:700">Tổng ngày công: @String.Format("{0:0.00}", ViewBag.tongngaycong)</p>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false, searching: true,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+        if (document.location.search.length) {
+            var urlParams = new URLSearchParams(document.location.search);
+
+            var s1 = urlParams.get('ngaybatdau').split('/');
+            var date1 = new Date(s1[2], s1[1] - 1, s1[0]);
+
+            var s2 = urlParams.get('ngayketthuc').split('/');
+            var date2 = new Date(s2[2], s2[1] - 1, s2[0]);
+
+            $('#reservationdatetime1').datetimepicker({
+                icons: { time: 'far fa-clock' },
+                format: 'DD/MM/yyyy',
+                locale: 'vi',
+                defaultDate: date1
+            });
+            $('#reservationdatetime2').datetimepicker({
+                useCurrent: false,
+                format: 'DD/MM/yyyy',
+                locale: 'vi',
+                icons: { time: 'far fa-clock' },
+                defaultDate: date2
+            });
+        }
+
+        else {
+            $('#reservationdatetime1').datetimepicker({
+                icons: { time: 'far fa-clock' },
+                format: 'DD/MM/yyyy',
+                locale: 'vi'
+            });
+            $('#reservationdatetime2').datetimepicker({
+                useCurrent: false,
+                format: 'DD/MM/yyyy',
+                locale: 'vi',
+                icons: { time: 'far fa-clock' }
+            });
+        }
+        
+        $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+            $('#reservationdatetime2').datetimepicker('minDate', e.date);
+        });
+        $("#reservationdatetime2").on("change.datetimepicker", function (e) {
+            $('#reservationdatetime1').datetimepicker('maxDate', e.date);
+        });
+
+
+    })
+
+</script>

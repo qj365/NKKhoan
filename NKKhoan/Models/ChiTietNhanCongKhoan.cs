@@ -22,6 +22,7 @@
 
         [Column(TypeName = "date")]
         [Display(Name = "Ngày thực hiện thực")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? NgayThucHienKhoan { get; set; }
 
         [Display(Name = "Giờ bắt đầu thực")]

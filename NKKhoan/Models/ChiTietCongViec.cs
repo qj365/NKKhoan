@@ -24,9 +24,6 @@
         [Display(Name = "Sản lượng thực tế")]
         public int? SanLuongThucTe { get; set; }
 
-        [StringLength(50)]
-        [Display(Name = "Số lô")]
-        public string SoLoSanPham { get; set; }
 
         public virtual CongViec CongViec { get; set; }
 

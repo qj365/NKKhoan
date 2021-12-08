@@ -34,7 +34,7 @@
                     <div class="card-body">
                         @using (Html.BeginForm("Index", "Product", FormMethod.Get))
                         {
-                            <div class="row">
+                            @*<div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Truy vấn</label>
@@ -45,12 +45,52 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>*@
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="searchTuHSD">Hạn sử dụng: Từ</label>
+                                        <div style="width: 100%;">
+                                            <input type="number" min="1" step="1" id="searchTuHSD" class="form-control " value="@ViewBag.SearchTuHSD" name="searchTuHSD">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="searchDenHSD">Đến</label>
+                                        <div style="width: 100%;">
+                                            <input type="number" min="1" step="1" id="searchDenHSD" class="form-control " value="@ViewBag.SearchDenHSD" name="searchDenHSD">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="searchTuNDK">
+                                            Ngày đăng ký: Từ
+                                        </label>
+                                        <input id="searchTuNDK" value="@ViewBag.SearchTuNDK" name="searchTuNDK" class="date-picker form-control" type="date">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="searchDenNDK">
+                                            Đến
+                                        </label>
+                                        <div>
+                                            <input id="searchDenNDK" value="@ViewBag.SearchDenNDK" name="searchDenNDK" class="date-picker form-control" type="date">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row" style="padding: 0px 7.5px;">
                                 <div class="input-group input-group-lg">
                                     <div class="input-group-append">
-                                        <button type="submit" class="btn btn-lg btn-default">
+                                        <button type="submit" class="btn btn-lg btn-default" id="button">
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </div>
@@ -165,6 +205,24 @@
           var urlParams = new URLSearchParams(document.location.search);
           $('#Select').val(urlParams.get('Select'));
       }
+
+      $.validator.methods.date = function (value, element) {
+          return this.optional(element) || moment(value, "DD/MM/YYYY", true).isValid();
+      }
+
+      $('#reservationdatetime1').datetimepicker({
+          icons: { time: 'far fa-clock' },
+          locale: 'vi',
+          format: 'DD/MM/yyyy'
+      });
+
+      $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+          $('#reservationdatetime2').datetimepicker('minDate', e.date);
+      });
+
+      $('#button').click({
+          format: 'DD/MM/YYYY'
+      });
   });
 </script>
 
