@@ -167,6 +167,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.4.1\lib\net452\xunit.core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.AspNet.Identity.Core">
@@ -219,6 +225,7 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmployeeStatisticController.cs" />
     <Compile Include="Areas\Admin\Controllers\JobController.cs" />
     <Compile Include="Areas\Admin\Controllers\PositionController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
@@ -226,6 +233,7 @@
     <Compile Include="Areas\Admin\ViewModel\EmployeeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\InfoViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\WorkTimeViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\EmployeeStatisticViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -272,6 +280,14 @@
     <Compile Include="Migrations\202112060813193_bosolosanpham.Designer.cs">
       <DependentUpon>202112060813193_bosolosanpham.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112071527386_bomatkhau.cs" />
+    <Compile Include="Migrations\202112071527386_bomatkhau.Designer.cs">
+      <DependentUpon>202112071527386_bomatkhau.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112071636200_dinhmuckhoan-int.cs" />
+    <Compile Include="Migrations\202112071636200_dinhmuckhoan-int.Designer.cs">
+      <DependentUpon>202112071636200_dinhmuckhoan-int.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -313,17 +329,15 @@
     <Content Include="Areas\Admin\Views\Job\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Edit.cshtml" />
-
     <Content Include="Areas\Admin\Views\Department\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Department\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Department\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Position\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Position\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Position\Edit.cshtml" />
-
     <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Info.cshtml" />
-
+    <Content Include="Areas\Admin\Views\EmployeeStatistic\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -418,6 +432,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112060813193_bosolosanpham.resx">
       <DependentUpon>202112060813193_bosolosanpham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112071527386_bomatkhau.resx">
+      <DependentUpon>202112071527386_bomatkhau.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112071636200_dinhmuckhoan-int.resx">
+      <DependentUpon>202112071636200_dinhmuckhoan-int.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

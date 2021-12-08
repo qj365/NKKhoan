@@ -247,16 +247,18 @@
             $('#minage').val(urlParams.get('minage'));
             $('#maxage').val(urlParams.get('maxage'));
 
-            var s = urlParams.get('tuan').split('/');
+            if (urlParams.get('tuan') !== '') {
+                var s = urlParams.get('tuan').split('/');
 
-            var date = new Date(s[2], s[1] - 1, s[0]);
+                var date = new Date(s[2], s[1] - 1, s[0]);
 
-            $('#reservationdatetime1').datetimepicker({
-                icons: { time: 'far fa-clock' },
-                format: 'DD/MM/yyyy',
-                defaultDate: date,
-                locale: 'vi'
-            });
+                $('#reservationdatetime1').datetimepicker({
+                    icons: { time: 'far fa-clock' },
+                    format: 'DD/MM/yyyy',
+                    defaultDate: date,
+                    locale: 'vi'
+                });
+            }            
         }
 
         else {

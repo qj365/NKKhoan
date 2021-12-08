@@ -210,7 +210,7 @@
 
                         <li class="nav-item">
                             <a href="~/Admin/Department" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Department" ? "active" : "")">
-                                <i class="nav-icon fas fa-users"></i>
+                                <i class="nav-icon fas fa-building"></i>
                                 <p>
                                     Phòng ban
                                 </p>
@@ -219,7 +219,7 @@
 
                         <li class="nav-item">
                             <a href="~/Admin/Position" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Position" ? "active" : "")">
-                                <i class="nav-icon fas fa-users"></i>
+                                <i class="nav-icon fas fa-male"></i>
                                 <p>
                                     Chức vụ
                                 </p>
@@ -229,7 +229,7 @@
                         @{string classTree = "";
                             string classActive = "";
                         }
-                        @if (ViewContext.RouteData.Values["Controller"].ToString() == "Delivery"
+                        @if (ViewContext.RouteData.Values["Controller"].ToString() == "EmployeeStatistic"
                             || ViewContext.RouteData.Values["Controller"].ToString() == "Order")
                         {
                             classTree = "menu-is-opening menu-open";
@@ -246,9 +246,9 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="~/Admin/Delivery" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Delivery" ? "active" : "")">
+                                    <a href="~/Admin/EmployeeStatistic" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "EmployeeStatistic" ? "active" : "")">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Lương sản phẩm</p>
+                                        <p>Công nhân</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
