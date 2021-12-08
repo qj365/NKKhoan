@@ -59,14 +59,14 @@ namespace NKKhoan.Areas.Admin.DAO
                     while (reader.Read())
                     {
                         var employee = new CongNhan();
-                        employee.MaNhanCong = Int32.Parse(reader["MaNhanCong"].ToString());
-                        employee.HoTen = reader["HoTen"].ToString();
-                        employee.NgayNamSinh = DateTime.Parse(reader["NgayNamSinh"].ToString());
-                        employee.QueQuan = reader["QueQuan"].ToString();
-                        employee.GioiTinh = reader["GioiTinh"].ToString();
-                        employee.MatKhau = reader["MatKhau"].ToString();
-                        employee.LuongHopDong = Int32.Parse(reader["LuongHopDong"].ToString());
-                        employee.LuongBaoHiem = Int32.Parse(reader["LuongBaoHiem"].ToString());
+                        employee.MaNhanCong = reader["MaNhanCong"] as int? ?? default;
+                        employee.HoTen = reader["HoTen"] as string;
+                        employee.NgayNamSinh = reader["NgayNamSinh"] as DateTime?;
+                        employee.QueQuan = reader["QueQuan"] as string;
+                        employee.GioiTinh = reader["GioiTinh"] as string;
+                        employee.MatKhau = reader["MatKhau"] as string;
+                        employee.LuongHopDong = reader["LuongHopDong"] as int?;
+                        employee.LuongBaoHiem = reader["LuongBaoHiem"] as int?;
                         employees.Add(employee);
                     }
                 }
@@ -95,12 +95,12 @@ namespace NKKhoan.Areas.Admin.DAO
                     while (reader.Read())
                     {
                         var job = new CongViec();
-                        job.MaCongViec = int.Parse(reader["MaCongViec"].ToString());
-                        job.TenCongViec = reader["TenCongViec"].ToString();
-                        job.DinhMucKhoan = decimal.Parse(reader["DinhMucKhoan"].ToString());
-                        job.HeSoKhoan = int.Parse(reader["HeSoKhoan"].ToString());
-                        job.DinhMucLaoDong = int.Parse(reader["DinhMucLaoDong"].ToString());
-                        job.DonGia = int.Parse(reader["DonGia"].ToString());
+                        job.MaCongViec = reader["MaCongViec"] as int? ?? default;
+                        job.TenCongViec = reader["TenCongViec"] as string;
+                        job.DinhMucKhoan = reader["DinhMucKhoan"] as decimal?;
+                        job.HeSoKhoan = reader["HeSoKhoan"] as int? ?? default;
+                        job.DinhMucLaoDong = reader["DinhMucLaoDong"] as int? ?? default;
+                        job.DonGia = reader["DonGia"] as int? ?? default;
                         jobs.Add(job);
                     }
                 }
@@ -108,7 +108,7 @@ namespace NKKhoan.Areas.Admin.DAO
             return jobs;
         }
 
-        public static int AssignEmployeeToTask(int MaNhanCong, int MaNKSLK)
+        public static int AssignEmployeeToTask(int MaNKSLK, int MaNhanCong)
         {
             int result;
             using (SqlConnection con = new SqlConnection(constr))
@@ -122,7 +122,7 @@ namespace NKKhoan.Areas.Admin.DAO
             }
             return result;
         }
-        public static int AssignJobToTask(int MaCongViec, int MaNKSLK)
+        public static int AssignJobToTask(int MaNKSLK, int MaCongViec)
         {
             int result;
             using (SqlConnection con = new SqlConnection(constr))
@@ -137,13 +137,21 @@ namespace NKKhoan.Areas.Admin.DAO
             return result;
         }
 
-        public static int FreeEmployeeFromTask(int MaNhanCong, int MaNKSLK)
+        public static int FreeEmployeeFromTask(int MaNKSLK, int? MaNhanCong = null)
         {
             int result;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                string sqlcmd = "DELETE FROM dbo.ChiTietNhanCongKhoan WHERE MaNKSLK = " + MaNKSLK + " AND MaNhanCong = " + MaNhanCong;
+                string sqlcmd;
+                if (MaNhanCong != null)
+                {
+                    sqlcmd = "DELETE FROM dbo.ChiTietNhanCongKhoan WHERE MaNKSLK = " + MaNKSLK + " AND MaNhanCong = " + MaNhanCong;
+                }
+                else
+                {
+                    sqlcmd = "DELETE FROM dbo.ChiTietNhanCongKhoan WHERE MaNKSLK = " + MaNKSLK;
+                }
                 using (SqlCommand cmd = new SqlCommand(sqlcmd, con))
                 {
                     result = cmd.ExecuteNonQuery();
@@ -151,13 +159,21 @@ namespace NKKhoan.Areas.Admin.DAO
             }
             return result;
         }
-        public static int FreeJobFromTask(int MaCongViec, int MaNKSLK)
+        public static int FreeJobFromTask(int MaNKSLK, int? MaCongViec = null)
         {
             int result;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                string sqlcmd = "DELETE FROM dbo.ChiTietCongViec WHERE MaNKSLK = " + MaNKSLK + " AND MaCongViec = " + MaCongViec;
+                string sqlcmd;
+                if (MaCongViec != null)
+                {
+                    sqlcmd = "DELETE FROM dbo.ChiTietCongViec WHERE MaNKSLK = " + MaNKSLK + " AND MaCongViec = " + MaCongViec;
+                }
+                else
+                {
+                    sqlcmd = "DELETE FROM dbo.ChiTietCongViec WHERE MaNKSLK = " + MaNKSLK;
+                }
                 using (SqlCommand cmd = new SqlCommand(sqlcmd, con))
                 {
                     result = cmd.ExecuteNonQuery();

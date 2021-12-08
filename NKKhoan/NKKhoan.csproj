@@ -180,6 +180,7 @@
     <Compile Include="Areas\Admin\DAO\TaskDAO.cs" />
     <Compile Include="Areas\Admin\ViewModels\EmployeeListBoxViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\JobListBoxViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ShiftListBoxViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\TaskViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\EmployeeViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -192,33 +193,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111051348097_init.cs" />
-    <Compile Include="Migrations\202111051348097_init.Designer.cs">
-      <DependentUpon>202111051348097_init.cs</DependentUpon>
+    <Compile Include="Migrations\202112061319336_a.cs" />
+    <Compile Include="Migrations\202112061319336_a.Designer.cs">
+      <DependentUpon>202112061319336_a.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111060241060_init2.cs" />
-    <Compile Include="Migrations\202111060241060_init2.Designer.cs">
-      <DependentUpon>202111060241060_init2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111121559069_themphongban.cs" />
-    <Compile Include="Migrations\202111121559069_themphongban.Designer.cs">
-      <DependentUpon>202111121559069_themphongban.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111121609567_themchưcvu.cs" />
-    <Compile Include="Migrations\202111121609567_themchưcvu.Designer.cs">
-      <DependentUpon>202111121609567_themchưcvu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111140228474_sua-sp-cv.cs" />
-    <Compile Include="Migrations\202111140228474_sua-sp-cv.Designer.cs">
-      <DependentUpon>202111140228474_sua-sp-cv.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111150323338_them-foreignkey.cs" />
-    <Compile Include="Migrations\202111150323338_them-foreignkey.Designer.cs">
-      <DependentUpon>202111150323338_them-foreignkey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112060220439_deletecascade.cs" />
-    <Compile Include="Migrations\202112060220439_deletecascade.Designer.cs">
-      <DependentUpon>202112060220439_deletecascade.cs</DependentUpon>
+    <Compile Include="Migrations\202112071550040_requiredtime.cs" />
+    <Compile Include="Migrations\202112071550040_requiredtime.Designer.cs">
+      <DependentUpon>202112071550040_requiredtime.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -266,6 +247,7 @@
     <Content Include="Areas\Admin\Views\Task\ListBoxEmployee.cshtml" />
     <Content Include="Areas\Admin\Views\Task\ListBoxJob.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\ListBoxShift.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -336,26 +318,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111051348097_init.resx">
-      <DependentUpon>202111051348097_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112061319336_a.resx">
+      <DependentUpon>202112061319336_a.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111060241060_init2.resx">
-      <DependentUpon>202111060241060_init2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111121559069_themphongban.resx">
-      <DependentUpon>202111121559069_themphongban.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111121609567_themchưcvu.resx">
-      <DependentUpon>202111121609567_themchưcvu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111140228474_sua-sp-cv.resx">
-      <DependentUpon>202111140228474_sua-sp-cv.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111150323338_them-foreignkey.resx">
-      <DependentUpon>202111150323338_them-foreignkey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112060220439_deletecascade.resx">
-      <DependentUpon>202112060220439_deletecascade.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112071550040_requiredtime.resx">
+      <DependentUpon>202112071550040_requiredtime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

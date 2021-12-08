@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Sửa NKSLK</h1>
+                <h1>Sửa nhật ký khoán</h1>
             </div>
 
         </div>
@@ -29,65 +29,67 @@
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.HiddenFor(model => model.nkslk.MaNKSLK)
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.nkslk.NgayThucHienKhoan, htmlAttributes: new { @class = "control-label col-md-3" })
-                                        <div class="col-md-10 input-group date" id="reservationdatetime1" data-target-input="nearest">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.nkslk.NgayThucHienKhoan, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-10 input-group date" id="reservationdatetime1" data-target-input="nearest">
 
-                                            @Html.EditorFor(model => model.nkslk.NgayThucHienKhoan, new { htmlAttributes = new { @class = "form-control" } })
-                                            <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.nkslk.NgayThucHienKhoan, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.nkslk.NgayThucHienKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label">Ca</label>
-                                        <div class="col-md-10">
-                                            @Html.DropDownList("Ca", new List<SelectListItem>
-                                                {
-                                                new SelectListItem{ Text="Ca 1"},
-                                                new SelectListItem{ Text="Ca 2"},
-                                                new SelectListItem{ Text="Ca 3"}
-                                                }, new { @class = "form-control" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.nkslk.GioBatDau, htmlAttributes: new { @class = "control-label col-md-3" })
-                                        <div class="col-md-10 input-group date" id="reservationdatetime2" data-target-input="nearest">
-
-                                            @Html.EditorFor(model => model.nkslk.GioBatDau, new { htmlAttributes = new { @class = "form-control" } })
-                                            <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.nkslk.GioBatDau, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.nkslk.GioKetThuc, htmlAttributes: new { @class = "control-label col-md-3" })
-                                        <div class="col-md-10 input-group date" id="reservationdatetime3" data-target-input="nearest">
-
-                                            @Html.EditorFor(model => model.nkslk.GioKetThuc, new { htmlAttributes = new { @class = "form-control" } })
-                                            <div class="input-group-append" data-target="#reservationdatetime3" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.nkslk.GioKetThuc, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    @{Html.RenderAction("ListBoxEmployee", "Task", new { MaNKSLK = Model.nkslk.MaNKSLK });}
-                                    @{Html.RenderAction("ListBoxJob", "Task", new { MaNKSLK = Model.nkslk.MaNKSLK });}
-
-                                    <div class="form-group">
-                                        <div class="col-md-10">
-                                            <input type="submit" value="Save" class="btn btn-primary" />
-                                            <a href="~/Admin/Task" class="btn btn-warning">Huỷ</a>
-                                        </div>
+                                        @Html.ValidationMessageFor(model => model.nkslk.NgayThucHienKhoan, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+
+                                @*<div class="form-group">
+                                    <label class="control-label">Ca</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("ca", new List<SelectListItem>
+                                            {
+                                            new SelectListItem{ Text="Ca 1 (6h-14h)", Value="1"},
+                                            new SelectListItem{ Text="Ca 2 (14h-22h)", Value="2"},
+                                            new SelectListItem{ Text="Ca 3 (14h-22h)", Value="3"}
+                                            }, new { @class = "form-control" })
+                                    </div>
+                                </div>*@
+
+                                @{Html.RenderAction("ListBoxShift", "Task", new { giobatdau = Model.nkslk.GioBatDau, gioketthuc = Model.nkslk.GioKetThuc });}
+
+                                @*<div class="form-group">
+            @Html.LabelFor(model => model.nkslk.GioBatDau, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-10 input-group date" id="reservationdatetime2" data-target-input="nearest">
+
+                @Html.EditorFor(model => model.nkslk.GioBatDau, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                </div>
+                @Html.ValidationMessageFor(model => model.nkslk.GioBatDau, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nkslk.GioKetThuc, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-10 input-group date" id="reservationdatetime3" data-target-input="nearest">
+
+                @Html.EditorFor(model => model.nkslk.GioKetThuc, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="input-group-append" data-target="#reservationdatetime3" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                </div>
+                @Html.ValidationMessageFor(model => model.nkslk.GioKetThuc, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+                                @{Html.RenderAction("ListBoxEmployee", "Task", new { MaNKSLK = Model.nkslk.MaNKSLK });}
+                                @{Html.RenderAction("ListBoxJob", "Task", new { MaNKSLK = Model.nkslk.MaNKSLK });}
+
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                        <a href="~/Admin/Task" class="btn btn-warning">Huỷ</a>
+                                    </div>
+                                </div>
+                            </div>
                             }
                         </div>
                     </div>

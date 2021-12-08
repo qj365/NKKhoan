@@ -27,9 +27,9 @@ namespace NKKhoan.Areas.Admin.Controllers
         // GET: Admin/Task
         public ActionResult Index()
         {
-            List<TaskViewModel> taskViewModels = new List<TaskViewModel>();
+            _ = new List<TaskViewModel>();
 
-            taskViewModels = TaskDAO.getListTask();
+            List<TaskViewModel> taskViewModels = TaskDAO.getListTask();
             return View(taskViewModels);
         }
 
@@ -62,8 +62,28 @@ namespace NKKhoan.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(TaskViewModel task, int[] selectedemployee = null, int[] selectedjob = null)
+        public ActionResult Save(TaskViewModel task, int selectedshift, int[] selectedemployee = null, int[] selectedjob = null)
         {
+            if (task.nkslk.GioBatDau == new TimeSpan(0, 0, 0) || task.nkslk.GioKetThuc == new TimeSpan(0, 0, 0))
+            {
+                switch (selectedshift)
+                {
+                    case 1:
+                        task.nkslk.GioBatDau = new TimeSpan(6, 0, 0);
+                        task.nkslk.GioKetThuc = new TimeSpan(14, 0, 0);
+                        break;
+                    case 2:
+                        task.nkslk.GioBatDau = new TimeSpan(14, 0, 0);
+                        task.nkslk.GioKetThuc = new TimeSpan(22, 0, 0);
+                        break;
+                    case 3:
+                        task.nkslk.GioBatDau = new TimeSpan(22, 0, 0);
+                        task.nkslk.GioKetThuc = new TimeSpan(6, 0, 0);
+                        break;
+                    default:
+                        break;
+                }
+            }
             if (task.nkslk.MaNKSLK == 0)
             {
                 _context.NKSLK.Add(task.nkslk);
@@ -73,7 +93,7 @@ namespace NKKhoan.Areas.Admin.Controllers
                 {
                     foreach (var item in selectedemployee)
                     {
-                        TaskDAO.AssignEmployeeToTask(item, id.MaNKSLK);
+                        TaskDAO.AssignEmployeeToTask(id.MaNKSLK, item);
                     }
                     _context.SaveChanges();
                 }
@@ -81,7 +101,7 @@ namespace NKKhoan.Areas.Admin.Controllers
                 {
                     foreach (var item in selectedjob)
                     {
-                        TaskDAO.AssignJobToTask(item, id.MaNKSLK);
+                        TaskDAO.AssignJobToTask(id.MaNKSLK, item);
                     }
                     _context.SaveChanges();
                 }
@@ -94,23 +114,77 @@ namespace NKKhoan.Areas.Admin.Controllers
                 NKSLKInDb.GioBatDau = task.nkslk.GioBatDau;
                 NKSLKInDb.GioKetThuc = task.nkslk.GioKetThuc;
                 _context.SaveChanges();
-                foreach (var item in selectedemployee)
+                if (selectedemployee == null)
                 {
-                    if (!_context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaNhanCong == item))
+                    TaskDAO.FreeEmployeeFromTask(task.nkslk.MaNKSLK);
+                }
+                else
+                {
+                    foreach (var item in selectedemployee)
                     {
-                        TaskDAO.AssignEmployeeToTask(item, task.nkslk.MaNKSLK);
+                        if (!_context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaNhanCong == item))
+                        {
+                            TaskDAO.AssignEmployeeToTask(task.nkslk.MaNKSLK, item);
+                        }
+                    }
+                    foreach (var item in _context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK))
+                    {
+                        if (!selectedemployee.Any(x => x == item.MaNhanCong))
+                        {
+                            TaskDAO.FreeEmployeeFromTask(task.nkslk.MaNKSLK, item.MaNhanCong);
+                        }
                     }
                 }
-                foreach (var item in _context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK))
+                if (selectedjob == null)
                 {
-                    if (!selectedemployee.Any(x => x == item.MaNhanCong))
+                    TaskDAO.FreeJobFromTask(task.nkslk.MaNKSLK);
+                }
+                else
+                {
+                    foreach (var item in selectedjob)
                     {
-                        TaskDAO.FreeEmployeeFromTask(item.MaNhanCong, task.nkslk.MaNKSLK);
+                        if (!_context.ChiTietCongViec.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaCongViec == item))
+                        {
+                            TaskDAO.AssignJobToTask(task.nkslk.MaNKSLK, item);
+                        }
+                    }
+                    foreach (var item in _context.ChiTietCongViec.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK))
+                    {
+                        if (!selectedjob.Any(x => x == item.MaCongViec))
+                        {
+                            TaskDAO.FreeJobFromTask(task.nkslk.MaNKSLK, item.MaCongViec);
+                        }
                     }
                 }
-
             }
             return RedirectToAction("Index", "Task");
+        }
+
+        [ChildActionOnly]
+        public ActionResult ListBoxShift(TimeSpan? giobatdau = null, TimeSpan? gioketthuc = null)
+        {
+            var shift = new ShiftListBoxViewModel();
+            var shiftlistitem = new List<SelectListItem>();
+            shiftlistitem.Add(new SelectListItem() { Text = "Ca 1 (6h-14h)", Value = "1" });
+            shiftlistitem.Add(new SelectListItem() { Text = "Ca 2 (14h-22h)", Value = "2" });
+            shiftlistitem.Add(new SelectListItem() { Text = "Ca 3 (22h-6h)", Value = "3" });
+            shift.shifts = shiftlistitem;
+            if (giobatdau != null && gioketthuc != null)
+            {
+                if (giobatdau == new TimeSpan(6, 0, 0) && gioketthuc == new TimeSpan(14, 0, 0))
+                {
+                    shift.selectedshift = 1;
+                }
+                else if (giobatdau == new TimeSpan(14, 0, 0) && gioketthuc == new TimeSpan(22, 0, 0))
+                {
+                    shift.selectedshift = 2;
+                }
+                else if (giobatdau == new TimeSpan(22, 0, 0) && gioketthuc == new TimeSpan(6, 0, 0))
+                {
+                    shift.selectedshift = 3;
+                }
+            }
+            return PartialView(shift);
         }
 
         [ChildActionOnly]

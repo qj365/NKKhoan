@@ -7,13 +7,13 @@ namespace NKKhoan.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class themphongban : IMigrationMetadata
+    public sealed partial class requiredtime : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(themphongban));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(requiredtime));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111121559069_themphongban"; }
+            get { return "202112071550040_requiredtime"; }
         }
         
         string IMigrationMetadata.Source

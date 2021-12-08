@@ -2,7 +2,7 @@
 
 <div class="form-group">
     @Html.LabelFor(model => model.employeeName, htmlAttributes: new { @class = "control-label col-md-3" })
-    <div class="col-md-10 input-group date" id="reservationdatetime3" data-target-input="nearest">
+    <div class="col-md-10">
 
         @Html.ListBoxFor(model => model.selectedemployee, Model.employees, new { @class = "form-control selectpicker", data_live_search = "true" })
     </div>

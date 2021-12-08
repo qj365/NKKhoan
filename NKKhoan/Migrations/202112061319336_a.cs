@@ -3,42 +3,54 @@ namespace NKKhoan.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class a : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.CongNhan",
-                c => new
-                    {
-                        MaNhanCong = c.Int(nullable: false, identity: true),
-                        HoTen = c.String(nullable: false, maxLength: 50),
-                        NgayNamSinh = c.DateTime(nullable: false, storeType: "date"),
-                        PhongBan = c.String(nullable: false, maxLength: 50),
-                        ChucVu = c.String(nullable: false, maxLength: 50),
-                        QueQuan = c.String(nullable: false, maxLength: 50),
-                        GioiTinh = c.String(maxLength: 50),
-                        MatKhau = c.String(maxLength: 100),
-                        LuongHopDong = c.Int(nullable: false),
-                        LuongBaoHiem = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.MaNhanCong);
-            
-            CreateTable(
-                "dbo.ChiTietNhanCongKhoan",
+                "dbo.ChiTietCongViec",
                 c => new
                     {
                         MaNKSLK = c.Int(nullable: false),
-                        MaNhanCong = c.Int(nullable: false),
-                        NgayThucHienKhoan = c.DateTime(storeType: "date"),
-                        GioBatDau = c.Time(precision: 7),
-                        GioKetThuc = c.Time(precision: 7),
+                        MaCongViec = c.Int(nullable: false),
+                        SanLuongThucTe = c.Int(),
+                        SoLoSanPham = c.String(maxLength: 50),
                     })
-                .PrimaryKey(t => new { t.MaNKSLK, t.MaNhanCong })
-                .ForeignKey("dbo.NKSLK", t => t.MaNKSLK)
-                .ForeignKey("dbo.CongNhan", t => t.MaNhanCong)
+                .PrimaryKey(t => new { t.MaNKSLK, t.MaCongViec })
+                .ForeignKey("dbo.CongViec", t => t.MaCongViec)
+                .ForeignKey("dbo.NKSLK", t => t.MaNKSLK, cascadeDelete: true)
                 .Index(t => t.MaNKSLK)
-                .Index(t => t.MaNhanCong);
+                .Index(t => t.MaCongViec);
+            
+            CreateTable(
+                "dbo.CongViec",
+                c => new
+                    {
+                        MaCongViec = c.Int(nullable: false, identity: true),
+                        TenCongViec = c.String(maxLength: 50),
+                        DinhMucKhoan = c.Decimal(precision: 18, scale: 2),
+                        DonViKhoan = c.String(maxLength: 50),
+                        HeSoKhoan = c.Int(),
+                        DinhMucLaoDong = c.Int(),
+                        DonGia = c.Int(),
+                        SanPham_MaSanPham = c.Int(),
+                    })
+                .PrimaryKey(t => t.MaCongViec)
+                .ForeignKey("dbo.SanPham", t => t.SanPham_MaSanPham)
+                .Index(t => t.SanPham_MaSanPham);
+            
+            CreateTable(
+                "dbo.SanPham",
+                c => new
+                    {
+                        MaSanPham = c.Int(nullable: false, identity: true),
+                        TenSanPham = c.String(nullable: false, maxLength: 50),
+                        SoDangKy = c.String(nullable: false, maxLength: 50),
+                        HanSuDung = c.Int(nullable: false),
+                        QuyCach = c.String(nullable: false, maxLength: 50),
+                        NgayDangKy = c.DateTime(nullable: false, storeType: "date"),
+                    })
+                .PrimaryKey(t => t.MaSanPham);
             
             CreateTable(
                 "dbo.NKSLK",
@@ -52,49 +64,59 @@ namespace NKKhoan.Migrations
                 .PrimaryKey(t => t.MaNKSLK);
             
             CreateTable(
-                "dbo.ChiTietCongViec",
+                "dbo.ChiTietNhanCongKhoan",
                 c => new
                     {
                         MaNKSLK = c.Int(nullable: false),
-                        MaCongViec = c.Int(nullable: false),
-                        SanPhamApDung = c.Int(nullable: false),
-                        SanLuongThucTe = c.Int(),
-                        SoLoSanPham = c.String(maxLength: 50),
+                        MaNhanCong = c.Int(nullable: false),
+                        NgayThucHienKhoan = c.DateTime(storeType: "date"),
+                        GioBatDau = c.Time(precision: 7),
+                        GioKetThuc = c.Time(precision: 7),
                     })
-                .PrimaryKey(t => new { t.MaNKSLK, t.MaCongViec, t.SanPhamApDung })
-                .ForeignKey("dbo.CongViec", t => t.MaCongViec)
-                .ForeignKey("dbo.SanPham", t => t.SanPhamApDung)
-                .ForeignKey("dbo.NKSLK", t => t.MaNKSLK)
+                .PrimaryKey(t => new { t.MaNKSLK, t.MaNhanCong })
+                .ForeignKey("dbo.CongNhan", t => t.MaNhanCong)
+                .ForeignKey("dbo.NKSLK", t => t.MaNKSLK, cascadeDelete: true)
                 .Index(t => t.MaNKSLK)
-                .Index(t => t.MaCongViec)
-                .Index(t => t.SanPhamApDung);
+                .Index(t => t.MaNhanCong);
             
             CreateTable(
-                "dbo.CongViec",
+                "dbo.CongNhan",
                 c => new
                     {
-                        MaCongViec = c.Int(nullable: false, identity: true),
-                        TenCongViec = c.String(maxLength: 50),
-                        DinhMucKhoan = c.Decimal(precision: 18, scale: 2),
-                        DonViKhoan = c.String(maxLength: 50),
-                        HeSoKhoan = c.Int(),
-                        DinhMucLaoDong = c.Int(),
-                        DonGia = c.Int(),
+                        MaNhanCong = c.Int(nullable: false, identity: true),
+                        HoTen = c.String(nullable: false, maxLength: 50),
+                        NgayNamSinh = c.DateTime(nullable: false, storeType: "date"),
+                        QueQuan = c.String(nullable: false, maxLength: 50),
+                        GioiTinh = c.String(maxLength: 50),
+                        MatKhau = c.String(maxLength: 100),
+                        LuongHopDong = c.Int(nullable: false),
+                        LuongBaoHiem = c.Int(nullable: false),
+                        MaPhongBan = c.Int(nullable: false),
+                        MaChucVu = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.MaCongViec);
+                .PrimaryKey(t => t.MaNhanCong)
+                .ForeignKey("dbo.ChucVus", t => t.MaChucVu, cascadeDelete: true)
+                .ForeignKey("dbo.PhongBans", t => t.MaPhongBan, cascadeDelete: true)
+                .Index(t => t.MaPhongBan)
+                .Index(t => t.MaChucVu);
             
             CreateTable(
-                "dbo.SanPham",
+                "dbo.ChucVus",
                 c => new
                     {
-                        MaSanPham = c.Int(nullable: false, identity: true),
-                        TenSanPham = c.String(maxLength: 50),
-                        SoDangKy = c.String(maxLength: 50),
-                        HanSuDung = c.Int(),
-                        QuyCach = c.String(maxLength: 50),
-                        NgayDangKy = c.DateTime(storeType: "date"),
+                        MaChucVu = c.Int(nullable: false, identity: true),
+                        TenChucVu = c.String(nullable: false, maxLength: 50),
                     })
-                .PrimaryKey(t => t.MaSanPham);
+                .PrimaryKey(t => t.MaChucVu);
+            
+            CreateTable(
+                "dbo.PhongBans",
+                c => new
+                    {
+                        MaPhongBan = c.Int(nullable: false, identity: true),
+                        TenPhongBan = c.String(nullable: false, maxLength: 50),
+                    })
+                .PrimaryKey(t => t.MaPhongBan);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -172,10 +194,12 @@ namespace NKKhoan.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.ChiTietNhanCongKhoan", "MaNhanCong", "dbo.CongNhan");
             DropForeignKey("dbo.ChiTietNhanCongKhoan", "MaNKSLK", "dbo.NKSLK");
+            DropForeignKey("dbo.CongNhan", "MaPhongBan", "dbo.PhongBans");
+            DropForeignKey("dbo.CongNhan", "MaChucVu", "dbo.ChucVus");
+            DropForeignKey("dbo.ChiTietNhanCongKhoan", "MaNhanCong", "dbo.CongNhan");
             DropForeignKey("dbo.ChiTietCongViec", "MaNKSLK", "dbo.NKSLK");
-            DropForeignKey("dbo.ChiTietCongViec", "SanPhamApDung", "dbo.SanPham");
+            DropForeignKey("dbo.CongViec", "SanPham_MaSanPham", "dbo.SanPham");
             DropForeignKey("dbo.ChiTietCongViec", "MaCongViec", "dbo.CongViec");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
@@ -183,22 +207,26 @@ namespace NKKhoan.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.ChiTietCongViec", new[] { "SanPhamApDung" });
-            DropIndex("dbo.ChiTietCongViec", new[] { "MaCongViec" });
-            DropIndex("dbo.ChiTietCongViec", new[] { "MaNKSLK" });
+            DropIndex("dbo.CongNhan", new[] { "MaChucVu" });
+            DropIndex("dbo.CongNhan", new[] { "MaPhongBan" });
             DropIndex("dbo.ChiTietNhanCongKhoan", new[] { "MaNhanCong" });
             DropIndex("dbo.ChiTietNhanCongKhoan", new[] { "MaNKSLK" });
+            DropIndex("dbo.CongViec", new[] { "SanPham_MaSanPham" });
+            DropIndex("dbo.ChiTietCongViec", new[] { "MaCongViec" });
+            DropIndex("dbo.ChiTietCongViec", new[] { "MaNKSLK" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.PhongBans");
+            DropTable("dbo.ChucVus");
+            DropTable("dbo.CongNhan");
+            DropTable("dbo.ChiTietNhanCongKhoan");
+            DropTable("dbo.NKSLK");
             DropTable("dbo.SanPham");
             DropTable("dbo.CongViec");
             DropTable("dbo.ChiTietCongViec");
-            DropTable("dbo.NKSLK");
-            DropTable("dbo.ChiTietNhanCongKhoan");
-            DropTable("dbo.CongNhan");
         }
     }
 }
