@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace NKKhoan.Areas.Admin.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
 

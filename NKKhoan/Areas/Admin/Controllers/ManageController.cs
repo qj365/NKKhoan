@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using NKKhoan.Models;
 
-namespace NKKhoan.Controllers
+namespace NKKhoan.Areas.Admin.Controllers
 {
     [Authorize]
     public class ManageController : Controller
@@ -55,11 +55,11 @@ namespace NKKhoan.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Đổi mật khẩu thành công"
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
+                : message == ManageMessageId.AddPhoneSuccess ? "Đổi số điện thoại thành công"
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
@@ -103,6 +103,7 @@ namespace NKKhoan.Controllers
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
+            ViewBag.Sdt = UserManager.GetPhoneNumber(User.Identity.GetUserId());
             return View();
         }
 

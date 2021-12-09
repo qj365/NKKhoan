@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using NKKhoan.Models;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace NKKhoan
 {
@@ -27,7 +30,14 @@ namespace NKKhoan
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your SMS service here to send a text message.
+            // Initialize the Twilio client
+            TwilioClient.Init("AC2fe7078700aa8439f994a2cb08fa5f8e", "78eb0480091d0871753f8c215dbad572");
+
+            // Send a new outgoing SMS by POSTing to the Messages resource
+            var result = MessageResource.Create(
+                from: new PhoneNumber("+13192545348"), // From number, must be an SMS-enabled Twilio number
+                to: new PhoneNumber(message.Destination), // To number, if using Sandbox see note above
+                body: message.Body);
             return Task.FromResult(0);
         }
     }
@@ -47,17 +57,17 @@ namespace NKKhoan
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
+                RequireUniqueEmail = false
             };
 
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequiredLength = 5,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             // Configure user lockout defaults

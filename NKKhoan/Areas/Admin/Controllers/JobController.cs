@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace NKKhoan.Areas.Admin.Controllers
 {
+    [Authorize]
     public class JobController : Controller
     {
         private ApplicationDbContext _context;

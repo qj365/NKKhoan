@@ -9,8 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using NKKhoan.Models;
+using static NKKhoan.Areas.Admin.Controllers.ManageController;
 
-namespace NKKhoan.Controllers
+namespace NKKhoan.Areas.Admin.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -56,7 +57,7 @@ namespace NKKhoan.Controllers
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
-        {
+        {            
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -72,10 +73,35 @@ namespace NKKhoan.Controllers
             {
                 return View(model);
             }
+            var user = await UserManager.FindByNameAsync(model.UserName);
+            if (user != null)
+            {
+                if (!await UserManager.IsPhoneNumberConfirmedAsync(user.Id))
+                {
+                    string code = await UserManager.GenerateChangePhoneNumberTokenAsync(user.Id, user.PhoneNumber);
+                    if (UserManager.SmsService != null)
+                    {
+                        var message = new IdentityMessage
+                        {
+                            Destination = user.PhoneNumber,
+                            Body = "Mã code client server của bạn là: " + code
+                        };
+                        // Send token
+                        try
+                        {
+                            await UserManager.SmsService.SendAsync(message);
+
+                        }
+                        catch { }
+                    }
+                    return RedirectToAction("VerifyPhoneNumberRegister", "Account", new { PhoneNumber = user.PhoneNumber, UserId = user.Id });
+                }
+                    
+            }
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,24 +177,71 @@ namespace NKKhoan.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, PhoneNumber = model.PhoneNumber };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    string code = await UserManager.GenerateChangePhoneNumberTokenAsync(user.Id, user.PhoneNumber);
+                    if (UserManager.SmsService != null)
+                    {
+                        var message = new IdentityMessage
+                        {
+                            Destination = model.PhoneNumber,
+                            Body = "Mã code client server của bạn là: " + code
+                        };
+                        // Send token
+                        try
+                        {
+                            await UserManager.SmsService.SendAsync(message);
+
+                        }
+                        catch { }
+                    }
+
+                    return RedirectToAction("VerifyPhoneNumberRegister", "Account", new { PhoneNumber = user.PhoneNumber, UserId = user.Id });
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> VerifyPhoneNumberRegister(string phoneNumber, string userId)
+        {
+            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(userId, phoneNumber);
+            // Send an SMS through the SMS provider to verify the phone number
+            if (phoneNumber == null)
+                return View("Error");
+            else
+                return View("VerifyPhoneNumberRegister", new VerifyPhoneNumberRegisterViewModel {UserId = userId, PhoneNumber = phoneNumber });          
+        }
+
+        //
+        // POST: /Manage/VerifyPhoneNumber
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task<ActionResult> VerifyPhoneNumberRegister(VerifyPhoneNumberRegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await UserManager.ChangePhoneNumberAsync(model.UserId, model.PhoneNumber, model.Code);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(model.UserId);
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return View("RegisterSuccess");
+            }
+            // If we got this far, something failed, redisplay form
+            ModelState.AddModelError("", "Failed to verify phone");
             return View(model);
         }
 
@@ -392,7 +465,7 @@ namespace NKKhoan.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -449,7 +522,7 @@ namespace NKKhoan.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

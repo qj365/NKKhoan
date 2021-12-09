@@ -11,6 +11,7 @@ using System.Globalization;
 
 namespace NKKhoan.Areas.Admin.Controllers
 {
+    [Authorize]
     public class EmployeeStatisticController : Controller
     {
 
