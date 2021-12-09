@@ -83,10 +83,10 @@
                                 @Html.DisplayFor(modelItem => item.ChucVu.TenChucVu)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.Where(x => x.CongNhan.MaNhanCong == item.MaNhanCong).SingleOrDefault().GioBatDau)
+                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.SingleOrDefault(x => x.CongNhan.MaNhanCong == item.MaNhanCong).GioBatDau)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.Where(x => x.CongNhan.MaNhanCong == item.MaNhanCong).SingleOrDefault().GioKetThuc)
+                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.SingleOrDefault(x => x.CongNhan.MaNhanCong == item.MaNhanCong).GioKetThuc)
                             </td>
                             <td>
 
@@ -181,7 +181,7 @@
                                 @Html.DisplayFor(modelItem => item.SanPham.TenSanPham)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietCongViec.Where(x => x.CongViec.MaCongViec == item.MaCongViec).SingleOrDefault().SanLuongThucTe)
+                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietCongViec.SingleOrDefault(x => x.CongViec.MaCongViec == item.MaCongViec).SanLuongThucTe)
                             </td>
                             <td>
 

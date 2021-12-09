@@ -42,43 +42,6 @@
                                 </div>
 
                                 @{Html.RenderAction("ListBoxShift", "Task");}
-
-                                @*<div class="form-group">
-            <label class="control-label">Ca</label>
-            <div class="col-md-10">
-                @Html.DropDownList("ca", new List<SelectListItem>
-                    {
-                    new SelectListItem{ Text="Ca 1 (6h-14h)", Value="1"},
-                    new SelectListItem{ Text="Ca 2 (14h-22h)", Value="2"},
-                    new SelectListItem{ Text="Ca 3 (14h-22h)", Value="3"}
-                    }, new { @class = "form-control" })
-            </div>
-        </div>*@
-
-                                @*<div class="form-group">
-            @Html.LabelFor(model => model.nkslk.GioBatDau, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-10 input-group date" id="reservationdatetime2" data-target-input="nearest">
-
-                @Html.EditorFor(model => model.nkslk.GioBatDau, new { htmlAttributes = new { @class = "form-control" } })
-                <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                </div>
-                @Html.ValidationMessageFor(model => model.nkslk.GioBatDau, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.nkslk.GioKetThuc, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-10 input-group date" id="reservationdatetime3" data-target-input="nearest">
-
-                @Html.EditorFor(model => model.nkslk.GioKetThuc, new { htmlAttributes = new { @class = "form-control" } })
-                <div class="input-group-append" data-target="#reservationdatetime3" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-clock"></i></div>
-                </div>
-                @Html.ValidationMessageFor(model => model.nkslk.GioKetThuc, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
                                 @{Html.RenderAction("ListBoxEmployee", "Task");}
                                 @{Html.RenderAction("ListBoxJob", "Task");}
 

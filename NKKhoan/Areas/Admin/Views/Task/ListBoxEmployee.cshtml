@@ -1,7 +1,10 @@
 ﻿@model NKKhoan.Areas.Admin.ViewModels.EmployeeListBoxViewModel
 
 <div class="form-group">
-    @Html.LabelFor(model => model.employeeName, htmlAttributes: new { @class = "control-label col-md-3" })
+    @Html.LabelFor(model => model.employeeName, htmlAttributes: new { @class = "control-label" })
+    <a class="btn btn-primary" href="~/Admin/Employee/Create">
+        <i class="fas fa-plus"></i>
+    </a>
     <div class="col-md-10">
 
         @Html.ListBoxFor(model => model.selectedemployee, Model.employees, new { @class = "form-control selectpicker", data_live_search = "true" })
