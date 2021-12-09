@@ -3,7 +3,7 @@ namespace NKKhoan.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class a : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -14,7 +14,6 @@ namespace NKKhoan.Migrations
                         MaNKSLK = c.Int(nullable: false),
                         MaCongViec = c.Int(nullable: false),
                         SanLuongThucTe = c.Int(),
-                        SoLoSanPham = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => new { t.MaNKSLK, t.MaCongViec })
                 .ForeignKey("dbo.CongViec", t => t.MaCongViec)
@@ -33,11 +32,11 @@ namespace NKKhoan.Migrations
                         HeSoKhoan = c.Int(),
                         DinhMucLaoDong = c.Int(),
                         DonGia = c.Int(),
-                        SanPham_MaSanPham = c.Int(),
+                        MaSanPham = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.MaCongViec)
-                .ForeignKey("dbo.SanPham", t => t.SanPham_MaSanPham)
-                .Index(t => t.SanPham_MaSanPham);
+                .ForeignKey("dbo.SanPham", t => t.MaSanPham, cascadeDelete: true)
+                .Index(t => t.MaSanPham);
             
             CreateTable(
                 "dbo.SanPham",
@@ -49,6 +48,7 @@ namespace NKKhoan.Migrations
                         HanSuDung = c.Int(nullable: false),
                         QuyCach = c.String(nullable: false, maxLength: 50),
                         NgayDangKy = c.DateTime(nullable: false, storeType: "date"),
+                        Anh = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.MaSanPham);
             
@@ -58,8 +58,8 @@ namespace NKKhoan.Migrations
                     {
                         MaNKSLK = c.Int(nullable: false, identity: true),
                         NgayThucHienKhoan = c.DateTime(nullable: false, storeType: "date"),
-                        GioBatDau = c.Time(precision: 7),
-                        GioKetThuc = c.Time(precision: 7),
+                        GioBatDau = c.Time(nullable: false, precision: 7),
+                        GioKetThuc = c.Time(nullable: false, precision: 7),
                     })
                 .PrimaryKey(t => t.MaNKSLK);
             
@@ -199,7 +199,7 @@ namespace NKKhoan.Migrations
             DropForeignKey("dbo.CongNhan", "MaChucVu", "dbo.ChucVus");
             DropForeignKey("dbo.ChiTietNhanCongKhoan", "MaNhanCong", "dbo.CongNhan");
             DropForeignKey("dbo.ChiTietCongViec", "MaNKSLK", "dbo.NKSLK");
-            DropForeignKey("dbo.CongViec", "SanPham_MaSanPham", "dbo.SanPham");
+            DropForeignKey("dbo.CongViec", "MaSanPham", "dbo.SanPham");
             DropForeignKey("dbo.ChiTietCongViec", "MaCongViec", "dbo.CongViec");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
@@ -211,7 +211,7 @@ namespace NKKhoan.Migrations
             DropIndex("dbo.CongNhan", new[] { "MaPhongBan" });
             DropIndex("dbo.ChiTietNhanCongKhoan", new[] { "MaNhanCong" });
             DropIndex("dbo.ChiTietNhanCongKhoan", new[] { "MaNKSLK" });
-            DropIndex("dbo.CongViec", new[] { "SanPham_MaSanPham" });
+            DropIndex("dbo.CongViec", new[] { "MaSanPham" });
             DropIndex("dbo.ChiTietCongViec", new[] { "MaCongViec" });
             DropIndex("dbo.ChiTietCongViec", new[] { "MaNKSLK" });
             DropTable("dbo.AspNetUserLogins");

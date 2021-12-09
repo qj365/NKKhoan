@@ -223,7 +223,6 @@
     <Compile Include="Areas\Admin\Controllers\PositionController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
-    <Compile Include="Areas\Admin\DAO\TaskDAO.cs" />
     <Compile Include="Areas\Admin\ViewModels\EmployeeListBoxViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\JobListBoxViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ShiftListBoxViewModel.cs" />
@@ -241,25 +240,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112061319336_a.cs" />
-    <Compile Include="Migrations\202112061319336_a.Designer.cs">
-      <DependentUpon>202112061319336_a.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112071550040_requiredtime.cs" />
-    <Compile Include="Migrations\202112071550040_requiredtime.Designer.cs">
-      <DependentUpon>202112071550040_requiredtime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112060800357_themspvaocv.cs" />
-    <Compile Include="Migrations\202112060800357_themspvaocv.Designer.cs">
-      <DependentUpon>202112060800357_themspvaocv.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112060805527_themanh.cs" />
-    <Compile Include="Migrations\202112060805527_themanh.Designer.cs">
-      <DependentUpon>202112060805527_themanh.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112060813193_bosolosanpham.cs" />
-    <Compile Include="Migrations\202112060813193_bosolosanpham.Designer.cs">
-      <DependentUpon>202112060813193_bosolosanpham.cs</DependentUpon>
+    <Compile Include="Migrations\202112090345283_init.cs" />
+    <Compile Include="Migrations\202112090345283_init.Designer.cs">
+      <DependentUpon>202112090345283_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -316,7 +299,6 @@
     <Content Include="Areas\Admin\Views\Position\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Info.cshtml" />
-
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -385,20 +367,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112061319336_a.resx">
-      <DependentUpon>202112061319336_a.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112071550040_requiredtime.resx">
-      <DependentUpon>202112071550040_requiredtime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112060800357_themspvaocv.resx">
-      <DependentUpon>202112060800357_themspvaocv.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112060805527_themanh.resx">
-      <DependentUpon>202112060805527_themanh.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112060813193_bosolosanpham.resx">
-      <DependentUpon>202112060813193_bosolosanpham.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112090345283_init.resx">
+      <DependentUpon>202112090345283_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

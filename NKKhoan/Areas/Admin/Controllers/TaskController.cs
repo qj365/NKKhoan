@@ -1,6 +1,5 @@
 ﻿using NKKhoan.Areas.Admin.ViewModels;
 using NKKhoan.Models;
-using NKKhoan.Areas.Admin.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +26,29 @@ namespace NKKhoan.Areas.Admin.Controllers
         // GET: Admin/Task
         public ActionResult Index()
         {
-            _ = new List<TaskViewModel>();
+            var taskViewModels = new List<TaskViewModel>();
 
-            List<TaskViewModel> taskViewModels = TaskDAO.getListTask();
+            foreach (var item in _context.NKSLK.ToList())
+            {
+                var task = new TaskViewModel();
+                task.nkslk = item;
+
+                var employees = new List<CongNhan>();
+                foreach (var item1 in item.ChiTietNhanCongKhoan)
+                {
+                    employees.Add(_context.CongNhan.SingleOrDefault(x => x.MaNhanCong == item1.MaNhanCong));
+                }
+                task.congnhan = employees;
+
+                var jobs = new List<CongViec>();
+                foreach (var item2 in item.ChiTietCongViec)
+                {
+                    jobs.Add(_context.CongViec.SingleOrDefault(x => x.MaCongViec == item2.MaCongViec));
+                }
+                task.congviec = jobs;
+
+                taskViewModels.Add(task);
+            }
             return View(taskViewModels);
         }
 
@@ -44,8 +63,21 @@ namespace NKKhoan.Areas.Admin.Controllers
             if (task == null)
                 return HttpNotFound();
             task.nkslk = _context.NKSLK.SingleOrDefault(c => c.MaNKSLK == id);
-            task.congnhan = TaskDAO.getListEmployeeWorkedOn(id);
-            task.congviec = TaskDAO.getListJobWorkedOn(id);
+
+            var employees = new List<CongNhan>();
+            foreach (var item1 in task.nkslk.ChiTietNhanCongKhoan)
+            {
+                employees.Add(_context.CongNhan.SingleOrDefault(x => x.MaNhanCong == item1.MaNhanCong));
+            }
+            task.congnhan = employees;
+
+            var jobs = new List<CongViec>();
+            foreach (var item2 in task.nkslk.ChiTietCongViec)
+            {
+                jobs.Add(_context.CongViec.SingleOrDefault(x => x.MaCongViec == item2.MaCongViec));
+            }
+            task.congviec = jobs;
+
             return View(task);
         }
 
@@ -99,35 +131,42 @@ namespace NKKhoan.Areas.Admin.Controllers
             {
                 _context.NKSLK.Add(task.nkslk);
                 _context.SaveChanges();
-                var id = _context.NKSLK.OrderByDescending(x => x.MaNKSLK).FirstOrDefault();
+                var idtask = _context.NKSLK.OrderByDescending(x => x.MaNKSLK).FirstOrDefault().MaNKSLK;
                 if (selectedemployee != null)
                 {
                     foreach (var item in selectedemployee)
                     {
-                        TaskDAO.AssignEmployeeToTask(id.MaNKSLK, item);
+                        var employeetask = new ChiTietNhanCongKhoan();
+                        employeetask.MaNKSLK = idtask;
+                        employeetask.MaNhanCong = item;
+                        _context.ChiTietNhanCongKhoan.Add(employeetask);
                     }
-                    _context.SaveChanges();
                 }
                 if (selectedjob != null)
                 {
-                    foreach (var item in selectedjob)
+                    foreach (var item in selectedemployee)
                     {
-                        TaskDAO.AssignJobToTask(id.MaNKSLK, item);
+                        var employeetask = new ChiTietNhanCongKhoan();
+                        employeetask.MaNKSLK = idtask;
+                        employeetask.MaNhanCong = item;
+                        _context.ChiTietNhanCongKhoan.Add(employeetask);
                     }
-                    _context.SaveChanges();
                 }
+                _context.SaveChanges();
             }
             else
             {
-                var NKSLKInDb = _context.NKSLK.Single(c => c.MaNKSLK == task.nkslk.MaNKSLK);
-                NKSLKInDb.MaNKSLK = task.nkslk.MaNKSLK;
-                NKSLKInDb.NgayThucHienKhoan = task.nkslk.NgayThucHienKhoan;
-                NKSLKInDb.GioBatDau = task.nkslk.GioBatDau;
-                NKSLKInDb.GioKetThuc = task.nkslk.GioKetThuc;
+                var TaskInDb = _context.NKSLK.SingleOrDefault(c => c.MaNKSLK == task.nkslk.MaNKSLK);
+                TaskInDb.NgayThucHienKhoan = task.nkslk.NgayThucHienKhoan;
+                TaskInDb.GioBatDau = task.nkslk.GioBatDau;
+                TaskInDb.GioKetThuc = task.nkslk.GioKetThuc;
                 _context.SaveChanges();
                 if (selectedemployee == null)
                 {
-                    TaskDAO.FreeEmployeeFromTask(task.nkslk.MaNKSLK);
+                    foreach (var item in _context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).ToList())
+                    {
+                        _context.ChiTietNhanCongKhoan.Remove(item);
+                    }
                 }
                 else
                 {
@@ -135,38 +174,48 @@ namespace NKKhoan.Areas.Admin.Controllers
                     {
                         if (!_context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaNhanCong == item))
                         {
-                            TaskDAO.AssignEmployeeToTask(task.nkslk.MaNKSLK, item);
+                            var employeetask = new ChiTietNhanCongKhoan();
+                            employeetask.MaNKSLK = task.nkslk.MaNKSLK;
+                            employeetask.MaNhanCong = item;
+                            _context.ChiTietNhanCongKhoan.Add(employeetask);
                         }
                     }
                     foreach (var item in _context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK))
                     {
                         if (!selectedemployee.Any(x => x == item.MaNhanCong))
                         {
-                            TaskDAO.FreeEmployeeFromTask(task.nkslk.MaNKSLK, item.MaNhanCong);
+                            _context.ChiTietNhanCongKhoan.Remove(item);
                         }
                     }
                 }
                 if (selectedjob == null)
                 {
-                    TaskDAO.FreeJobFromTask(task.nkslk.MaNKSLK);
+                    foreach (var item in _context.ChiTietCongViec.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).ToList())
+                    {
+                        _context.ChiTietCongViec.Remove(item);
+                    }
                 }
                 else
                 {
                     foreach (var item in selectedjob)
                     {
-                        if (!_context.ChiTietCongViec.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaCongViec == item))
+                        if (!_context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaNhanCong == item))
                         {
-                            TaskDAO.AssignJobToTask(task.nkslk.MaNKSLK, item);
+                            var jobtask = new ChiTietCongViec();
+                            jobtask.MaNKSLK = task.nkslk.MaNKSLK;
+                            jobtask.MaCongViec = item;
+                            _context.ChiTietCongViec.Add(jobtask);
                         }
                     }
                     foreach (var item in _context.ChiTietCongViec.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK))
                     {
                         if (!selectedjob.Any(x => x == item.MaCongViec))
                         {
-                            TaskDAO.FreeJobFromTask(task.nkslk.MaNKSLK, item.MaCongViec);
+                            _context.ChiTietCongViec.Remove(item);
                         }
                     }
                 }
+                _context.SaveChanges();
             }
             return RedirectToAction("Index", "Task");
         }
@@ -205,7 +254,7 @@ namespace NKKhoan.Areas.Admin.Controllers
             employee.employees = _context.CongNhan.Select(a => new SelectListItem() { Value = a.MaNhanCong.ToString(), Text = a.HoTen }).ToList();
             if (MaNKSLK != null)
             {
-                employee.selectedemployee = TaskDAO.getListEmployeeWorkedOn(MaNKSLK).Select(x => x.MaNhanCong).ToArray();
+                employee.selectedemployee = _context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == MaNKSLK).Select(x => x.MaNhanCong).ToArray();
             }
             return PartialView(employee);
         }
@@ -217,7 +266,7 @@ namespace NKKhoan.Areas.Admin.Controllers
             job.jobs = _context.CongViec.Select(a => new SelectListItem() { Value = a.MaCongViec.ToString(), Text = a.TenCongViec }).ToList();
             if (MaNKSLK != null)
             {
-                job.selectedjob = TaskDAO.getListJobWorkedOn(MaNKSLK).Select(x => x.MaCongViec).ToArray();
+                job.selectedjob = _context.ChiTietCongViec.Where(x => x.MaNKSLK == MaNKSLK).Select(x => x.MaCongViec).ToArray();
             }
             return PartialView(job);
         }

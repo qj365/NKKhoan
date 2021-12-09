@@ -51,46 +51,58 @@
                                     <th>
                                         @Html.DisplayName("Chức vụ")
                                     </th>
+                                    <th>
+                                        @Html.DisplayName("Giờ bắt đầu")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Giờ kết thúc")
+                                    </th>
                                     <th>Chức năng</th>
                                 </tr>
                             </thead>
 
                             @foreach (var item in Model.congnhan)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.HoTen)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NgayNamSinh)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.GioiTinh)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.QueQuan)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PhongBan.TenPhongBan)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ChucVu.TenChucVu)
-                                    </td>
-                                    <td>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HoTen)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayNamSinh)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GioiTinh)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.QueQuan)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PhongBan.TenPhongBan)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ChucVu.TenChucVu)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.Where(x => x.CongNhan.MaNhanCong == item.MaNhanCong).FirstOrDefault().GioBatDau)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.Where(x => x.CongNhan.MaNhanCong == item.MaNhanCong).FirstOrDefault().GioKetThuc)
+                            </td>
+                            <td>
 
-                                        <a class="btn-edit" href="~/Admin/Employee/Edit/@item.MaNhanCong">
-                                            <i class="far fa-edit icon-edit"></i>
-                                        </a>
+                                <a class="btn-edit" href="~/Admin/Employee/Edit/@item.MaNhanCong">
+                                    <i class="far fa-edit icon-edit"></i>
+                                </a>
 
-                                        <a class="js-delete" href="~/Admin/Employee/Delete/@item.MaNhanCong">
-                                            <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
-                                        </a>
+                                <a class="js-delete" href="~/Admin/Employee/Delete/@item.MaNhanCong">
+                                    <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
+                                </a>
 
-                                        <a class="info" href="~/Admin/Employee/Detail/@item.MaNhanCong">
-                                            <i class="fas fa-info-circle"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                <a class="info" href="~/Admin/Employee/Detail/@item.MaNhanCong">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
                             }
                         </table>
                     </div>
@@ -137,6 +149,9 @@
                                     <th>
                                         @Html.DisplayName("Sản phẩm")
                                     </th>
+                                    <th>
+                                        @Html.DisplayName("Sản lượng")
+                                    </th>
                                     <th>Chức năng</th>
                                 </tr>
                             </thead>
@@ -164,6 +179,9 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.SanPham.TenSanPham)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietCongViec.Where(x => x.CongViec.MaCongViec == item.MaCongViec).FirstOrDefault().SanLuongThucTe)
                             </td>
                             <td>
 

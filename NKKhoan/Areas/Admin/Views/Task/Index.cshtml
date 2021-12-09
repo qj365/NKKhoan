@@ -63,77 +63,77 @@
 
                             @foreach (var item in Model)
                             {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.nkslk.MaNKSLK)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.nkslk.NgayThucHienKhoan)
-                            </td>
-                            <td>
-                                @{
-                                    string ca;
-                                    if (item.nkslk.GioBatDau == new TimeSpan(6, 0, 0) && item.nkslk.GioKetThuc == new TimeSpan(14, 0, 0))
-                                    {
-                                        ca = "Ca 1";
-                                    }
-                                    else if (item.nkslk.GioBatDau == new TimeSpan(14, 0, 0) && item.nkslk.GioKetThuc == new TimeSpan(22, 0, 0))
-                                    {
-                                        ca = "Ca 2";
-                                    }
-                                    else if (item.nkslk.GioBatDau == new TimeSpan(22, 0, 0) && item.nkslk.GioKetThuc == new TimeSpan(6, 0, 0))
-                                    {
-                                        ca = "Ca 3";
-                                    }
-                                    else
-                                    {
-                                        ca = item.nkslk.GioBatDau.ToString() + "-" + item.nkslk.GioKetThuc.ToString();
-                                    }
-                                }
-                                @Html.DisplayFor(modelItem => ca)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.nkslk.GioBatDau)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.nkslk.GioKetThuc)
-                            </td>
-                            <td>
-                                @{
-                                    var hotenList = new List<string>();
-                                    foreach (var item1 in item.congnhan)
-                                    {
-                                        hotenList.Add(item1.HoTen);
-                                    };
-                                    var hotenstring = String.Join(", ", hotenList);
-                                }
-                                @Html.DisplayFor(modelItem => hotenstring)
-                            </td>
-                            <td>
-                                @{
-                                    var tencongviecList = new List<string>();
-                                    foreach (var item1 in item.congviec)
-                                    {
-                                        tencongviecList.Add(item1.TenCongViec);
-                                    }
-                                    var tencongviecstring = String.Join(", ", tencongviecList);
-                                }
-                                @Html.DisplayFor(modelItem => tencongviecstring)
-                            </td>
-                            <td>
-                                <a class="btn-edit" href="~/Admin/Task/Edit/@item.nkslk.MaNKSLK">
-                                    <i class="far fa-edit icon-edit"></i>
-                                </a>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nkslk.MaNKSLK)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nkslk.NgayThucHienKhoan)
+                                    </td>
+                                    <td>
+                                        @{
+                                            string ca;
+                                            if (item.nkslk.GioBatDau == new TimeSpan(6, 0, 0) && item.nkslk.GioKetThuc == new TimeSpan(14, 0, 0))
+                                            {
+                                                ca = "Ca 1";
+                                            }
+                                            else if (item.nkslk.GioBatDau == new TimeSpan(14, 0, 0) && item.nkslk.GioKetThuc == new TimeSpan(22, 0, 0))
+                                            {
+                                                ca = "Ca 2";
+                                            }
+                                            else if (item.nkslk.GioBatDau == new TimeSpan(22, 0, 0) && item.nkslk.GioKetThuc == new TimeSpan(6, 0, 0))
+                                            {
+                                                ca = "Ca 3";
+                                            }
+                                            else
+                                            {
+                                                ca = item.nkslk.GioBatDau.ToString() + "-" + item.nkslk.GioKetThuc.ToString();
+                                            }
+                                        }
+                                        @Html.DisplayFor(modelItem => ca)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nkslk.GioBatDau)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nkslk.GioKetThuc)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var hotenList = new List<string>();
+                                            foreach (var item1 in item.congnhan)
+                                            {
+                                                hotenList.Add(item1.HoTen);
+                                            };
+                                            var hotenstring = String.Join(", ", hotenList);
+                                        }
+                                        @Html.DisplayFor(modelItem => hotenstring)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var tencongviecList = new List<string>();
+                                            foreach (var item1 in item.congviec)
+                                            {
+                                                tencongviecList.Add(item1.TenCongViec);
+                                            }
+                                            var tencongviecstring = String.Join(", ", tencongviecList);
+                                        }
+                                        @Html.DisplayFor(modelItem => tencongviecstring)
+                                    </td>
+                                    <td>
+                                        <a class="btn-edit" href="~/Admin/Task/Edit/@item.nkslk.MaNKSLK">
+                                            <i class="far fa-edit icon-edit"></i>
+                                        </a>
 
-                                <a class="js-delete" href="~/Admin/Task/Delete/@item.nkslk.MaNKSLK">
-                                    <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
-                                </a>
+                                        <a class="js-delete" href="~/Admin/Task/Delete/@item.nkslk.MaNKSLK">
+                                            <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
+                                        </a>
 
-                                <a class="info" href="~/Admin/Task/Detail/@item.nkslk.MaNKSLK">
-                                    <i class="fas fa-info-circle"></i>
-                                </a>
-                            </td>
-                        </tr>
+                                        <a class="info" href="~/Admin/Task/Detail/@item.nkslk.MaNKSLK">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             }
                         </table>
                     </div>
