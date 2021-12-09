@@ -90,11 +90,11 @@
                             </td>
                             <td>
 
-                                <a class="btn-edit" href="~/Admin/Employee/Edit/@item.MaNhanCong">
+                                <a class="btn-edit" href="~/Admin/Task/EditEmployee/?employee=@item.MaNhanCong&task=@Model.nkslk.MaNKSLK">
                                     <i class="far fa-edit icon-edit"></i>
                                 </a>
 
-                                <a class="js-delete" href="~/Admin/Employee/Delete/@item.MaNhanCong">
+                                <a class="js-delete" href="~/Admin/Task/DeleteEmployee/?employee=@item.MaNhanCong&task=@Model.nkslk.MaNKSLK">
                                     <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
                                 </a>
 
@@ -185,11 +185,11 @@
                             </td>
                             <td>
 
-                                <a class="btn-edit" href="~/Admin/Job/Edit/@item.MaCongViec">
+                                <a class="btn-edit" href="~/Admin/Task/EditJob/?job=@item.MaCongViec&task=@Model.nkslk.MaNKSLK">
                                     <i class="far fa-edit icon-edit"></i>
                                 </a>
 
-                                <a class="js-delete" href="~/Admin/Job/Delete/@item.MaCongViec">
+                                <a class="js-delete" href="~/Admin/Task/DeleteJob/?job=@item.MaCongViec&task=@Model.nkslk.MaNKSLK">
                                     <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
                                 </a>
 
@@ -208,7 +208,7 @@
 </section>
 
 <div class="form-group">
-    <div class="col-sm-12">
+    <div class="col-md-offset-1 col-md-11">
         <a href="~/Admin/Task" class="btn btn-warning float-right">Trở về</a>
     </div>
 </div>
@@ -226,7 +226,7 @@
 
             event.preventDefault();
 
-            bootbox.confirm("Bạn chắc chắn muốn xoá nhật ký khoán này?", function (r) {
+            bootbox.confirm("Bạn chắc chắn muốn xoá công nhân khoán này?", function (r) {
                 if (r) {
                     window.location = button.attr('href');
                 }
@@ -251,7 +251,7 @@
 
             event.preventDefault();
 
-            bootbox.confirm("Bạn chắc chắn muốn xoá nhật ký khoán này?", function (r) {
+            bootbox.confirm("Bạn chắc chắn muốn xoá công việc khoán này?", function (r) {
                 if (r) {
                     window.location = button.attr('href');
                 }

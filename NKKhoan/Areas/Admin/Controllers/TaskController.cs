@@ -103,6 +103,54 @@ namespace NKKhoan.Areas.Admin.Controllers
             }
         }
 
+        public ActionResult DeleteEmployee(int employee, int task)
+        {
+            var employeetask = _context.ChiTietNhanCongKhoan.SingleOrDefault(x => (x.MaNKSLK == task) && (x.MaNhanCong == employee));
+            if (employeetask == null)
+                return HttpNotFound();
+            else
+            {
+                _context.ChiTietNhanCongKhoan.Remove(employeetask);
+                _context.SaveChanges();
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+        }
+
+        public ActionResult DeleteJob(int job, int task)
+        {
+            var jobtask = _context.ChiTietCongViec.SingleOrDefault(x => (x.MaNKSLK == task) && (x.MaCongViec == job));
+            if (jobtask == null)
+                return HttpNotFound();
+            else
+            {
+                _context.ChiTietCongViec.Remove(jobtask);
+                _context.SaveChanges();
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+        }
+
+        public ActionResult EditEmployee(int employee, int task)
+        {
+            var employeetask = _context.ChiTietNhanCongKhoan.SingleOrDefault(x => (x.MaNKSLK == task) && (x.MaNhanCong == employee));
+            if (employeetask == null)
+                return HttpNotFound();
+            else
+            {
+                return View(employeetask);
+            }
+        }
+
+        public ActionResult EditJob(int job, int task)
+        {
+            var jobtask = _context.ChiTietCongViec.SingleOrDefault(x => (x.MaNKSLK == task) && (x.MaCongViec == job));
+            if (jobtask == null)
+                return HttpNotFound();
+            else
+            {
+                return View(jobtask);
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(TaskViewModel task, int selectedshift, int[] selectedemployee = null, int[] selectedjob = null)
@@ -174,7 +222,7 @@ namespace NKKhoan.Areas.Admin.Controllers
                 }
                 foreach (var item in selectedjob ?? Enumerable.Empty<int>())
                 {
-                    if (!_context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaNhanCong == item))
+                    if (!_context.ChiTietCongViec.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaCongViec == item))
                     {
                         var jobtask = new ChiTietCongViec();
                         jobtask.MaNKSLK = task.nkslk.MaNKSLK;
@@ -192,6 +240,25 @@ namespace NKKhoan.Areas.Admin.Controllers
                 _context.SaveChanges();
             }
             return RedirectToAction("Index", "Task");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveDetail(ChiTietCongViec job, ChiTietNhanCongKhoan employee, string returnUrl)
+        {
+            if (employee.MaNhanCong != 0)
+            {
+                var EmployeeInDb = _context.ChiTietNhanCongKhoan.SingleOrDefault(x => (x.MaNKSLK == employee.MaNKSLK&& x.MaNhanCong == employee.MaNhanCong));
+                EmployeeInDb.GioBatDau = employee.GioBatDau;
+                EmployeeInDb.GioKetThuc = employee.GioKetThuc;
+            }
+            if (job.MaCongViec != 0)
+            {
+                var JobInDb = _context.ChiTietCongViec.SingleOrDefault(x => (x.MaNKSLK == job.MaNKSLK && x.MaCongViec == job.MaCongViec));
+                JobInDb.SanLuongThucTe = job.SanLuongThucTe;
+            }
+            _context.SaveChanges();
+            return returnUrl != null ? Redirect(returnUrl) : (ActionResult)RedirectToAction("Detail", "Task", new { @id = employee.MaNKSLK});
         }
 
         [ChildActionOnly]

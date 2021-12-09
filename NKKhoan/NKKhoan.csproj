@@ -299,6 +299,8 @@
     <Content Include="Areas\Admin\Views\Position\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Info.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\EditEmployee.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\EditJob.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
