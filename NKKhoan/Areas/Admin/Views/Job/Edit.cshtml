@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-7">
                                             <input type="submit" value="Save" class="btn btn-primary" />
-                                            <a href="~/Admin/Job/Index" class="btn btn-warning">Huỷ</a>
+                                            z
                                         </div>
                                     </div>
                                 </div>
@@ -74,6 +74,14 @@
                                         <div class="col-md-7">
                                             @Html.EditorFor(model => model.DinhMucLaoDong, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.DinhMucLaoDong, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.MaSanPham, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-7">
+                                            @Html.DropDownListFor(m => m.MaSanPham, new SelectList(ViewBag.SanPham, "masanpham", "tensanpham"), "", new { @class = "form-control ssp" })
+
+                                            @Html.ValidationMessageFor(model => model.MaSanPham, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
