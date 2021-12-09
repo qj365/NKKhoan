@@ -52,10 +52,10 @@
                                         @Html.DisplayName("Chức vụ")
                                     </th>
                                     <th>
-                                        @Html.DisplayName("Giờ bắt đầu")
+                                        @Html.DisplayName("Giờ bắt đầu làm")
                                     </th>
                                     <th>
-                                        @Html.DisplayName("Giờ kết thúc")
+                                        @Html.DisplayName("Giờ kết thúc làm")
                                     </th>
                                     <th>Chức năng</th>
                                 </tr>
@@ -83,10 +83,10 @@
                                 @Html.DisplayFor(modelItem => item.ChucVu.TenChucVu)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.Where(x => x.CongNhan.MaNhanCong == item.MaNhanCong).FirstOrDefault().GioBatDau)
+                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.Where(x => x.CongNhan.MaNhanCong == item.MaNhanCong).SingleOrDefault().GioBatDau)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.Where(x => x.CongNhan.MaNhanCong == item.MaNhanCong).FirstOrDefault().GioKetThuc)
+                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietNhanCongKhoan.Where(x => x.CongNhan.MaNhanCong == item.MaNhanCong).SingleOrDefault().GioKetThuc)
                             </td>
                             <td>
 
@@ -181,7 +181,7 @@
                                 @Html.DisplayFor(modelItem => item.SanPham.TenSanPham)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietCongViec.Where(x => x.CongViec.MaCongViec == item.MaCongViec).FirstOrDefault().SanLuongThucTe)
+                                @Html.DisplayFor(modelItem => Model.nkslk.ChiTietCongViec.Where(x => x.CongViec.MaCongViec == item.MaCongViec).SingleOrDefault().SanLuongThucTe)
                             </td>
                             <td>
 
