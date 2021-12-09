@@ -38,6 +38,17 @@ namespace NKKhoan.Areas.Admin.Controllers
             return View();
         }
 
+        public ActionResult Detail(int id)
+        {
+            TaskViewModel task = new TaskViewModel();
+            if (task == null)
+                return HttpNotFound();
+            task.nkslk = _context.NKSLK.SingleOrDefault(c => c.MaNKSLK == id);
+            task.congnhan = TaskDAO.getListEmployeeWorkedOn(id);
+            task.congviec = TaskDAO.getListJobWorkedOn(id);
+            return View(task);
+        }
+
         public ActionResult Edit(int id)
         {
             TaskViewModel task = new TaskViewModel();
