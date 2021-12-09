@@ -1,9 +1,8 @@
-﻿@model IEnumerable<NKKhoan.Models.CongViec>
+﻿@using NKKhoan.Areas.Admin.ViewModel
+@model IEnumerable<NKKhoan.Models.CongViec>
 
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-}
+@{ ViewBag.Title = "Index";
+Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
 
 
@@ -20,6 +19,105 @@
 
 <section class="content">
     <div class="container-fluid">
+
+        @*search*@
+        @*<div class="card card-default collapsed-card" id="card-id">
+
+            <div class="card-header">
+                <h3 class="card-title">Tìm kiếm</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-plus" id="button-collapse"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Index", "Employee", FormMethod.Get))
+                {
+                    <div class="row">
+
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label>Chọn phòng ban</label>
+                                @Html.DropDownList("spb", new SelectList(ViewBag.phongban, "maphongban", "tenphongban"), "", new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label>Chọn chức vụ</label>
+                                @Html.DropDownList("scv", new SelectList(ViewBag.chucvu, "machucvu", "tenchucvu"), "", new { @class = "form-control" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label>Giới tính</label>
+                                @Html.DropDownList("sgt", new List<SelectListItem>
+                                                                {
+                                                new SelectListItem{ Text="", Value=""},
+                                                new SelectListItem{ Text="Nam", Value="Nam"},
+                                                new SelectListItem{ Text="Nữ", Value="Nữ"}
+                                                }, new { @class = "form-control" })
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label>Độ tuổi</label>
+                                <input type="number" name="minage" id="minage" value="" class="form-control" />
+                                <span style=" width: 7px; height: 2px; font-size: 0px; display: inline-block; background: rgb(154, 154, 154); margin: 0px 4px; vertical-align: middle; position: absolute; right: -8px; top: 60%;">
+                                    -
+                                </span>
+
+                            </div>
+                        </div>
+
+                        <div class="col-1">
+                            <div class="form-group">
+                                <label style="visibility:hidden">giá</label>
+                                <input type="number" name="maxage" id="maxage" value="" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Công nhân làm vượt giờ của tuần</label>
+                                <div class="input-group date" id="reservationdatetime1" data-target-input="nearest">
+                                    <input name="tuan" class="form-control datetimepicker-input text-box single-line valid" data-target="#reservationdatetime1">
+                                    <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row" style="padding: 0px 7.5px;">
+                        <div class="input-group input-group-lg">
+                            <input type="search" class="form-control form-control-lg" placeholder="Nhập tên nhân viên" name="sb" id="sb">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-lg btn-default">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>*@
+        @*table*@
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -54,43 +152,48 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.DonGia)
                                     </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.SanPham.TenSanPham)
+                                    </th>
                                     <th></th>
                                 </tr>
                             </thead>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TenCongViec)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DinhMucKhoan)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DonViKhoan)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.HeSoKhoan)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DinhMucLaoDong)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DonGia)
-                                    </td>
-                                    <td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenCongViec)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DinhMucKhoan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DonViKhoan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HeSoKhoan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DinhMucLaoDong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DonGia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SanPham.TenSanPham)
+                    </td>
+                    <td>
 
-                                        <a class="btn-edit" href="~/Admin/Job/Edit/@item.MaCongViec">
-                                            <i class="far fa-edit icon-edit"></i>
-                                        </a>
+                        <a class="btn-edit" href="~/Admin/Job/Edit/@item.MaCongViec">
+                            <i class="far fa-edit icon-edit"></i>
+                        </a>
 
-                                        <a class="js-delete" href="~/Admin/Job/Delete/@item.MaCongViec">
-                                            <i class="far fa-trash-alt icon-delete"></i>
-                                        </a>
+                        <a class="js-delete" href="~/Admin/Job/Delete/@item.MaCongViec">
+                            <i class="far fa-trash-alt icon-delete"></i>
+                        </a>
 
-                                    </td>
-                                </tr>
-                            }
+                    </td>
+                </tr>}
                         </table>
                     </div>
                 </div>
@@ -100,24 +203,24 @@
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-      $("#example1").on("click", ".js-delete", function (event) {
-          var button = $(this);
+        $("#example1").on("click", ".js-delete", function (event) {
+            var button = $(this);
 
-          event.preventDefault();
+            event.preventDefault();
 
-          bootbox.confirm("Bạn chắc chắn muốn xoá mục này?", function (r) {
-              if (r) {
-                  window.location = button.attr('href');
-              }
-          })
+            bootbox.confirm("Bạn chắc chắn muốn xoá mục này?", function (r) {
+                if (r) {
+                    window.location = button.attr('href');
+                }
+            })
 
 
-      });
-  });
+        });
+    });
 </script>

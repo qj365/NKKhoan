@@ -1,4 +1,5 @@
-﻿using NKKhoan.Models;
+﻿using NKKhoan.Areas.Admin.ViewModel;
+using NKKhoan.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,14 +28,26 @@ namespace NKKhoan.Areas.Admin.Controllers
         }
         public ViewResult Create()
         {
-            return View();
+            var sp = _context.SanPham.ToList();
+            var viewModel = new JobViewModel
+            {
+                SanPhams = sp
+            };
+
+            return View("JobForm", viewModel);
         }
         public ActionResult Edit(int id)
         {
             var job = _context.CongViec.SingleOrDefault(c => c.MaCongViec == id);
             if (job == null)
                 return HttpNotFound();
-            return View(job);
+            var sp = _context.SanPham.ToList();
+            var viewModel = new JobViewModel
+            {
+                SanPhams = sp
+            };
+
+            return View("JobForm", viewModel);
         }
 
         public ActionResult Delete(int id)
@@ -55,7 +68,10 @@ namespace NKKhoan.Areas.Admin.Controllers
         public ActionResult Save(CongViec job)
         {
             if (job.MaCongViec == 0)
+            {
+                job.DonGia = (int?)(126360 * job.HeSoKhoan * job.DinhMucLaoDong / job.DinhMucKhoan);
                 _context.CongViec.Add(job);
+            }
             else
             {
                 var jobInDb = _context.CongViec.Single(c => c.MaCongViec == job.MaCongViec);
@@ -64,8 +80,7 @@ namespace NKKhoan.Areas.Admin.Controllers
                 jobInDb.DonViKhoan = job.DonViKhoan;
                 jobInDb.HeSoKhoan = job.HeSoKhoan;
                 jobInDb.DinhMucLaoDong = job.DinhMucLaoDong;
-                int? dongia =(int?)( 126360 * jobInDb.HeSoKhoan * jobInDb.DinhMucLaoDong / jobInDb.DinhMucKhoan);
-                jobInDb.DonGia = dongia;
+                jobInDb.DonGia = (int?)(126360 * job.HeSoKhoan * job.DinhMucLaoDong / job.DinhMucKhoan);
             }
 
             _context.SaveChanges();

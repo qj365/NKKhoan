@@ -1,0 +1,113 @@
+﻿@model NKKhoan.Areas.Admin.ViewModel.JobViewModel
+
+@{ ViewBag.Title = "Create"; }
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@Model.Title</h1>
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+
+                            @using (Html.BeginForm("Save", "Job", FormMethod.Post, new { style = "display: flex; width: 100%;" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.MaCongViec)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TenCongViec, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-7">
+                                            @Html.EditorFor(model => model.TenCongViec, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.TenCongViec, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DinhMucKhoan, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-7">
+                                            @Html.EditorFor(model => model.DinhMucKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.DinhMucKhoan, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DonViKhoan, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-7">
+                                            @Html.EditorFor(model => model.DonViKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.DonViKhoan, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-7">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                            <a href="~/Admin/Job" class="btn btn-warning">Huỷ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.HeSoKhoan, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-7">
+                                            @Html.EditorFor(model => model.HeSoKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.HeSoKhoan, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.DinhMucLaoDong, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-7">
+                                            @Html.EditorFor(model => model.DinhMucLaoDong, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.DinhMucLaoDong, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.MaSanPham, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-7">
+                                            @Html.DropDownListFor(m => m.MaSanPham, new SelectList(Model.SanPhams, "masanpham", "tensanpham"), "", new { @class = "form-control ssp" })
+
+                                            @Html.ValidationMessageFor(model => model.MaSanPham, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+
+    $('.ssp').select2();
+    $(function () {
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) || moment(value, "DD/MM/YYYY", true).isValid();
+        }
+
+        $('#reservationdatetime1').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            locale: 'vi',
+            format: 'DD/MM/yyyy'
+        });
+
+        $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+            $('#reservationdatetime2').datetimepicker('minDate', e.date);
+        });
+
+    })
+</script>
+
