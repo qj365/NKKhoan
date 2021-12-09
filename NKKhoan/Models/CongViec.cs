@@ -42,6 +42,11 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietCongViec> ChiTietCongViec { get; set; }
 
+        [Display(Name = "Sản phẩm")]
+        [Required]
+        public int? MaSanPham { get; set; }
+        [ForeignKey("MaSanPham")]
+
         public virtual SanPham SanPham { get; set; }
     }
 }

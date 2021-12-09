@@ -33,6 +33,7 @@ namespace NKKhoan.Areas.Admin.ViewModel
             GioiTinh = congNhan.GioiTinh;
             LuongBaoHiem = congNhan.LuongBaoHiem;
             LuongHopDong = congNhan.LuongHopDong;
+            
         }
 
         [Key]

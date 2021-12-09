@@ -1,4 +1,5 @@
-﻿@model IEnumerable<NKKhoan.Models.CongNhan>
+﻿@using NKKhoan.Areas.Admin.ViewModel
+@model IEnumerable<NKKhoan.Models.CongNhan>
 
 @{
     ViewBag.Title = "Index";
@@ -41,14 +42,14 @@
                 {
                     <div class="row">
 
-                        <div class="col-3">
+                        <div class="col-2">
                             <div class="form-group">
                                 <label>Chọn phòng ban</label>
                                 @Html.DropDownList("spb", new SelectList(ViewBag.phongban, "maphongban", "tenphongban"), "", new { @class = "form-control" })
                             </div>
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-2">
                             <div class="form-group">
                                 <label>Chọn chức vụ</label>
                                 @Html.DropDownList("scv", new SelectList(ViewBag.chucvu, "machucvu", "tenchucvu"), "", new { @class = "form-control" })
@@ -58,7 +59,7 @@
 
                         <div class="col-2">
                             <div class="form-group">
-                                <label>Chọn giới tính</label>
+                                <label>Giới tính</label>
                                 @Html.DropDownList("sgt", new List<SelectListItem>
                                                 {
                                                 new SelectListItem{ Text="", Value=""},
@@ -70,9 +71,9 @@
                         </div>
 
 
-                        <div class="col-2">
+                        <div class="col-1">
                             <div class="form-group">
-                                <label>Chọn độ tuổi</label>
+                                <label>Độ tuổi</label>
                                 <input type="number" name="minage" id="minage" value="" class="form-control" />
                                 <span style=" width: 7px; height: 2px; font-size: 0px; display: inline-block; background: rgb(154, 154, 154); margin: 0px 4px; vertical-align: middle; position: absolute; right: -8px; top: 60%;">
                                     -
@@ -81,14 +82,27 @@
                             </div>
                         </div>
 
-                        <div class="col-2">
+                        <div class="col-1">
                             <div class="form-group">
-                                <label style="visibility:hidden">Chọn khoảng giá</label>
+                                <label style="visibility:hidden">giá</label>
                                 <input type="number" name="maxage" id="maxage" value="" class="form-control" />
                             </div>
                         </div>
 
-                        
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Công nhân làm vượt giờ của tuần</label>
+                                <div class="input-group date" id="reservationdatetime1" data-target-input="nearest">
+                                    <input name="tuan" class="form-control datetimepicker-input text-box single-line valid" data-target="#reservationdatetime1">
+                                    <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
                     </div>
 
                     <div class="row" style="padding: 0px 7.5px;">
@@ -152,9 +166,21 @@
 
                             @foreach (var item in Model)
                             {
+                                var title = "";
+                                var styleWarning = "display:none;";
+
+                                if (ViewBag.List != null)
+                                {
+                                    var l = ViewBag.List as IEnumerable<NKKhoan.Areas.Admin.ViewModel.WorkTimeViewModel>;
+                                    var cn = l.First(c => c.MaCN == item.MaNhanCong);
+                                    title = "Từ ngày " + ViewBag.Ndt + " đến " + ViewBag.Ncc + " nhân viên này làm quá giờ tiêu chuẩn " + cn.GioLam + " giờ.";
+                                    styleWarning = "";
+                                }
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.HoTen)
+                                        <i class="fas fa-exclamation-circle warning-user" data-toggle="tooltip" data-placement="right" title="@title" style=@styleWarning></i>
+
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.NgayNamSinh)
@@ -221,25 +247,45 @@
             $('#minage').val(urlParams.get('minage'));
             $('#maxage').val(urlParams.get('maxage'));
 
+            var s = urlParams.get('tuan').split('/');
+
+            var date = new Date(s[2], s[1] - 1, s[0]);
+
+            $('#reservationdatetime1').datetimepicker({
+                icons: { time: 'far fa-clock' },
+                format: 'DD/MM/yyyy',
+                defaultDate: date,
+                locale: 'vi'
+            });
         }
 
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false, searching: false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
-      $("#example1").on("click", ".js-delete", function (event) {
-          var button = $(this);
-
-          event.preventDefault();
-
-          bootbox.confirm("Bạn chắc chắn muốn xoá mục này?", function (r) {
-              if (r) {
-                  window.location = button.attr('href');
-              }
-          })
+        else {
+            $('#reservationdatetime1').datetimepicker({
+                icons: { time: 'far fa-clock' },
+                locale: 'vi',
+                format: 'DD/MM/yyyy'
+            });
+        }
 
 
-      });
-  });
+
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false, searching: false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+        $("#example1").on("click", ".js-delete", function (event) {
+            var button = $(this);
+
+            event.preventDefault();
+
+            bootbox.confirm("Bạn chắc chắn muốn xoá mục này?", function (r) {
+                if (r) {
+                    window.location = button.attr('href');
+                }
+            })
+
+
+        });
+    });
 </script>
