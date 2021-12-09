@@ -132,25 +132,19 @@ namespace NKKhoan.Areas.Admin.Controllers
                 _context.NKSLK.Add(task.nkslk);
                 _context.SaveChanges();
                 var idtask = _context.NKSLK.OrderByDescending(x => x.MaNKSLK).FirstOrDefault().MaNKSLK;
-                if (selectedemployee != null)
+                foreach (var item in selectedemployee ?? Enumerable.Empty<int>())
                 {
-                    foreach (var item in selectedemployee)
-                    {
-                        var employeetask = new ChiTietNhanCongKhoan();
-                        employeetask.MaNKSLK = idtask;
-                        employeetask.MaNhanCong = item;
-                        _context.ChiTietNhanCongKhoan.Add(employeetask);
-                    }
+                    var employeetask = new ChiTietNhanCongKhoan();
+                    employeetask.MaNKSLK = idtask;
+                    employeetask.MaNhanCong = item;
+                    _context.ChiTietNhanCongKhoan.Add(employeetask);
                 }
-                if (selectedjob != null)
+                foreach (var item in selectedjob ?? Enumerable.Empty<int>())
                 {
-                    foreach (var item in selectedemployee)
-                    {
-                        var employeetask = new ChiTietNhanCongKhoan();
-                        employeetask.MaNKSLK = idtask;
-                        employeetask.MaNhanCong = item;
-                        _context.ChiTietNhanCongKhoan.Add(employeetask);
-                    }
+                    var jobtask = new ChiTietCongViec();
+                    jobtask.MaNKSLK = idtask;
+                    jobtask.MaCongViec = item;
+                    _context.ChiTietCongViec.Add(jobtask);
                 }
                 _context.SaveChanges();
             }
@@ -161,58 +155,38 @@ namespace NKKhoan.Areas.Admin.Controllers
                 TaskInDb.GioBatDau = task.nkslk.GioBatDau;
                 TaskInDb.GioKetThuc = task.nkslk.GioKetThuc;
                 _context.SaveChanges();
-                if (selectedemployee == null)
+                foreach (var item in selectedemployee ?? Enumerable.Empty<int>())
                 {
-                    foreach (var item in _context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).ToList())
+                    if (!_context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaNhanCong == item))
+                    {
+                        var employeetask = new ChiTietNhanCongKhoan();
+                        employeetask.MaNKSLK = task.nkslk.MaNKSLK;
+                        employeetask.MaNhanCong = item;
+                        _context.ChiTietNhanCongKhoan.Add(employeetask);
+                    }
+                }
+                foreach (var item in _context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK))
+                {
+                    if (!(selectedemployee ?? Enumerable.Empty<int>()).Any(x => x == item.MaNhanCong))
                     {
                         _context.ChiTietNhanCongKhoan.Remove(item);
                     }
                 }
-                else
+                foreach (var item in selectedjob ?? Enumerable.Empty<int>())
                 {
-                    foreach (var item in selectedemployee)
+                    if (!_context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaNhanCong == item))
                     {
-                        if (!_context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaNhanCong == item))
-                        {
-                            var employeetask = new ChiTietNhanCongKhoan();
-                            employeetask.MaNKSLK = task.nkslk.MaNKSLK;
-                            employeetask.MaNhanCong = item;
-                            _context.ChiTietNhanCongKhoan.Add(employeetask);
-                        }
-                    }
-                    foreach (var item in _context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK))
-                    {
-                        if (!selectedemployee.Any(x => x == item.MaNhanCong))
-                        {
-                            _context.ChiTietNhanCongKhoan.Remove(item);
-                        }
+                        var jobtask = new ChiTietCongViec();
+                        jobtask.MaNKSLK = task.nkslk.MaNKSLK;
+                        jobtask.MaCongViec = item;
+                        _context.ChiTietCongViec.Add(jobtask);
                     }
                 }
-                if (selectedjob == null)
+                foreach (var item in _context.ChiTietCongViec.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK))
                 {
-                    foreach (var item in _context.ChiTietCongViec.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).ToList())
+                    if (!(selectedjob ?? Enumerable.Empty<int>()).Any(x => x == item.MaCongViec))
                     {
                         _context.ChiTietCongViec.Remove(item);
-                    }
-                }
-                else
-                {
-                    foreach (var item in selectedjob)
-                    {
-                        if (!_context.ChiTietNhanCongKhoan.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK).Any(x => x.MaNhanCong == item))
-                        {
-                            var jobtask = new ChiTietCongViec();
-                            jobtask.MaNKSLK = task.nkslk.MaNKSLK;
-                            jobtask.MaCongViec = item;
-                            _context.ChiTietCongViec.Add(jobtask);
-                        }
-                    }
-                    foreach (var item in _context.ChiTietCongViec.Where(x => x.MaNKSLK == task.nkslk.MaNKSLK))
-                    {
-                        if (!selectedjob.Any(x => x == item.MaCongViec))
-                        {
-                            _context.ChiTietCongViec.Remove(item);
-                        }
                     }
                 }
                 _context.SaveChanges();
