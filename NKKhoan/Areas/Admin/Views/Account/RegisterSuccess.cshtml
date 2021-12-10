@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@{ Layout = null;}
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -8,18 +10,19 @@
 <body>
     <div>
         <h3 style="text-align:center">Đăng ký thành công. Trang sẽ tự động chuyển hướng trong <h3 id="counter" style="text-align:center">4</h3></h3>
+        <a href="~/Admin/Dashboard" style="text-align: center; display: block">Nếu trang không tự động chuyển hướng thì nhấn vào đây</a>
     </div>
 </body>
 </html>
 <script type="text/javascript">
-function countdown() {
-    var i = document.getElementById('counter');
-    if (parseInt(i.innerHTML)<=0) {
-        location.href = '/Admin/Dashboard';
+    function countdown() {
+        var i = document.getElementById('counter');
+        if (parseInt(i.innerHTML) <= 0) {
+            location.href = '/Admin/Dashboard';
+        }
+        if (parseInt(i.innerHTML) != 0) {
+            i.innerHTML = parseInt(i.innerHTML) - 1;
+        }
     }
-if (parseInt(i.innerHTML)!=0) {
-    i.innerHTML = parseInt(i.innerHTML)-1;
-}
-}
-setInterval(function(){ countdown(); },1000);
+    setInterval(function () { countdown(); }, 1000);
 </script>

@@ -301,6 +301,10 @@
     <Compile Include="Migrations\202112071636200_dinhmuckhoan-int.Designer.cs">
       <DependentUpon>202112071636200_dinhmuckhoan-int.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112100427373_add-delete.cs" />
+    <Compile Include="Migrations\202112100427373_add-delete.Designer.cs">
+      <DependentUpon>202112100427373_add-delete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -354,6 +358,7 @@
     <Content Include="Areas\Admin\Views\Account\RegisterSuccess.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -454,6 +459,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112071636200_dinhmuckhoan-int.resx">
       <DependentUpon>202112071636200_dinhmuckhoan-int.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112100427373_add-delete.resx">
+      <DependentUpon>202112100427373_add-delete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

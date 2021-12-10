@@ -76,6 +76,8 @@ namespace NKKhoan.Areas.Admin.Controllers
 
         public ViewResult Create()
         {
+            ViewBag.ReturnUrl = Request.UrlReferrer == null ? "~/Admin/Employee" : Request.UrlReferrer.ToString();
+
             var pb = _context.PhongBan.ToList();
             var cv = _context.ChucVu.ToList();
 
@@ -90,6 +92,9 @@ namespace NKKhoan.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
+           
+            ViewBag.ReturnUrl = Request.UrlReferrer == null ? "~/Admin/Employee" : Request.UrlReferrer.ToString();
+
             var employee = _context.CongNhan.SingleOrDefault(c => c.MaNhanCong == id);
             if (employee == null)
                 return HttpNotFound();
@@ -120,7 +125,7 @@ namespace NKKhoan.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(CongNhan employee)
+        public ActionResult Save(CongNhan employee, string returnUrl)
         {
             if (employee.MaNhanCong == 0)
                 _context.CongNhan.Add(employee);
@@ -129,8 +134,8 @@ namespace NKKhoan.Areas.Admin.Controllers
                 var employeeInDb = _context.CongNhan.Single(c => c.MaNhanCong == employee.MaNhanCong);
                 employeeInDb.HoTen = employee.HoTen;
                 employeeInDb.NgayNamSinh = employee.NgayNamSinh;
-                employeeInDb.PhongBan = employee.PhongBan;
-                employeeInDb.ChucVu = employee.ChucVu;
+                employeeInDb.MaPhongBan = employee.MaPhongBan;
+                employeeInDb.MaChucVu = employee.MaChucVu;
                 employeeInDb.QueQuan = employee.QueQuan;
                 employeeInDb.GioiTinh = employee.GioiTinh;
                 employeeInDb.LuongBaoHiem = employee.LuongBaoHiem;
@@ -138,7 +143,7 @@ namespace NKKhoan.Areas.Admin.Controllers
             }
 
             _context.SaveChanges();
-            return RedirectToAction("Index", "Employee");
+            return Redirect(returnUrl);
         }
 
         public ActionResult Info(int id, string ngaybatdau = null, string ngayketthuc = null)

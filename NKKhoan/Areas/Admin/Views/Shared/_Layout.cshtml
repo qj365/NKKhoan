@@ -265,17 +265,16 @@
                         @{string classTreeManage = "";
                             string classActiveManage = "";
                         }
-                        @if (ViewContext.RouteData.Values["Action"].ToString() == "ChangePassword"
-                            || ViewContext.RouteData.Values["Action"].ToString() == "AddPhoneNumber")
+                        @if (ViewContext.RouteData.Values["Controller"].ToString() == "Manage")
                         {
                             classTreeManage = "menu-is-opening menu-open";
                             classActiveManage = "active";
                         }
                         <li class="nav-item @classTreeManage">
                             <a href="#" class="nav-link @classActiveManage">
-                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <i class="nav-icon fas fa-user-circle"></i>
                                 <p>
-                                    Thống kê
+                                    Tài khoản
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>

@@ -124,7 +124,7 @@ namespace NKKhoan.Areas.Admin.Controllers
                 var message = new IdentityMessage
                 {
                     Destination = model.Number,
-                    Body = "Your security code is: " + code
+                    Body = "Mã code đổi số điện thoại của bạn là: " + code
                 };
                 await UserManager.SmsService.SendAsync(message);
             }
