@@ -1,4 +1,5 @@
-﻿using NKKhoan.Models;
+﻿using NKKhoan.Areas.Admin.ViewModel;
+using NKKhoan.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -27,7 +28,7 @@ namespace NKKhoan.Areas.Admin.Controllers
         }
 
         // GET: Admin/Product
-        public ActionResult Index(string Select = null, string searchTuHSD = null, 
+        public ActionResult Index(string Select = null, string searchTuHSD = null,
             string searchDenHSD = null, string searchTuNDK = null, string searchDenNDK = null)
         {
             IQueryable<SanPham> productQuery = _context.SanPham;
@@ -117,7 +118,7 @@ namespace NKKhoan.Areas.Admin.Controllers
             var lst = _context.Database.SqlQuery<SanPham>("" + SqlCommand)
                 .ToList<SanPham>();
             return View(lst);
-            
+
         }
 
         public ActionResult Create()
@@ -146,12 +147,88 @@ namespace NKKhoan.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult Info(int id)
+        public ActionResult Info(int id, string ngaybatdau = null, string ngayketthuc = null)
         {
-            var product = _context.SanPham.SingleOrDefault(c => c.MaSanPham == id);
-            if (product == null)
-                return HttpNotFound();
-            return View(product);
+            ViewBag.sp = _context.SanPham.ToList();
+            ViewBag.cv = _context.CongViec.ToList();
+            ViewBag.ctcv = _context.ChiTietCongViec.ToList();
+            ViewBag.nkslk = _context.NKSLK.ToList();
+            ViewBag.ctnck = _context.ChiTietNhanCongKhoan.ToList();
+            ViewBag.cn = _context.CongNhan.ToList();
+            ViewBag.spinfo = _context.SanPham.SingleOrDefault(c => c.MaSanPham == id);
+
+            //var product = _context.SanPham.SingleOrDefault(c => c.MaSanPham == id);
+            //if (product == null)
+            //    return HttpNotFound();
+            //return View(product);
+
+            IQueryable<NKSLK> nkslkQuery = _context.NKSLK;
+
+            ViewBag.Ngaybatdau = ngaybatdau;
+            ViewBag.Ngayketthuc = ngayketthuc;
+
+            bool NBD = string.IsNullOrEmpty(ngaybatdau);
+
+            bool NKT = string.IsNullOrEmpty(ngayketthuc);
+
+            StringBuilder SqlCommand = new StringBuilder();
+
+            SqlCommand.Append(" SELECT ");
+            //SqlCommand.Append(" sp.MaSanPham MaSanPham, ");
+            //SqlCommand.Append(" sp.TenSanPham TenSanPham, ");
+            //SqlCommand.Append(" sp.SoDangKy SoDangKy, ");
+            //SqlCommand.Append(" sp.HanSuDung HanSuDung, ");
+            //SqlCommand.Append(" sp.QuyCach QuyCach, ");
+            //SqlCommand.Append(" sp.NgayDangKy NgayDangKy, ");
+            //SqlCommand.Append(" sp.Anh Anh, ");
+
+            SqlCommand.Append(" nkslk.MaNKSLK MaNKSLK, ");
+            SqlCommand.Append(" nkslk.NgayThucHienKhoan NgayThucHienKhoan, ");
+            SqlCommand.Append(" nkslk.GioBatDau GioBatDau, ");
+            SqlCommand.Append(" nkslk.GioKetThuc GioKetThuc ");
+
+            //SqlCommand.Append(" cv.TenCongViec TenCongViec, ");
+            //SqlCommand.Append(" cv.DonGia DonGia, ");
+            //SqlCommand.Append(" ctcv.SanLuongThucTe SanLuongThucTe, ");
+            //SqlCommand.Append(" cn.HoTen HoTen ");
+
+            //SqlCommand.Append(" FROM SanPham sp, CongViec cv, ChiTietCongViec ctcv, NKSLK nkslk, ChiTietNhanCongKhoan ctnck, CongNhan cn");
+
+            SqlCommand.Append(" FROM NKSLK nkslk");
+
+            SqlCommand.Append(" WHERE 1=1 ");
+            //SqlCommand.AppendFormat(" and sp.MaSanPham = {0}", id);
+            //SqlCommand.Append(" and sp.MaSanPham = cv.MaSanPham");
+            //SqlCommand.Append(" and cv.MaCongViec = ctcv.MaCongViec");
+            //SqlCommand.Append(" and ctcv.MaNKSLK = nkslk.MaNKSLK");
+            //SqlCommand.Append(" and nkslk.MaNKSLK = ctnck.MaNKSLK");
+            //SqlCommand.Append(" and ctnck.MaNhanCong = cn.MaNhanCong");
+
+            if (!NBD && NKT)
+            {
+                DateTime dtNBD = DateTime.Parse(ngaybatdau);
+                string strNBD = dtNBD.ToString("yyyy/MM/dd");
+                SqlCommand.Append(" and NgayThucHienKhoan >= '" + strNBD + "'");
+            }
+            if (!NKT && NBD)
+            {
+                DateTime dtNKT = DateTime.Parse(ngayketthuc);
+                string strNKT = dtNKT.ToString("yyyy/MM/dd");
+                SqlCommand.Append(" and NgayThucHienKhoan <= '" + strNKT + "'");
+            }
+            if (!NBD && !NKT)
+            {
+                DateTime dtNBD = DateTime.Parse(ngaybatdau);
+                DateTime dtNKT = DateTime.Parse(ngayketthuc);
+
+                string strNBD = dtNBD.ToString("yyyy/MM/dd");
+                string strNKT = dtNKT.ToString("yyyy/MM/dd");
+                SqlCommand.Append(" and NgayThucHienKhoan >= '" + strNBD + "'" + " and NgayThucHienKhoan <= '" + strNKT + "'");
+            }
+
+            var lst = _context.Database.SqlQuery<NKSLK>("" + SqlCommand)
+                .ToList<NKSLK>();
+            return View(lst);
         }
 
         [HttpPost]
@@ -173,7 +250,7 @@ namespace NKKhoan.Areas.Admin.Controllers
                 _context.SanPham.Add(product);
                 _context.SaveChanges();
                 return RedirectToAction("Index", "Product");
-            }               
+            }
             else
             {
                 var productInDb = _context.SanPham.Single(c => c.MaSanPham == product.MaSanPham);
@@ -189,15 +266,15 @@ namespace NKKhoan.Areas.Admin.Controllers
                                             System.IO.Path.GetFileName(photo.FileName));
                     photo.SaveAs(path);
 
-                    productInDb.Anh = photo.FileName;                   
+                    productInDb.Anh = photo.FileName;
                 }
-                else if(photo == null)
+                else if (photo == null)
                 {
                     productInDb.Anh = photoBefore;
                 }
                 _context.SaveChanges();
                 return RedirectToAction("Index", "Product");
-            }             
+            }
         }
     }
 }
