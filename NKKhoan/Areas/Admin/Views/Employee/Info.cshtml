@@ -190,18 +190,44 @@
         if (document.location.search.length) {
             var urlParams = new URLSearchParams(document.location.search);
 
-            if (urlParams.get('ngaybatdau') !== '') {
+            if (urlParams.get('ngaybatdau')) {
+
                 var s1 = urlParams.get('ngaybatdau').split('/');
                 var date1 = new Date(s1[2], s1[1] - 1, s1[0]);
                 $('#reservationdatetime1').datetimepicker({
+                    useCurrent: false,
                     icons: { time: 'far fa-clock' },
                     format: 'DD/MM/yyyy',
                     locale: 'vi',
                     defaultDate: date1
                 });
+
+                $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+                    $('#reservationdatetime2').datetimepicker('minDate', e.date);
+                });
+                $("#reservationdatetime2").on("change.datetimepicker", function (e) {
+                    $('#reservationdatetime1').datetimepicker('maxDate', e.date);
+                });
+
+            }
+            else {
+                console.log(typeof (urlParams.get('ngaybatdau')))
+
+                $('#reservationdatetime1').datetimepicker({
+                    icons: { time: 'far fa-clock' },
+                    format: 'DD/MM/yyyy',
+                    locale: 'vi'
+                });
+
+                $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+                    $('#reservationdatetime2').datetimepicker('minDate', e.date);
+                });
+                $("#reservationdatetime2").on("change.datetimepicker", function (e) {
+                    $('#reservationdatetime1').datetimepicker('maxDate', e.date);
+                });
             }
 
-            if (urlParams.get('ngayketthuc') !== '') {
+            if (urlParams.get('ngayketthuc')) {
                 var s2 = urlParams.get('ngayketthuc').split('/');
                 var date2 = new Date(s2[2], s2[1] - 1, s2[0]);
 
@@ -213,7 +239,36 @@
                     icons: { time: 'far fa-clock' },
                     defaultDate: date2
                 });
+
+                $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+                    $('#reservationdatetime2').datetimepicker('minDate', e.date);
+                });
+                $("#reservationdatetime2").on("change.datetimepicker", function (e) {
+                    $('#reservationdatetime1').datetimepicker('maxDate', e.date);
+                });
             }
+            else {
+                $('#reservationdatetime2').datetimepicker({
+                    useCurrent: false,
+                    format: 'DD/MM/yyyy',
+                    locale: 'vi',
+                    icons: { time: 'far fa-clock' }
+                });
+
+                $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+                    $('#reservationdatetime2').datetimepicker('minDate', e.date);
+                });
+                $("#reservationdatetime2").on("change.datetimepicker", function (e) {
+                    $('#reservationdatetime1').datetimepicker('maxDate', e.date);
+                });
+            }
+
+
+            var btns = document.querySelectorAll('.info')
+            console.log(btns)
+            btns.forEach(e => e.href = e.href + document.location.search)
+
+
         }
 
         else {
@@ -229,7 +284,7 @@
                 icons: { time: 'far fa-clock' }
             });
         }
-        
+
         $("#reservationdatetime1").on("change.datetimepicker", function (e) {
             $('#reservationdatetime2').datetimepicker('minDate', e.date);
         });

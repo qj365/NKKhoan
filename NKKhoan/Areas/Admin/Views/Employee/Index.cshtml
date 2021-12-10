@@ -164,14 +164,20 @@
                                 </tr>
                             </thead>
 
+                            @{
+                                List < WorkTimeViewModel> l = new List<WorkTimeViewModel>();
+                                if (ViewBag.List != null) { 
+                                    l = ViewBag.List as List<NKKhoan.Areas.Admin.ViewModel.WorkTimeViewModel>;
+                                }
+                            } 
+
                             @foreach (var item in Model)
                             {
                                 var title = "";
                                 var styleWarning = "display:none;";
 
-                                if (ViewBag.List != null)
+                                if (l.Count() > 0)
                                 {
-                                    var l = ViewBag.List as IEnumerable<NKKhoan.Areas.Admin.ViewModel.WorkTimeViewModel>;
                                     var cn = l.First(c => c.MaCN == item.MaNhanCong);
                                     title = "Từ ngày " + ViewBag.Ndt + " đến " + ViewBag.Ncc + " nhân viên này làm quá giờ tiêu chuẩn " + cn.GioLam + " giờ.";
                                     styleWarning = "";

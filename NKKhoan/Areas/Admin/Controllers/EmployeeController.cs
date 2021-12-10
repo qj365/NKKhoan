@@ -61,13 +61,28 @@ namespace NKKhoan.Areas.Admin.Controllers
                 ViewBag.Ncc = _context.Database.SqlQuery<DateTime>("select dbo.getFirstDateOfWeek({0})", new object[] { t }).First().ToString("dd/MM/yyyy");
 
                 int gioccongchuan = _context.Database.SqlQuery<int>("select dbo.GioCongChuan({0})", new object[] { t }).First();
-                var list = _context.Database.SqlQuery<WorkTimeViewModel>("select * from dbo.NhanVienLamVuotGio ({0}); ", new object[] { t }).ToList();                
-
-                ViewBag.List = list;
-                foreach (var item in list)
+                var list = _context.Database.SqlQuery<WorkTimeViewModel>("select * from dbo.NhanVienLamVuotGio ({0}); ", new object[] { t }).ToList();   
+                
+                var e = new WorkTimeViewModel()
                 {
-                    employeeQuery = employeeQuery.Where(c => c.MaNhanCong == item.MaCN);
+                    MaCN=2,
+                    TenCN="",
+                    GioLam=5
+                };
+                list.Add(e);
+                ViewBag.List = list;
+                if (list.Count() > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        employeeQuery = employeeQuery.Where(c => c.MaNhanCong == item.MaCN);
+                    }
                 }
+                else
+                {
+                    employeeQuery = Enumerable.Empty<CongNhan>().AsQueryable();
+                }
+                
             }
 
             var employee = employeeQuery.ToList();
@@ -176,17 +191,17 @@ namespace NKKhoan.Areas.Admin.Controllers
 
                 int luong = 0;
                 double ngaycong = 0;
-                               
+
                 try
                 {
+                    ngaycong = _context.Database.SqlQuery<double>("select dbo.NhatKyLamViec({0}, {1}, {2})", new object[] { id, info.NKSLK.NgayThucHienKhoan, info.NKSLK.NgayThucHienKhoan }).First();
                      luong = _context.Database.SqlQuery<int>("select dbo.TienLuongSanPhamCongNhan({0}, {1}, {2})", new object[] { id, info.NKSLK.NgayThucHienKhoan, info.NKSLK.NgayThucHienKhoan }).First();
-                     ngaycong = _context.Database.SqlQuery<double>("select dbo.NhatKyLamViec({0}, {1}, {2})", new object[] { id, info.NKSLK.NgayThucHienKhoan, info.NKSLK.NgayThucHienKhoan }).First();
                     tongluong += luong;
                     tongngaycong += ngaycong;
                 }
-                catch { }              
+                catch { }
 
-                ViewBag.tongluong = tongluong;
+            ViewBag.tongluong = tongluong;
                 ViewBag.tongngaycong = tongngaycong;
 
                 InfoViewModel.LuongSP = luong;

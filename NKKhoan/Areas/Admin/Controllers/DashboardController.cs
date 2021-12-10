@@ -29,8 +29,8 @@ namespace NKKhoan.Areas.Admin.Controllers
             ViewBag.Cv = _context.CongViec.Count();
             ViewBag.Sp = _context.SanPham.Count();
             ViewBag.Cn = _context.CongNhan.Count();
-            ViewBag.Sltt = _context.Database.SqlQuery<int>("select dbo.sanluongthucte()").First();
-            ViewBag.Dmk = _context.Database.SqlQuery<int>("select dbo.dinhmuckhoan()").First();
+            ViewBag.Sltt = _context.Database.SqlQuery<int>("select dbo.sanluongthucte()").FirstOrDefault();
+            ViewBag.Dmk = _context.Database.SqlQuery<int>("select dbo.dinhmuckhoan()").FirstOrDefault();
             ViewBag.Chuaht = ViewBag.Dmk - ViewBag.Sltt;
 
             DateTime date = DateTime.Now;
@@ -44,17 +44,15 @@ namespace NKKhoan.Areas.Admin.Controllers
             {
                 var item = new EmployeeStatisticViewModel(employee);
 
-                int luong = 0;
+
                 double ngaycong = 0;
 
                 try
                 {
-                    ngaycong = _context.Database.SqlQuery<double>("select dbo.NhatKyLamViec({0}, {1}, {2})", new object[] { item.MaNhanCong, firstDayOfMonth, lastDayOfMonth }).First();
+                    ngaycong = _context.Database.SqlQuery<double>("select dbo.NhatKyLamViec({0}, {1}, {2})", new object[] { item.MaNhanCong, firstDayOfMonth, lastDayOfMonth }).FirstOrDefault();
                 }
                 catch { }
 
-
-                item.LuongSP = luong;
                 item.NgayCong = ngaycong;
 
                 list.Add(item);

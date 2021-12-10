@@ -41,7 +41,7 @@
 
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script src="~/signalr/hubs"></script>
+
 
     <style>
 
@@ -268,97 +268,6 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
-    @*<script>
-
-            var newNoti1 = '<a href="#" class="dropdown-item linkInfo">' +
-                '<div class="media">' +
-                '<img src="https://placebear.com/128/128" alt="User Avatar" class="img-size-50 img-circle mr-3">' +
-                '<div class="media-body">' +
-                '<h3 class="dropdown-item-title">Có đơn hàng mới' +
-                '</h3> ' +
-                '<p class="text-sm">'+
-
-                '</p>' +
-
-                '</div>' +
-                '</div>' +
-                '</a>';
-            $(function () {
-                $('a.noti').click(function (e) {
-                    e.stopPropagation();
-                    $('.noti--content').show();
-                    var count = 0;
-                    count = parseInt($('span.count-noti').html()) || 0;
-                    //only load notification if not already loaded
-
-                        updateNotification();
-
-                    $("span.count-noti").attr("hidden", true);
-                    $('span.count-noti', this).html('&nbsp;');
-                })
-                // hide notifications
-                $('html').click(function () {
-                    $('.noti--content').hide();
-                })
-
-
-                function updateNotification() {
-
-                    $.ajax({
-                        type: 'GET',
-                        url: '/Dashboard/GetNotificationOrders',
-                        success: function (response) {
-                            if (response.length != 0) {
-                                $('#notiContent').empty();
-                            }
-                            $.each(response, function (index, value) {
-                                $('#notiContent').append('<a href="/Admin/Delivery/Info/'+ value.Id +'" class="dropdown-item linkInfo">' +
-                                    '<div class="media">' +
-                                    '<img src="https://placebear.com/128/128" alt="User Avatar" class="img-size-50 img-circle mr-3">' +
-                                    '<div class="media-body">' +
-                                    '<h3 class="dropdown-item-title">Có đơn hàng mới' +
-                                    '</h3> ' +
-                                    '<p class="text-sm"># ' + value.Id +
-                                    '</p>' +
-                                    '<p class="text-sm text-muted">Thành tiền: ' + value.TotalPrice + '</p>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</a>' +
-                                    '<div class="dropdown-divider"></div>'
-                                )
-
-                            });
-                            if (response.length != 0) {
-                                $('#notiContent').append('<a href="#" class="dropdown-item dropdown-footer" id="deleteAll">Xoá tất cả</a>')
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    })
-                }
-
-                function updateNotificationCount() {
-                    $('span.count-noti').removeAttr("hidden")
-                    var count = 0;
-                    count = parseInt($('span.count-noti').html()) || 0;
-                    count++;
-                    $('span.count-noti').html(count);
-                }
-
-                // signalr js code for start hub and send receive notification
-                var notificationHub = $.connection.notificationHub;
-                $.connection.hub.start().done(function () {
-                    console.log('Notification hub started');
-                });
-                //signalr method for push server message to client
-                notificationHub.client.notify = function (message) {
-                    if (message && message.toLowerCase() == "added") {
-                        updateNotificationCount();
-                    }
-                }
-            })
-        </script>*@
 
 
 
