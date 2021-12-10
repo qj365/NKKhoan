@@ -277,6 +277,10 @@
     <Compile Include="Migrations\202112100427373_add-delete.Designer.cs">
       <DependentUpon>202112100427373_add-delete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112080454152_displaynameAnhsp.cs" />
+    <Compile Include="Migrations\202112080454152_displaynameAnhsp.Designer.cs">
+      <DependentUpon>202112080454152_displaynameAnhsp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -294,6 +298,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Data\ProductImage\NoImage.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -325,6 +330,7 @@
     <Content Include="Areas\Admin\Views\Task\ListBoxShift.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Detail.cshtml" />
 
+
     <Content Include="Areas\Admin\Views\Department\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Department\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Department\Edit.cshtml" />
@@ -333,6 +339,9 @@
     <Content Include="Areas\Admin\Views\Position\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Info.cshtml" />
+
+    <Content Include="Areas\Admin\Views\Product\Info.cshtml" />
+
 
     <Content Include="Areas\Admin\Views\Task\EditEmployee.cshtml" />
     <Content Include="Areas\Admin\Views\Task\EditJob.cshtml" />
@@ -343,6 +352,7 @@
     <Content Include="Areas\Admin\Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\Error.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+
 
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -396,7 +406,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -423,6 +432,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112100427373_add-delete.resx">
       <DependentUpon>202112100427373_add-delete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112080454152_displaynameAnhsp.resx">
+      <DependentUpon>202112080454152_displaynameAnhsp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

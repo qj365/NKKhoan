@@ -42,6 +42,7 @@
         [Required(ErrorMessage = "Vui lòng nhập ngày đăng ký")]
         public DateTime? NgayDangKy { get; set; }
 
+        [Display(Name = "Ảnh sản phẩm")]
         [Required(ErrorMessage = "Vui lòng upload ảnh")]
         public string Anh { get; set; }
 

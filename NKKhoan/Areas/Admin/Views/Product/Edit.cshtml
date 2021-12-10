@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Edit";
-
 }
 
 <section class="content-header">
@@ -24,7 +23,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
-                            @using (Html.BeginForm("Save", "Product", FormMethod.Post, new { style = "display: flex; width: 100%;" }))
+                            @using (Html.BeginForm("Save", "Product", FormMethod.Post, new { style = "display: flex; width: 100%;", enctype = "multipart/form-data" }))
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.HiddenFor(model => model.MaSanPham)
@@ -85,7 +84,33 @@
                                             @Html.ValidationMessageFor(model => model.HanSuDung, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                    
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Anh, htmlAttributes: new { @class = "control-label col-md-4" })
+
+                                        <div class="col-md-10">
+                                            <input class="form-control " onchange="readURL(this);" type="file" accept="image/*" id="photo" name="photo">
+                                            <div class="form-group">
+                                                <img class="col-md-5" id="blah" src="~/Areas/Admin/Data/ProductImage/@Model.Anh" alt="placeholder" style="width:150px; height:200px" />
+                                            </div>
+                                            <script>
+                                                function readURL(input) {
+                                                    if (input.files && input.files[0]) {
+                                                        var reader = new FileReader();
+
+                                                        reader.onload = function (e) {
+                                                            $('#blah')
+                                                                .attr('src', e.target.result)
+                                                                .width(250)
+                                                                .height(200);
+                                                        };
+
+                                                        reader.readAsDataURL(input.files[0]);
+                                                    }
+                                                }
+                                            </script>
+                                        @Html.ValidationMessageFor(model => model.Anh, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
                                 </div>
 
                             }
@@ -114,4 +139,13 @@
         });
 
     })
+
+    bsCustomFileInput.init();
+
+    exampleInputFile.onchange = evt => {
+        const [file] = exampleInputFile.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
 </script>

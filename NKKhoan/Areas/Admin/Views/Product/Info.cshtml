@@ -1,0 +1,219 @@
+﻿@model NKKhoan.Models.SanPham
+
+@{
+    ViewBag.Title = "Info";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Chi tiết sản phẩm</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lương sản phẩm @Model.TenSanPham</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @*<table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TenSanPham)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.SoDangKy)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.HanSuDung)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.QuyCach)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.NgayDangKy)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Anh)
+                                    </th>
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenSanPham)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SoDangKy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.HanSuDung)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.QuyCach)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NgayDangKy)
+                                    </td>
+                                    <td>
+                                        <img width="100px" src="~/Areas/Admin/Data/ProductImage/@item.Anh" />
+                                    </td>
+                                    <td>
+
+                                        <a class="btn-edit" href="~/Admin/Product/Edit/@item.MaSanPham">
+                                            <i class="far fa-edit icon-edit"></i>
+                                        </a>
+
+                                        <a class="js-delete" href="~/Admin/Product/Delete/@item.MaSanPham">
+                                            <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
+                                        </a>
+
+                                        <a class="info" href="~/Admin/Product/Info/@item.MaSanPham">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </table>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            @using (Html.BeginForm("Save", "Product", FormMethod.Post, new { style = "display: flex; width: 100%;", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.MaSanPham)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Anh, htmlAttributes: new { @class = "control-label col-md-4" })
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <img class="col-md-12" id="blah" src="~/Areas/Admin/Data/ProductImage/@Model.Anh" alt="placeholder" style="width:600px; height:450px" />
+                                            </div>
+                                            <script>
+                                                function readURL(input) {
+                                                    if (input.files && input.files[0]) {
+                                                        var reader = new FileReader();
+
+                                                        reader.onload = function (e) {
+                                                            $('#blah')
+                                                                .attr('src', e.target.result)
+                                                                .width(550)
+                                                                .height(600);
+                                                        };
+
+                                                        reader.readAsDataURL(input.files[0]);
+                                                    }
+                                                }
+                                            </script>
+                                        @Html.ValidationMessageFor(model => model.Anh, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
+                                <div class="col=md-6" style="width: 100%">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NgayDangKy, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.NgayDangKy, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            @Html.ValidationMessageFor(model => model.NgayDangKy, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.HanSuDung, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.HanSuDung, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            @Html.ValidationMessageFor(model => model.HanSuDung, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TenSanPham, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.TenSanPham, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            @Html.ValidationMessageFor(model => model.TenSanPham, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.SoDangKy, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.SoDangKy, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            @Html.ValidationMessageFor(model => model.SoDangKy, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.QuyCach, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.QuyCach, new { htmlAttributes = new { @class = "form-control", @readonly= "readonly" } })
+                                            @Html.ValidationMessageFor(model => model.QuyCach, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <a href="~/Admin/Product/Index" class="btn btn-warning">Huỷ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+
+    $(function () {
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) || moment(value, "DD/MM/YYYY", true).isValid();
+        }
+
+        $('#reservationdatetime1').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            locale: 'vi',
+            format: 'DD/MM/yyyy'
+        });
+
+        $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+            $('#reservationdatetime2').datetimepicker('minDate', e.date);
+        });
+
+    })
+</script>
