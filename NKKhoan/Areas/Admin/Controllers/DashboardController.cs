@@ -1,4 +1,5 @@
-﻿using NKKhoan.Models;
+﻿using NKKhoan.Areas.Admin.ViewModel;
+using NKKhoan.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace NKKhoan.Areas.Admin.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
 
@@ -24,7 +26,42 @@ namespace NKKhoan.Areas.Admin.Controllers
         // GET: Admin/Dashboard
         public ActionResult Index()
         {
-            return View();
+            ViewBag.Cv = _context.CongViec.Count();
+            ViewBag.Sp = _context.SanPham.Count();
+            ViewBag.Cn = _context.CongNhan.Count();
+            ViewBag.Sltt = _context.Database.SqlQuery<int>("select dbo.sanluongthucte()").First();
+            ViewBag.Dmk = _context.Database.SqlQuery<int>("select dbo.dinhmuckhoan()").First();
+            ViewBag.Chuaht = ViewBag.Dmk - ViewBag.Sltt;
+
+            DateTime date = DateTime.Now;
+            var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            var list = new List<EmployeeStatisticViewModel>();
+
+            var employees = _context.CongNhan.ToList();
+            foreach (var employee in employees)
+            {
+                var item = new EmployeeStatisticViewModel(employee);
+
+                int luong = 0;
+                double ngaycong = 0;
+
+                try
+                {
+                    ngaycong = _context.Database.SqlQuery<double>("select dbo.NhatKyLamViec({0}, {1}, {2})", new object[] { item.MaNhanCong, firstDayOfMonth, lastDayOfMonth }).First();
+                }
+                catch { }
+
+
+                item.LuongSP = luong;
+                item.NgayCong = ngaycong;
+
+                list.Add(item);
+            }
+            list = list.OrderByDescending(c => c.NgayCong).Take(5).ToList();
+
+            return View(list);
         }
     }
 }

@@ -190,25 +190,30 @@
         if (document.location.search.length) {
             var urlParams = new URLSearchParams(document.location.search);
 
-            var s1 = urlParams.get('ngaybatdau').split('/');
-            var date1 = new Date(s1[2], s1[1] - 1, s1[0]);
+            if (urlParams.get('ngaybatdau') !== '') {
+                var s1 = urlParams.get('ngaybatdau').split('/');
+                var date1 = new Date(s1[2], s1[1] - 1, s1[0]);
+                $('#reservationdatetime1').datetimepicker({
+                    icons: { time: 'far fa-clock' },
+                    format: 'DD/MM/yyyy',
+                    locale: 'vi',
+                    defaultDate: date1
+                });
+            }
 
-            var s2 = urlParams.get('ngayketthuc').split('/');
-            var date2 = new Date(s2[2], s2[1] - 1, s2[0]);
+            if (urlParams.get('ngayketthuc') !== '') {
+                var s2 = urlParams.get('ngayketthuc').split('/');
+                var date2 = new Date(s2[2], s2[1] - 1, s2[0]);
 
-            $('#reservationdatetime1').datetimepicker({
-                icons: { time: 'far fa-clock' },
-                format: 'DD/MM/yyyy',
-                locale: 'vi',
-                defaultDate: date1
-            });
-            $('#reservationdatetime2').datetimepicker({
-                useCurrent: false,
-                format: 'DD/MM/yyyy',
-                locale: 'vi',
-                icons: { time: 'far fa-clock' },
-                defaultDate: date2
-            });
+
+                $('#reservationdatetime2').datetimepicker({
+                    useCurrent: false,
+                    format: 'DD/MM/yyyy',
+                    locale: 'vi',
+                    icons: { time: 'far fa-clock' },
+                    defaultDate: date2
+                });
+            }
         }
 
         else {

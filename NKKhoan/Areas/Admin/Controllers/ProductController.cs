@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace NKKhoan.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private ApplicationDbContext _context;

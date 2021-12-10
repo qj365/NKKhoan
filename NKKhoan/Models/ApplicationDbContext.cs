@@ -31,12 +31,12 @@ namespace NKKhoan.Models
             modelBuilder.Entity<CongNhan>()
                 .HasMany(e => e.ChiTietNhanCongKhoan)
                 .WithRequired(e => e.CongNhan)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<CongViec>()
                 .HasMany(e => e.ChiTietCongViec)
                 .WithRequired(e => e.CongViec)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<NKSLK>()
                 .HasMany(e => e.ChiTietCongViec)

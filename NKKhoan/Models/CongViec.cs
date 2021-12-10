@@ -24,7 +24,7 @@
         public string TenCongViec { get; set; }
 
         [Display(Name = "Định mức khoán")]
-        public decimal? DinhMucKhoan { get; set; }
+        public int? DinhMucKhoan { get; set; }
 
         [StringLength(50)]
         [Display(Name = "Đơn vị khoán")]

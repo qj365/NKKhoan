@@ -28,6 +28,11 @@
                             @using (Html.BeginForm("Save", "Employee", FormMethod.Post, new { style = "display: flex; width: 100%;" }))
                             {
                                 @Html.AntiForgeryToken()
+
+                                string returnUrl = ViewBag.ReturnUrl;
+                                
+                                <input type="hidden" name="returnUrl" value="@returnUrl" />
+
                                 @Html.HiddenFor(model => model.MaNhanCong)
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -111,7 +116,7 @@
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
                                             <input type="submit" value="Save" class="btn btn-primary" />
-                                            <a href="~/Admin/Employee" class="btn btn-warning">Huỷ</a>
+                                            <a href="@ViewBag.ReturnUrl" class="btn btn-warning">Huỷ</a>
                                         </div>
                                     </div>
                                 </div>

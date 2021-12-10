@@ -47,7 +47,7 @@ namespace NKKhoan.Models
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
@@ -68,6 +68,22 @@ namespace NKKhoan.Models
 
     public class VerifyPhoneNumberViewModel
     {
+        [Required]
+        [Display(Name = "Code")]
+        public string Code { get; set; }
+
+        [Required]
+        [Phone]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+    }
+
+    public class VerifyPhoneNumberRegisterViewModel
+    {
+        [Required]
+        [Display(Name = "UserId")]
+        public string UserId { get; set; }
+
         [Required]
         [Display(Name = "Code")]
         public string Code { get; set; }
