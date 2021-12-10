@@ -1,4 +1,20 @@
-﻿@model NKKhoan.Models.NKSLK
+﻿@model NKKhoan.Areas.Admin.ViewModels.TaskViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Sửa nhật ký khoán</h1>
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 
 
 <section class="content">
@@ -8,50 +24,69 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        @using (Html.BeginForm())
-                        {
-                            @Html.AntiForgeryToken()
-
-                            <div class="form-horizontal">
-                                <h4>NKSLK</h4>
-                                <hr />
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(model => model.MaNKSLK)
-
+                        <div class="row">
+                            @using (Html.BeginForm("Save", "Task", FormMethod.Post, new { style = "display: flex; width: 100%;" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.nkslk.MaNKSLK)
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.NgayThucHienKhoan, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.NgayThucHienKhoan, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.NgayThucHienKhoan, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => model.nkslk.NgayThucHienKhoan, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-10 input-group date" id="reservationdatetime1" data-target-input="nearest">
+
+                                        @Html.EditorFor(model => model.nkslk.NgayThucHienKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.nkslk.NgayThucHienKhoan, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.GioBatDau, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.GioBatDau, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.GioBatDau, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
+                                @{Html.RenderAction("ListBoxShift", "Task", new { giobatdau = Model.nkslk.GioBatDau, gioketthuc = Model.nkslk.GioKetThuc });}
+                                @{Html.RenderAction("ListBoxEmployee", "Task", new { MaNKSLK = Model.nkslk.MaNKSLK });}
+                                @{Html.RenderAction("ListBoxJob", "Task", new { MaNKSLK = Model.nkslk.MaNKSLK });}
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.GioKetThuc, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.GioKetThuc, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.GioKetThuc, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" value="Save" class="btn btn-default" />
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                        <a href="~/Admin/Task" class="btn btn-warning">Huỷ</a>
                                     </div>
                                 </div>
                             </div>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script type="text/javascript">
+    $(function () {
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) || moment(value, "DD/MM/yyyy", true).isValid();
+        }
+        $('#reservationdatetime1').datetimepicker({
+            locale: 'vi',
+            format: 'DD/MM/yyyy'
+        });
+        $('#reservationdatetime2').datetimepicker({
+            format: 'HH:mm'
+        });
+        $('#reservationdatetime3').datetimepicker({
+            format: 'HH:mm'
+        });
+
+        $('select').selectpicker();
+    })
+</script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>

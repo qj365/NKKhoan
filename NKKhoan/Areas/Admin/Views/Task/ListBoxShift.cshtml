@@ -1,0 +1,9 @@
+﻿@model NKKhoan.Areas.Admin.ViewModels.ShiftListBoxViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.shiftname, htmlAttributes: new { @class = "control-label col-md-3" })
+    <div class="col-md-10">
+
+        @Html.DropDownListFor(model => model.selectedshift, Model.shifts, new { @class = "form-control selectpicker", data_live_search = "true" })
+    </div>
+</div>

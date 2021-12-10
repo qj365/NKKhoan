@@ -7,13 +7,13 @@ namespace NKKhoan.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class suaspcv : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(suaspcv));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111140228474_sua-sp-cv"; }
+            get { return "202112090345283_init"; }
         }
         
         string IMigrationMetadata.Source

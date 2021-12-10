@@ -1,0 +1,85 @@
+﻿@model NKKhoan.Models.ChiTietCongViec
+
+@{
+    ViewBag.Title = "EditJob";
+    if (Request.UrlReferrer != null)
+    {
+        string returnURL = Request.UrlReferrer.ToString();
+        ViewBag.ReturnURL = returnURL;
+    }
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Sửa thông tin công việc @Model.CongViec.TenCongViec ở khoán @Model.MaNKSLK</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            @using (Html.BeginForm("SaveDetail", "Task", FormMethod.Post, new { style = "display: flex; width: 100%;" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.MaNKSLK)
+                                @Html.HiddenFor(model => model.MaCongViec)
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CongViec.TenCongViec, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.CongViec.TenCongViec, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.SanLuongThucTe, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.SanLuongThucTe, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.SanLuongThucTe, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                            <a href=@(ViewBag.ReturnURL.ToString() ?? "~/Admin/Employee/Detail?id=" + Model.MaNKSLK) class="btn btn-warning">Huỷ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+
+    $('.spb').select2();
+    $('.scv').select2();
+
+    $(function () {
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) || moment(value, "DD/MM/YYYY", true).isValid();
+        }
+
+        $('#reservationdatetime1').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            locale: 'vi',
+            format: 'DD/MM/yyyy'
+        });
+
+    })
+</script>
+
