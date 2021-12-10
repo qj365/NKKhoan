@@ -1,4 +1,5 @@
-﻿ 
+﻿@model IEnumerable<NKKhoan.Areas.Admin.ViewModel.EmployeeStatisticViewModel>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -23,7 +24,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>20</h3>
+                        <h3>@ViewBag.Cv</h3>
 
                         <p>Công việc</p>
                     </div>
@@ -38,7 +39,7 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>10</h3>
+                        <h3>@ViewBag.Sp</h3>
 
                         <p>Sản phẩm</p>
                     </div>
@@ -53,7 +54,7 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>70</h3>
+                        <h3>@ViewBag.Cn</h3>
 
                         <p>Công nhân</p>
                     </div>
@@ -68,14 +69,14 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>5</h3>
+                        <h3>@ViewBag.Chuaht</h3>
 
-                        <p>Đi muộn</p>
+                        <p>Chưa hoàn thành</p>
                     </div>
                     <div class="icon">
                         <i class="far fa-times-circle"></i>
                     </div>
-                    <a href="/Admin/Order" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="/Admin/Task" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
@@ -104,7 +105,7 @@
             <div class="col-md-6">
                 <div class="card card-success">
                     <div class="card-header">
-                        <h3 class="card-title">Top nhân viên năng suất nhất</h3>
+                        <h3 class="card-title">Top nhân viên làm việc nhiều nhất</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -125,21 +126,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>25</td>
-                                    <td>Conan 1</td>
-                                    <td><span class="badge bg-success">6</span></td>
-                                </tr>
-                                <tr>
-                                    <td>26</td>
-                                    <td>Lupin</td>
-                                    <td><span class="badge bg-success">5</span></td>
-                                </tr>
-                                <tr>
-                                    <td>24</td>
-                                    <td>Doremon 1</td>
-                                    <td><span class="badge bg-success">5</span></td>
-                                </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.MaNhanCong</td>
+                                        <td>@item.HoTen</td>
+                                        <td><span class="badge bg-success">@item.NgayCong</span></td>
+                                    </tr>
+                                }
+                                
                             </tbody>
                         </table>
                     </div>
@@ -157,13 +152,13 @@
     var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
     var pieData        = {
         labels: [
-            'Thiếu',
+            'Chưa hoàn thành',
             'Hoàn thành'
-            
+
         ],
         datasets: [
             {
-                data: [5,10],
+                data: [@ViewBag.Chuaht, @ViewBag.Sltt],
                 backgroundColor: ['#dc3545', '#00a65a'],
             }
         ]

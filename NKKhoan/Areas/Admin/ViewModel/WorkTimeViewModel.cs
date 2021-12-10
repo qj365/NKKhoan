@@ -8,6 +8,7 @@ namespace NKKhoan.Areas.Admin.ViewModel
     public class WorkTimeViewModel
     {
         public int MaCN { get; set;}
+        public string TenCN { get; set; }
         public double GioLam { get; set;}
     }
 }

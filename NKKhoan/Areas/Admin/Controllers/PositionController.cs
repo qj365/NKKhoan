@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace NKKhoan.Areas.Admin.Controllers
 {
+    [Authorize]
     public class PositionController : Controller
     {
         private ApplicationDbContext _context;

@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                                 </div>
-                                <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.HeSoKhoan, htmlAttributes: new { @class = "control-label col-md-3" })
                                     <div class="col-md-7">
@@ -72,6 +72,14 @@
                                     <div class="col-md-7">
                                         @Html.EditorFor(model => model.DinhMucLaoDong, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.DinhMucLaoDong, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.MaSanPham, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-7">
+                                        @Html.DropDownListFor(m => m.MaSanPham, new SelectList(ViewBag.SanPham, "masanpham", "tensanpham"), "", new { @class = "form-control ssp" })
+
+                                        @Html.ValidationMessageFor(model => model.MaSanPham, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>

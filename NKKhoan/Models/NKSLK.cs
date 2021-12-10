@@ -26,10 +26,12 @@
         public DateTime NgayThucHienKhoan { get; set; }
 
         [Display(Name = "Giờ bắt đầu")]
-        public TimeSpan? GioBatDau { get; set; }
+        [Required]
+        public TimeSpan GioBatDau { get; set; }
 
         [Display(Name = "Giờ kết thúc")]
-        public TimeSpan? GioKetThuc { get; set; }
+        [Required]
+        public TimeSpan GioKetThuc { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietCongViec> ChiTietCongViec { get; set; }
