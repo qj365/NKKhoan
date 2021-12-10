@@ -261,25 +261,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112090345283_init.cs" />
-    <Compile Include="Migrations\202112090345283_init.Designer.cs">
-      <DependentUpon>202112090345283_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112071527386_bomatkhau.cs" />
-    <Compile Include="Migrations\202112071527386_bomatkhau.Designer.cs">
-      <DependentUpon>202112071527386_bomatkhau.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112071636200_dinhmuckhoan-int.cs" />
-    <Compile Include="Migrations\202112071636200_dinhmuckhoan-int.Designer.cs">
-      <DependentUpon>202112071636200_dinhmuckhoan-int.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112100427373_add-delete.cs" />
-    <Compile Include="Migrations\202112100427373_add-delete.Designer.cs">
-      <DependentUpon>202112100427373_add-delete.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112080454152_displaynameAnhsp.cs" />
-    <Compile Include="Migrations\202112080454152_displaynameAnhsp.Designer.cs">
-      <DependentUpon>202112080454152_displaynameAnhsp.cs</DependentUpon>
+    <Compile Include="Migrations\202112100500006_init.cs" />
+    <Compile Include="Migrations\202112100500006_init.Designer.cs">
+      <DependentUpon>202112100500006_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -324,13 +308,10 @@
     <Content Include="Areas\Admin\Views\Job\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Edit.cshtml" />
-
     <Content Include="Areas\Admin\Views\Task\ListBoxEmployee.cshtml" />
     <Content Include="Areas\Admin\Views\Task\ListBoxJob.cshtml" />
     <Content Include="Areas\Admin\Views\Task\ListBoxShift.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Detail.cshtml" />
-
-
     <Content Include="Areas\Admin\Views\Department\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Department\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Department\Edit.cshtml" />
@@ -339,21 +320,15 @@
     <Content Include="Areas\Admin\Views\Position\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Info.cshtml" />
-
     <Content Include="Areas\Admin\Views\Product\Info.cshtml" />
-
-
     <Content Include="Areas\Admin\Views\Task\EditEmployee.cshtml" />
     <Content Include="Areas\Admin\Views\Task\EditJob.cshtml" />
-
     <Content Include="Areas\Admin\Views\EmployeeStatistic\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Error.cshtml" />
     <Content Include="Areas\Admin\Views\Account\RegisterSuccess.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Areas\Admin\Views\Manage\Error.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-
-
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -421,20 +396,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112090345283_init.resx">
-      <DependentUpon>202112090345283_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112071527386_bomatkhau.resx">
-      <DependentUpon>202112071527386_bomatkhau.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112071636200_dinhmuckhoan-int.resx">
-      <DependentUpon>202112071636200_dinhmuckhoan-int.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112100427373_add-delete.resx">
-      <DependentUpon>202112100427373_add-delete.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112080454152_displaynameAnhsp.resx">
-      <DependentUpon>202112080454152_displaynameAnhsp.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112100500006_init.resx">
+      <DependentUpon>202112100500006_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
