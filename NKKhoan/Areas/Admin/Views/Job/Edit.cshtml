@@ -76,6 +76,14 @@
                                             @Html.ValidationMessageFor(model => model.DinhMucLaoDong, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.MaSanPham, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-7">
+                                            @Html.DropDownListFor(m => m.MaSanPham, new SelectList(ViewBag.SanPham, "masanpham", "tensanpham"), "", new { @class = "form-control ssp" })
+
+                                            @Html.ValidationMessageFor(model => model.MaSanPham, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         </div>
