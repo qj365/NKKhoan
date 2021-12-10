@@ -31,6 +31,8 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                        @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+                        {
                             @*<div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -68,7 +70,9 @@
                                         <label for="searchTuNDK">
                                             Ngày đăng ký: Từ
                                         </label>
-                                        @*<input id="searchTuNDK" value="@ViewBag.SearchTuNDK" name="searchTuNDK" class="date-picker form-control" type="date">*@
+                                        @*<div>
+                                            <input id="searchTuNDK" value="@ViewBag.SearchTuNDK" name="searchTuNDK" class="date-picker form-control" type="date">
+                                        </div>*@                                     
                                         <div class="col-12 input-group date" id="reservationdatetime1" data-target-input="nearest">
                                             <input id="searchTuNDK" value="@ViewBag.SearchTuNDK" name="searchTuNDK" class="form-control datetimepicker-input text-box single-line valid" data-target="#reservationdatetime1">
                                             <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
@@ -105,6 +109,7 @@
                                     </div>
                                 </div>
                             </div>
+                        }
                     </div>
                 </div>
             </div>

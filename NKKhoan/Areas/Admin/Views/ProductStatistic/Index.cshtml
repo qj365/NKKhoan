@@ -1,16 +1,15 @@
 ﻿@model IEnumerable<NKKhoan.Models.NKSLK>
 
 @{
-    ViewBag.Title = "Info";
+    ViewBag.Title = "Index";
     var product = ViewBag.sp;
-    var productinfo = ViewBag.spinfo;
 }
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Chi tiết sản phẩm</h1>
+                <h1>Thống kê lương sản phẩm</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -22,7 +21,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Thông tin lương sản phẩm @productinfo.TenSanPham</h3>
+                        <h3 class="card-title">Thông tin lương sản phẩm</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -32,7 +31,7 @@
                     </div>
 
                     <div class="card-body">
-                        @using (Html.BeginForm("Info", "Product", FormMethod.Get, new { style = "display:contents" }))
+                        @using (Html.BeginForm("Index", "ProductStatistic", FormMethod.Get))
                         {
                             <div class="row">
                                 <div class="col-md-3">
@@ -40,7 +39,7 @@
                                         <label for="searchTuNDK">
                                             Ngày: Từ
                                         </label>
-                                        @*<input id="searchTuNDK" value="@ViewBag.SearchTuNDK" name="searchTuNDK" class="date-picker form-control" type="date">*@
+                                        @*<input id="ngaybatdau" value="@ViewBag.Ngaybatdau" name="ngaybatdau" class="date-picker form-control" type="date">*@
                                         <div class="col-12 input-group date" id="reservationdatetime1" data-target-input="nearest">
                                             <input id="ngaybatdau" value="@ViewBag.Ngaybatdau" name="ngaybatdau" class="form-control datetimepicker-input text-box single-line valid" data-target="#reservationdatetime1">
                                             <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
@@ -77,40 +76,48 @@
                                 </div>
                             </div>
                         }
-                            <table id="example1" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Mã khoán
-                                        </th>
-                                        <th>
-                                            Tên công việc
-                                        </th>
-                                        <th>
-                                            Đơn giá
-                                        </th>
-                                        <th>
-                                            Sản lượng thực tế
-                                        </th>
-                                        <th>
-                                            Lương sản phẩm
-                                        </th>
-                                        <th>
-                                            Ngày thực hiện khoán thực tế
-                                        </th>
-                                        <th>
-                                            Công nhân thực hiện khoán
-                                        </th>
-                                    </tr>
-                                </thead>
-                                @{
-                                    int[] arrsanluong = new int[1000];
-                                    int[] arrluongsp = new int[1000];
-                                    var i = 0;
-                                }
-                                @foreach (var itemcv in ViewBag.cv)
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Mã khoán
+                                    </th>
+                                    <th>
+                                        Tên công việc
+                                    </th>
+                                    <th>
+                                        Sản phẩm
+                                    </th>
+                                    <th>
+                                        Đơn giá
+                                    </th>
+                                    <th>
+                                        Sản lượng thực tế
+                                    </th>
+                                    <th>
+                                        Lương sản phẩm
+                                    </th>
+                                    <th>
+                                        Ngày thực hiện khoán thực tế
+                                    </th>
+                                    <th>
+                                        Công nhân thực hiện khoán
+                                    </th>
+                                    <th>
+                                        Chức năng
+                                    </th>
+                                </tr>
+                            </thead>
+                            @{
+                                int[] arrsanluong = new int[1000];
+                                int[] arrluongsp = new int[1000];
+                                var i = 0;
+                            }
+                            @foreach (var itemsp in ViewBag.sp)
+                            {
+                                foreach (var itemcv in ViewBag.cv)
                                 {
-                                    if (productinfo.MaSanPham == itemcv.MaSanPham)
+                                    if (itemsp.MaSanPham == itemcv.MaSanPham)
                                     {
                                         foreach (var itemctcv in ViewBag.ctcv)
                                         {
@@ -132,6 +139,9 @@
                                                                     </td>
                                                                     <td>
                                                                         @itemcv.TenCongViec
+                                                                    </td>
+                                                                    <td>
+                                                                        @itemsp.TenSanPham
                                                                     </td>
                                                                     <td>
                                                                         @itemcv.DonGia
@@ -166,6 +176,11 @@
                                                                             }
                                                                         }
                                                                     </td>
+                                                                    <td>
+                                                                        <a class="info" href="~/Admin/ProductStatistic/Info/@itemnkslk.MaNKSLK">
+                                                                            <i class="fas fa-info-circle"></i>
+                                                                        </a>
+                                                                    </td>
                                                                 </tr>
                                                             }
                                                         }
@@ -175,119 +190,17 @@
                                         }
                                     }
                                 }
-                            </table>
-
-                            <div class="row">
-                                <div class="col-md-8">
-                                </div>
-                                <div class="col">
-                                    <p style="font-weight:700">Tổng lương sản phẩm: @{int[] arrlsp = arrluongsp.Distinct().ToArray(); int tongluongsp = arrlsp.Sum();} @tongluongsp</p>
-                                    <p style="font-weight:700">Tổng sản lượng: @{int[] arrsl = arrsanluong.Distinct().ToArray(); int tongsanluong = arrsl.Sum();} @tongsanluong</p>
-                                </div>
-
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="row">
-                            @using (Html.BeginForm("Save", "Product", FormMethod.Post, new { style = "display: flex; width: 100%;", enctype = "multipart/form-data" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>
-                                            Ảnh sản phẩm
-                                        </label>
-
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <img class="col-md-12" id="blah" src="~/Areas/Admin/Data/ProductImage/@productinfo.Anh" alt="placeholder" style="width:600px; height:450px" />
-                                            </div>
-                                            <script>
-                                                function readURL(input) {
-                                                    if (input.files && input.files[0]) {
-                                                        var reader = new FileReader();
-
-                                                        reader.onload = function (e) {
-                                                            $('#blah')
-                                                                .attr('src', e.target.result)
-                                                                .width(550)
-                                                                .height(600);
-                                                        };
-
-                                                        reader.readAsDataURL(input.files[0]);
-                                                    }
-                                                }
-                                            </script>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="col=md-6" style="width: 100%">
-                                    <div class="form-group">
-                                        <label>
-                                            Ngày đăng ký
-                                        </label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" readonly="readonly" value="@productinfo.NgayDangKy.Date.ToString("dd/MM/yyyy")" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>
-                                            Hạn sử dụng
-                                        </label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" readonly="readonly" value="@productinfo.HanSuDung" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>
-                                            Tên sản phẩm
-                                        </label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" readonly="readonly" value="@productinfo.TenSanPham" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>
-                                            Số đăng ký
-                                        </label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" readonly="readonly" value="@productinfo.SoDangKy" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>
-                                            Quy cách
-                                        </label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" readonly="readonly" value="@productinfo.QuyCach" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <a href="~/Admin/Product/Index" class="btn btn-warning">Huỷ</a>
-                                        </div>
-                                    </div>
-                                </div>
                             }
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                            </div>
+                            <div class="col">
+                                <p style="font-weight:700">Tổng lương sản phẩm: @{int[] arrlsp = arrluongsp.Distinct().ToArray(); int tongluongsp = arrlsp.Sum();} @tongluongsp</p>
+                                <p style="font-weight:700">Tổng sản lượng: @{int[] arrsl = arrsanluong.Distinct().ToArray(); int tongsanluong = arrsl.Sum();} @tongsanluong</p>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -305,8 +218,8 @@
         }
 
         $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-            'rowsGroup': [0, 1, 2, 3, 4, 5, 6]
+            "responsive": true, "lengthChange": false, "autoWidth": false, searching: true,
+            'rowsGroup': [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
 

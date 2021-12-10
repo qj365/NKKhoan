@@ -1,0 +1,197 @@
+﻿@model IEnumerable<NKKhoan.Models.CongNhan>
+
+@{
+    ViewBag.Title = "InfoEmployee";
+    var employeeinfo = ViewBag.cninfo;
+}
+
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Chi tiết công nhân @employeeinfo.MaNhanCong</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            @using (Html.BeginForm("Save", "Product", FormMethod.Post, new { style = "display: flex; width: 100%;", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="col=md-6" style="width: 100%">
+                                    <div class="form-group">
+                                        <label>
+                                            Tên công nhân
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@employeeinfo.HoTen" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            Ngày sinh
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@employeeinfo.NgayNamSinh.Date.ToString("dd/MM/yyyy")" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            Quê quán
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@employeeinfo.QueQuan" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            Giới tính
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@employeeinfo.GioiTinh" />
+                                        </div>
+                                    </div>
+
+
+                                    @*<div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <a href="~/Admin/ProductStatistic/Info/" class="btn btn-warning">Huỷ</a>
+                                        </div>
+                                    </div>*@
+                                </div>
+
+                                <div class="col=md-6" style="width: 100%">
+                                    <div class="form-group">
+                                        <label>
+                                            Lương hợp đồng
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@employeeinfo.LuongHopDong" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            Lương bảo hiểm
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@employeeinfo.LuongBaoHiem" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            Phòng ban
+                                        </label>
+                                        @foreach (var itempb in ViewBag.pb)
+                                        {
+                                            if (employeeinfo.MaPhongBan == itempb.MaPhongBan)
+                                            {
+
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control" readonly="readonly" value="@itempb.TenPhongBan" />
+                                                </div>
+                                            }
+                                        }
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            Chức vụ
+                                        </label>
+                                        @foreach (var itemcv in ViewBag.cv)
+                                        {
+                                            if (employeeinfo.MaChucVu == itemcv.MaChucVu)
+                                            {
+
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control" readonly="readonly" value="@itemcv.TenChucVu" />
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/ashl1/datatables-rowsgroup/fbd569b8768155c7a9a62568e66a64115887d7d0/dataTables.rowsGroup.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) || moment(value, "DD/MM/YYYY", true).isValid();
+        }
+
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            'rowsGroup': [0, 1, 2, 3, 4, 5, 6]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+
+    if (document.location.search.length) {
+        var urlParams = new URLSearchParams(document.location.search);
+        $('#Select').val(urlParams.get('Select'));
+
+        var s1 = urlParams.get('searchTuNDK').split('/');
+        var date1 = new Date(s1[2], s1[1] - 1, s1[0]);
+
+        var s2 = urlParams.get('searchDenNDK').split('/');
+        var date2 = new Date(s2[2], s2[1] - 1, s2[0]);
+
+        $('#reservationdatetime1').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            format: 'DD/MM/yyyy',
+            locale: 'vi',
+            defaultDate: date1
+        });
+        $('#reservationdatetime2').datetimepicker({
+            useCurrent: false,
+            format: 'DD/MM/yyyy',
+            locale: 'vi',
+            icons: { time: 'far fa-clock' },
+            defaultDate: date2
+        });
+    }
+
+    else {
+        $('#reservationdatetime1').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            format: 'DD/MM/yyyy',
+            locale: 'vi'
+        });
+        $('#reservationdatetime2').datetimepicker({
+            useCurrent: false,
+            format: 'DD/MM/yyyy',
+            locale: 'vi',
+            icons: { time: 'far fa-clock' }
+        });
+    }
+
+    $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+        $('#reservationdatetime2').datetimepicker('minDate', e.date);
+    });
+    $("#reservationdatetime2").on("change.datetimepicker", function (e) {
+        $('#reservationdatetime1').datetimepicker('maxDate', e.date);
+    });
+</script>

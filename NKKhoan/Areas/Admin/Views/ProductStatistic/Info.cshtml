@@ -1,0 +1,341 @@
+﻿@model IEnumerable<NKKhoan.Models.NKSLK>
+
+@{
+    ViewBag.Title = "Info";
+    var nkinfo = ViewBag.nkslkinfo;
+    var productinfo = ViewBag.spinfo;
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Chi tiết khoán @nkinfo.MaNKSLK</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin nhân công khoán</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Tên nhân công
+                                    </th>
+                                    <th>
+                                        Ngày thực hiện khoán
+                                    </th>
+                                    <th>
+                                        Giờ bắt đầu
+                                    </th>
+                                    <th>
+                                        Giờ kết thúc
+                                    </th>
+                                    <th>
+                                        Chức năng
+                                    </th>
+                                </tr>
+                            </thead>
+                            @foreach (var itemnkslk in Model)
+                            {
+                                foreach (var itemctnck in ViewBag.ctnck)
+                                    {
+                                        if (itemctnck.MaNKSLK == itemnkslk.MaNKSLK)
+                                        {
+                                            foreach (var itemcn in ViewBag.cn)
+                                            {
+                                                if (itemctnck.MaNhanCong == itemcn.MaNhanCong)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @itemcn.HoTen
+                                                        </td>
+                                                        <td>
+                                                            @itemctnck.NgayThucHienKhoan.Date.ToString("dd/MM/yyyy")
+                                                        </td>
+                                                        <td>
+
+                                                            @itemctnck.GioBatDau
+                                                        </td>
+                                                        <td>
+                                                            @itemctnck.GioKetThuc
+                                                        </td>
+                                                        <td>
+                                                            <a class="info" href="~/Admin/ProductStatistic/InfoEmployee/@itemcn.MaNhanCong">
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin công việc khoán</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Tên công việc
+                                    </th>
+                                    <th>
+                                        Sản lượng thực tế
+                                    </th>
+                                    <th>
+                                        Định mức khoán
+                                    </th>
+                                    <th>
+                                        Đơn vị khoán
+                                    </th>
+                                    <th>
+                                        Hệ số khoán
+                                    </th>
+                                    <th>
+                                        Định mức lao động
+                                    </th>
+                                    <th>
+                                        Đơn giá
+                                    </th>
+                                    <th>
+                                        Sản phẩm
+                                    </th>
+                                    <th>
+                                        Chức năng
+                                    </th>
+                                </tr>
+                            </thead>
+                            @foreach (var itemsp in ViewBag.sp)
+                            {
+                                foreach (var itemcv in ViewBag.cv)
+                                {
+                                    if (itemsp.MaSanPham == itemcv.MaSanPham)
+                                    {
+                                        foreach (var itemctcv in ViewBag.ctcv)
+                                        {
+                                            if (itemcv.MaCongViec == itemctcv.MaCongViec)
+                                            {
+                                                foreach (var itemnkslk in Model)
+                                                {
+
+                                                    if (itemnkslk.MaNKSLK == itemctcv.MaNKSLK)
+                                                    {
+                                                        foreach (var itemctnck in ViewBag.ctnck)
+                                                        {
+
+                                                            if (itemctnck.MaNKSLK == itemnkslk.MaNKSLK)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @itemcv.TenCongViec
+                                                                    </td>
+                                                                    <td>
+                                                                        @itemctcv.SanLuongThucTe
+                                                                    </td>
+                                                                    <td>
+                                                                        @itemcv.DinhMucKhoan
+                                                                    </td>
+                                                                    <td>
+                                                                        @itemcv.DonViKhoan
+                                                                    </td>
+                                                                    <td>
+                                                                        @itemcv.HeSoKhoan
+                                                                    </td>
+                                                                    <td>
+                                                                        @itemcv.DinhMucLaoDong
+                                                                    </td>
+                                                                    <td>
+                                                                        @itemcv.DonGia
+                                                                    </td>
+                                                                    <td>
+                                                                        @itemsp.TenSanPham
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="info" href="~/Admin/ProductStatistic/InfoProduct/@itemsp.MaSanPham">
+                                                                            <i class="fas fa-info-circle"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            @using (Html.BeginForm("Save", "Product", FormMethod.Post, new { style = "display: flex; width: 100%;", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="col=md-6" style="width: 100%">
+                                    <div class="form-group">
+                                        <label>
+                                            Mã nhật ký sản lượng khoán
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@nkinfo.MaNKSLK" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            Ngày thực hiện khoán
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@nkinfo.NgayThucHienKhoan.Date.ToString("dd/MM/yyyy")" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <a href="~/Admin/ProductStatistic/Index" class="btn btn-warning">Huỷ</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col=md-6" style="width: 100%">
+                                    <div class="form-group">
+                                        <label>
+                                            Giờ bắt đầu
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@nkinfo.GioBatDau" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            Giờ kết thúc
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" readonly="readonly" value="@nkinfo.GioKetThuc" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/ashl1/datatables-rowsgroup/fbd569b8768155c7a9a62568e66a64115887d7d0/dataTables.rowsGroup.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) || moment(value, "DD/MM/YYYY", true).isValid();
+        }
+
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            'rowsGroup': [0, 1, 2, 3, 4, 5, 6]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+
+    if (document.location.search.length) {
+        var urlParams = new URLSearchParams(document.location.search);
+        $('#Select').val(urlParams.get('Select'));
+
+        var s1 = urlParams.get('searchTuNDK').split('/');
+        var date1 = new Date(s1[2], s1[1] - 1, s1[0]);
+
+        var s2 = urlParams.get('searchDenNDK').split('/');
+        var date2 = new Date(s2[2], s2[1] - 1, s2[0]);
+
+        $('#reservationdatetime1').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            format: 'DD/MM/yyyy',
+            locale: 'vi',
+            defaultDate: date1
+        });
+        $('#reservationdatetime2').datetimepicker({
+            useCurrent: false,
+            format: 'DD/MM/yyyy',
+            locale: 'vi',
+            icons: { time: 'far fa-clock' },
+            defaultDate: date2
+        });
+    }
+
+    else {
+        $('#reservationdatetime1').datetimepicker({
+            icons: { time: 'far fa-clock' },
+            format: 'DD/MM/yyyy',
+            locale: 'vi'
+        });
+        $('#reservationdatetime2').datetimepicker({
+            useCurrent: false,
+            format: 'DD/MM/yyyy',
+            locale: 'vi',
+            icons: { time: 'far fa-clock' }
+        });
+    }
+
+    $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+        $('#reservationdatetime2').datetimepicker('minDate', e.date);
+    });
+    $("#reservationdatetime2").on("change.datetimepicker", function (e) {
+        $('#reservationdatetime1').datetimepicker('maxDate', e.date);
+    });
+</script>
