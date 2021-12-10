@@ -1,0 +1,205 @@
+﻿@model IEnumerable<NKKhoan.Areas.Admin.ViewModel.EmployeeStatisticViewModel>
+
+@{
+    ViewBag.Title = "Statistic";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin công nhân</h1>
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default" id="card-id">
+
+            <div class="card-header">
+                <h3 class="card-title">Tìm kiếm</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="row" style="margin-left: 8px">
+                    <label>Tìm kiếm theo thời gian</label>
+                </div>
+                @using (Html.BeginForm("Index", "EmployeeStatistic", FormMethod.Get, new { style = "display:flex" }))
+                {
+                    <div class="col-3 input-group date" id="reservationdatetime1" data-target-input="nearest">
+                        <input name="ngaybatdau" class="form-control datetimepicker-input text-box single-line valid" data-target="#reservationdatetime1">
+                        <div class="input-group-append" data-target="#reservationdatetime1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+
+                    <div class="col-3 input-group date" id="reservationdatetime2" data-target-input="nearest">
+                        <input name="ngayketthuc" class="form-control datetimepicker-input text-box single-line" data-target="#reservationdatetime2">
+                        <div class="input-group-append" data-target="#reservationdatetime2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-1"></div>
+                    <button type="submit" class="btn btn-sm btn-default">
+                        <i class="fa fa-search"></i>
+                        Tìm kiếm
+                    </button>
+                }
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="col-sm-2">
+                                
+                            </div>
+
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.HoTen)
+                                        </th>
+                                        
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.PhongBan.TenPhongBan)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ChucVu.TenChucVu)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.LuongSP)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.NgayCong)
+                                        </th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+
+                                @foreach (var item in Model)
+                                {
+                                   
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HoTen)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PhongBan.TenPhongBan)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ChucVu.TenChucVu)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LuongSP)
+                                </td>
+                                <td>
+                                    @{
+                                        var nc = String.Format("{0:0.00}", item.NgayCong);
+                                    }
+                                    @nc
+                                </td>
+
+                                <td>                                    
+                                    <a class="btn btn-primary btn-sm info" href="~/Admin/Employee/Info/@item.MaNhanCong">
+                                        <i class="fas fa-info-circle">
+                                        </i>
+                                        <span style="margin-left:2px">
+                                            Info
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+
+
+
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false, searching: true,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+        if (document.location.search.length) {
+            var urlParams = new URLSearchParams(document.location.search);
+
+            if (urlParams.get('ngaybatdau') !== '') {
+                var s1 = urlParams.get('ngaybatdau').split('/');
+                var date1 = new Date(s1[2], s1[1] - 1, s1[0]);
+                $('#reservationdatetime1').datetimepicker({
+                    icons: { time: 'far fa-clock' },
+                    format: 'DD/MM/yyyy',
+                    locale: 'vi',
+                    defaultDate: date1
+                });
+            }
+            
+            if (urlParams.get('ngayketthuc') !== '') {
+                var s2 = urlParams.get('ngayketthuc').split('/');
+                var date2 = new Date(s2[2], s2[1] - 1, s2[0]);
+
+
+                $('#reservationdatetime2').datetimepicker({
+                    useCurrent: false,
+                    format: 'DD/MM/yyyy',
+                    locale: 'vi',
+                    icons: { time: 'far fa-clock' },
+                    defaultDate: date2
+                });
+            }
+            
+
+            var btns = document.querySelectorAll('.info')
+            console.log(btns)
+            btns.forEach(e => e.href = e.href + document.location.search)
+        }
+
+        else {
+            $('#reservationdatetime1').datetimepicker({
+                icons: { time: 'far fa-clock' },
+                format: 'DD/MM/yyyy',
+                locale: 'vi'
+            });
+            $('#reservationdatetime2').datetimepicker({
+                useCurrent: false,
+                format: 'DD/MM/yyyy',
+                locale: 'vi',
+                icons: { time: 'far fa-clock' }
+            });
+        }
+
+        $("#reservationdatetime1").on("change.datetimepicker", function (e) {
+            $('#reservationdatetime2').datetimepicker('minDate', e.date);
+        });
+        $("#reservationdatetime2").on("change.datetimepicker", function (e) {
+            $('#reservationdatetime1').datetimepicker('maxDate', e.date);
+        });
+
+
+    })
+</script>

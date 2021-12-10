@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort>44390</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -64,6 +64,9 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.14.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.14.1\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
+    <Reference Include="StarkbankEcdsa, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b2e6337a5d77bfbc, processorArchitecture=MSIL">
+      <HintPath>..\packages\starkbank-ecdsa.1.3.3\lib\net452\StarkbankEcdsa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -76,6 +79,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
       <Private>True</Private>
@@ -159,6 +163,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Twilio, Version=5.68.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.5.68.2\lib\net451\Twilio.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio.AspNet.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.AspNet.Common.5.68.3\lib\net45\Twilio.AspNet.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio.AspNet.Mvc, Version=5.68.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.AspNet.Mvc.5.68.3\lib\net451\Twilio.AspNet.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -166,6 +179,12 @@
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.4.1\lib\net452\xunit.core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -219,17 +238,23 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmployeeStatisticController.cs" />
     <Compile Include="Areas\Admin\Controllers\JobController.cs" />
     <Compile Include="Areas\Admin\Controllers\PositionController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductStatisticController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\EmployeeListBoxViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\JobListBoxViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ShiftListBoxViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\TaskViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\EmployeeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\InfoViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\WorkTimeViewModel.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\ViewModel\EmployeeStatisticViewModel.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\SalaryController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
@@ -237,41 +262,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111051348097_init.cs" />
-    <Compile Include="Migrations\202111051348097_init.Designer.cs">
-      <DependentUpon>202111051348097_init.cs</DependentUpon>
+    <Compile Include="Migrations\202112090345283_init.cs" />
+    <Compile Include="Migrations\202112090345283_init.Designer.cs">
+      <DependentUpon>202112090345283_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111060241060_init2.cs" />
-    <Compile Include="Migrations\202111060241060_init2.Designer.cs">
-      <DependentUpon>202111060241060_init2.cs</DependentUpon>
+    <Compile Include="Migrations\202112071527386_bomatkhau.cs" />
+    <Compile Include="Migrations\202112071527386_bomatkhau.Designer.cs">
+      <DependentUpon>202112071527386_bomatkhau.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111121559069_themphongban.cs" />
-    <Compile Include="Migrations\202111121559069_themphongban.Designer.cs">
-      <DependentUpon>202111121559069_themphongban.cs</DependentUpon>
+    <Compile Include="Migrations\202112071636200_dinhmuckhoan-int.cs" />
+    <Compile Include="Migrations\202112071636200_dinhmuckhoan-int.Designer.cs">
+      <DependentUpon>202112071636200_dinhmuckhoan-int.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111121609567_themchưcvu.cs" />
-    <Compile Include="Migrations\202111121609567_themchưcvu.Designer.cs">
-      <DependentUpon>202111121609567_themchưcvu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111140228474_sua-sp-cv.cs" />
-    <Compile Include="Migrations\202111140228474_sua-sp-cv.Designer.cs">
-      <DependentUpon>202111140228474_sua-sp-cv.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111150323338_them-foreignkey.cs" />
-    <Compile Include="Migrations\202111150323338_them-foreignkey.Designer.cs">
-      <DependentUpon>202111150323338_them-foreignkey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112060800357_themspvaocv.cs" />
-    <Compile Include="Migrations\202112060800357_themspvaocv.Designer.cs">
-      <DependentUpon>202112060800357_themspvaocv.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112060805527_themanh.cs" />
-    <Compile Include="Migrations\202112060805527_themanh.Designer.cs">
-      <DependentUpon>202112060805527_themanh.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112060813193_bosolosanpham.cs" />
-    <Compile Include="Migrations\202112060813193_bosolosanpham.Designer.cs">
-      <DependentUpon>202112060813193_bosolosanpham.cs</DependentUpon>
+    <Compile Include="Migrations\202112100427373_add-delete.cs" />
+    <Compile Include="Migrations\202112100427373_add-delete.Designer.cs">
+      <DependentUpon>202112100427373_add-delete.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202112080454152_displaynameAnhsp.cs" />
     <Compile Include="Migrations\202112080454152_displaynameAnhsp.Designer.cs">
@@ -306,19 +311,27 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Job\Edit.cshtml" />
+
+    <Content Include="Areas\Admin\Views\Task\ListBoxEmployee.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\ListBoxJob.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\ListBoxShift.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\Detail.cshtml" />
+
+
     <Content Include="Areas\Admin\Views\Department\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Department\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Department\Edit.cshtml" />
@@ -327,7 +340,21 @@
     <Content Include="Areas\Admin\Views\Position\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Info.cshtml" />
+
     <Content Include="Areas\Admin\Views\Product\Info.cshtml" />
+
+
+    <Content Include="Areas\Admin\Views\Task\EditEmployee.cshtml" />
+    <Content Include="Areas\Admin\Views\Task\EditJob.cshtml" />
+
+    <Content Include="Areas\Admin\Views\EmployeeStatistic\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\RegisterSuccess.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+
+
     <Content Include="Areas\Admin\Views\ProductStatistic\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ProductStatistic\Info.cshtml" />
     <Content Include="Areas\Admin\Views\ProductStatistic\InfoEmployee.cshtml" />
@@ -357,24 +384,24 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Register.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ResetPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\SendCode.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\VerifyCode.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Areas\Admin\Views\Manage\SetPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\VerifyPhoneNumberRegister.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Schedule\Schedule.cshtml" />
@@ -399,32 +426,17 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111051348097_init.resx">
-      <DependentUpon>202111051348097_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112090345283_init.resx">
+      <DependentUpon>202112090345283_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111060241060_init2.resx">
-      <DependentUpon>202111060241060_init2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112071527386_bomatkhau.resx">
+      <DependentUpon>202112071527386_bomatkhau.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111121559069_themphongban.resx">
-      <DependentUpon>202111121559069_themphongban.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112071636200_dinhmuckhoan-int.resx">
+      <DependentUpon>202112071636200_dinhmuckhoan-int.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111121609567_themchưcvu.resx">
-      <DependentUpon>202111121609567_themchưcvu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111140228474_sua-sp-cv.resx">
-      <DependentUpon>202111140228474_sua-sp-cv.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111150323338_them-foreignkey.resx">
-      <DependentUpon>202111150323338_them-foreignkey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112060800357_themspvaocv.resx">
-      <DependentUpon>202112060800357_themspvaocv.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112060805527_themanh.resx">
-      <DependentUpon>202112060805527_themanh.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112060813193_bosolosanpham.resx">
-      <DependentUpon>202112060813193_bosolosanpham.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112100427373_add-delete.resx">
+      <DependentUpon>202112100427373_add-delete.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112080454152_displaynameAnhsp.resx">
       <DependentUpon>202112080454152_displaynameAnhsp.cs</DependentUpon>
