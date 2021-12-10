@@ -230,7 +230,7 @@
                             string classActive = "";
                         }
                         @if (ViewContext.RouteData.Values["Controller"].ToString() == "EmployeeStatistic"
-                            || ViewContext.RouteData.Values["Controller"].ToString() == "Order")
+                            || ViewContext.RouteData.Values["Controller"].ToString() == "ProductStatistic")
                         {
                             classTree = "menu-is-opening menu-open";
                             classActive = "active";
@@ -252,9 +252,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="~/Admin/Order" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Order" ? "active" : "")">
+                                    <a href="~/Admin/ProductStatistic" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "ProductStatistic" ? "active" : "")">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Tất cả</p>
+                                        <p>Sản phẩm</p>
                                     </a>
                                 </li>
                             </ul>

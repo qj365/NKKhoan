@@ -143,7 +143,6 @@ namespace NKKhoan.Areas.Admin.Controllers
             SqlCommand.Append(" cn.NgayNamSinh NgayNamSinh, ");
             SqlCommand.Append(" cn.QueQuan QueQuan, ");
             SqlCommand.Append(" cn.GioiTinh GioiTinh, ");
-            SqlCommand.Append(" cn.MatKhau MatKhau, ");
             SqlCommand.Append(" cn.LuongHopDong LuongHopDong, ");
             SqlCommand.Append(" cn.LuongBaoHiem LuongBaoHiem, ");
             SqlCommand.Append(" cn.MaPhongBan MaPhongBan, ");
