@@ -227,11 +227,13 @@
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeStatisticController.cs" />
     <Compile Include="Areas\Admin\Controllers\JobController.cs" />
+    <Compile Include="Areas\Admin\Controllers\JobStatisticController.cs" />
     <Compile Include="Areas\Admin\Controllers\PositionController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Areas\Admin\ViewModel\EmployeeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\InfoViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\JobViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\WorkTimeViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\EmployeeStatisticViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -338,6 +340,7 @@
     <Content Include="Areas\Admin\Views\Employee\EmployeeForm.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Info.cshtml" />
     <Content Include="Areas\Admin\Views\EmployeeStatistic\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\JobStatistic\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

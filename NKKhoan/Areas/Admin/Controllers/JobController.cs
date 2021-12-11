@@ -43,6 +43,8 @@ namespace NKKhoan.Areas.Admin.Controllers
                     jobQuery = jobQuery.Where(c => c.DonGia > tb);
                 if(stv == "tv2")
                     jobQuery = jobQuery.Where(c => c.DonGia < tb);
+                if (stv == "tv3")
+                    return RedirectToAction("Index", "JobStatistic");
             }
             var job = jobQuery.ToList();
             return View(job);
@@ -78,7 +80,7 @@ namespace NKKhoan.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(CongViec job)
+        public ActionResult Save(CongViec job, string returnUrl)
         {
             if (job.MaCongViec == 0)
             {
@@ -94,10 +96,11 @@ namespace NKKhoan.Areas.Admin.Controllers
                 jobInDb.HeSoKhoan = job.HeSoKhoan;
                 jobInDb.DinhMucLaoDong = job.DinhMucLaoDong;
                 jobInDb.DonGia = (int?)(126360 * job.HeSoKhoan * job.DinhMucLaoDong / job.DinhMucKhoan);
+                jobInDb.MaSanPham = job.MaSanPham;
             }
 
             _context.SaveChanges();
-            return RedirectToAction("Index", "Job");
+            return returnUrl != null ? Redirect(returnUrl) : (ActionResult)RedirectToAction("Index", "Job");
         }
     }
 }

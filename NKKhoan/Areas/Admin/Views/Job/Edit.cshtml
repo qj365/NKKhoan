@@ -2,6 +2,11 @@
 
 @{
     ViewBag.Title = "Edit";
+    if (Request.UrlReferrer != null)
+    {
+        string returnURL = Request.UrlReferrer.ToString();
+        ViewBag.ReturnURL = returnURL;
+    }
 }
 
 
@@ -29,6 +34,7 @@
                             @using (Html.BeginForm("Save", "Job", FormMethod.Post, new { style = "display: flex; width: 100%;" }))
                             {
                                 @Html.AntiForgeryToken()
+                                <input type="hidden" name="returnUrl" value="@ViewBag.ReturnURL" />
                                 @Html.HiddenFor(model => model.MaCongViec)
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -57,7 +63,7 @@
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-7">
                                             <input type="submit" value="Save" class="btn btn-primary" />
-                                            <a href="~/Admin/Job/Index" class="btn btn-warning">Huỷ</a>
+                                            <a href=@(ViewBag.ReturnURL.ToString() ?? "~/Admin/Job/Index") class="btn btn-warning">Huỷ</a>
                                         </div>
                                     </div>
                                 </div>
