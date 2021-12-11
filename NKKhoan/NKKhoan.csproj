@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort>44390</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -302,8 +301,6 @@
     <Content Include="Areas\Admin\Views\Employee\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Employee\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Employee\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
@@ -335,6 +332,7 @@
     <Content Include="Areas\Admin\Views\ProductStatistic\Info.cshtml" />
     <Content Include="Areas\Admin\Views\ProductStatistic\InfoEmployee.cshtml" />
     <Content Include="Areas\Admin\Views\ProductStatistic\InfoProduct.cshtml" />
+    <None Include="Properties\PublishProfiles\csnhom7 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
