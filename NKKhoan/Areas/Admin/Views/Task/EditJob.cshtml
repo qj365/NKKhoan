@@ -7,14 +7,31 @@
         string returnURL = Request.UrlReferrer.ToString();
         ViewBag.ReturnURL = returnURL;
     }
+    string ca;
+    if (Model.NKSLK.GioBatDau == new TimeSpan(6, 0, 0) && Model.NKSLK.GioKetThuc == new TimeSpan(14, 0, 0))
+    {
+        ca = "ca 1 (6h-14h)";
+    }
+    else if (Model.NKSLK.GioBatDau == new TimeSpan(14, 0, 0) && Model.NKSLK.GioKetThuc == new TimeSpan(22, 0, 0))
+    {
+        ca = "ca 2 (14h-22h)";
+    }
+    else if (Model.NKSLK.GioBatDau == new TimeSpan(22, 0, 0) && Model.NKSLK.GioKetThuc == new TimeSpan(6, 0, 0))
+    {
+        ca = "ca 3 (22h-6h)";
+    }
+    else
+    {
+        ca = Model.NKSLK.GioBatDau.ToString() + "-" + Model.NKSLK.GioKetThuc.ToString();
+    }
 }
 
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Sửa thông tin công việc @Model.CongViec.TenCongViec ở khoán @Model.MaNKSLK</h1>
+            <div class="col-sm-12">
+                <h1>Sửa thông tin công việc @Model.CongViec.TenCongViec ở khoán ở khoán ngày @Model.NKSLK.NgayThucHienKhoan.ToString("dd-MM-yyyy"), @ca</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->

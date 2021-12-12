@@ -3,13 +3,30 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    string ca;
+    if (Model.nkslk.GioBatDau == new TimeSpan(6, 0, 0) && Model.nkslk.GioKetThuc == new TimeSpan(14, 0, 0))
+    {
+        ca = "ca 1 (6h-14h)";
+    }
+    else if (Model.nkslk.GioBatDau == new TimeSpan(14, 0, 0) && Model.nkslk.GioKetThuc == new TimeSpan(22, 0, 0))
+    {
+        ca = "ca 2 (14h-22h)";
+    }
+    else if (Model.nkslk.GioBatDau == new TimeSpan(22, 0, 0) && Model.nkslk.GioKetThuc == new TimeSpan(6, 0, 0))
+    {
+        ca = "ca 3 (22h-6h)";
+    }
+    else
+    {
+        ca = Model.nkslk.GioBatDau.ToString() + "-" + Model.nkslk.GioKetThuc.ToString();
+    }
 }
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Thông tin khoán @Model.nkslk.MaNKSLK</h1>
+            <div class="col-sm-10">
+                <h1>Thông tin khoán ngày @Model.nkslk.NgayThucHienKhoan.ToString("dd-MM-yyyy"), @ca</h1>
             </div>
 
         </div>
@@ -63,9 +80,30 @@
 
                             @foreach (var item in Model.congnhan)
                             {
+                                string title = string.Empty;
+                                string styleWarning = string.Empty;
+                                TimeSpan? giobatdau = item.ChiTietNhanCongKhoan.SingleOrDefault(x => (x.CongNhan.MaNhanCong == item.MaNhanCong && x.MaNKSLK == Model.nkslk.MaNKSLK)).GioBatDau;
+                                TimeSpan? gioketthuc = item.ChiTietNhanCongKhoan.SingleOrDefault(x => (x.CongNhan.MaNhanCong == item.MaNhanCong && x.MaNKSLK == Model.nkslk.MaNKSLK)).GioKetThuc;
+                                if (giobatdau > Model.nkslk.GioBatDau && gioketthuc < Model.nkslk.GioKetThuc && giobatdau != null && gioketthuc != null)
+                                {
+                                    title = "Công nhân này đến muộn và về sớm";
+                                }
+                                else if (giobatdau > Model.nkslk.GioBatDau)
+                                {
+                                    title = "Công nhân này đến muộn";
+                                }
+                                else if (gioketthuc < Model.nkslk.GioKetThuc)
+                                {
+                                    title = "Công nhân này về sớm";
+                                }
+                                else
+                                {
+                                    styleWarning = "display:none";
+                                }
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.HoTen)
+                                <i class="fas fa-exclamation-circle warning-user" data-toggle="tooltip" data-placement="right" title="@title" style=@styleWarning></i>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.NgayNamSinh)
@@ -96,10 +134,6 @@
 
                                 <a class="js-delete" href="~/Admin/Task/DeleteEmployee/?employee=@item.MaNhanCong&task=@Model.nkslk.MaNKSLK">
                                     <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
-                                </a>
-
-                                <a class="info" href="~/Admin/Employee/Detail/@item.MaNhanCong">
-                                    <i class="fas fa-info-circle"></i>
                                 </a>
                             </td>
                         </tr>
@@ -191,10 +225,6 @@
 
                                 <a class="js-delete" href="~/Admin/Task/DeleteJob/?job=@item.MaCongViec&task=@Model.nkslk.MaNKSLK">
                                     <i class="far fa-trash-alt icon-delete" style="margin-right: 10px"></i>
-                                </a>
-
-                                <a class="info" href="~/Admin/Job/Detail/@item.MaCongViec">
-                                    <i class="fas fa-info-circle"></i>
                                 </a>
                             </td>
                         </tr>
