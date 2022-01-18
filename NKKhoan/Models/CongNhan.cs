@@ -36,7 +36,7 @@
         public string QueQuan { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Giới tính")]
+        [Display(Name = "Giới tín")]
         public string GioiTinh { get; set; }
 
 

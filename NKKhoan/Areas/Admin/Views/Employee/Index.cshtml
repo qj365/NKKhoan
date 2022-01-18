@@ -179,7 +179,8 @@
                                 if (l.Count() > 0)
                                 {
                                     var cn = l.First(c => c.MaCN == item.MaNhanCong);
-                                    title = "Từ ngày " + ViewBag.Ndt + " đến " + ViewBag.Ncc + " nhân viên này làm quá giờ tiêu chuẩn " + cn.GioLam + " giờ.";
+                                    var vuotgio = cn.GioLam - ViewBag.Giochuan;
+                                    title = "Từ ngày " + ViewBag.Ndt + " đến " + ViewBag.Ncc + " nhân viên này đã làm " + cn.GioLam +" giờ công, vượt quá giờ công chuẩn " + vuotgio + " giờ. (Giờ công chuẩn: " + @ViewBag.Giochuan + " )";
                                     styleWarning = "";
                                 }
                                 <tr>

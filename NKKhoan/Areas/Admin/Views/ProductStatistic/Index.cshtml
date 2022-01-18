@@ -109,8 +109,8 @@
                                 </tr>
                             </thead>
                             @{
-                                int[] arrsanluong = new int[1000];
-                                int[] arrluongsp = new int[1000];
+                                long[] arrsanluong = new long[1000];
+                                long[] arrluongsp = new long[1000];
                                 var i = 0;
                             }
                             @foreach (var itemsp in ViewBag.sp)
@@ -197,8 +197,8 @@
                             <div class="col-md-8">
                             </div>
                             <div class="col">
-                                <p style="font-weight:700">Tổng lương sản phẩm: @{int[] arrlsp = arrluongsp.Distinct().ToArray(); int tongluongsp = arrlsp.Sum();} @tongluongsp</p>
-                                <p style="font-weight:700">Tổng sản lượng: @{int[] arrsl = arrsanluong.Distinct().ToArray(); int tongsanluong = arrsl.Sum();} @tongsanluong</p>
+                                <p style="font-weight:700">Tổng lương sản phẩm: @{long[] arrlsp = arrluongsp.Distinct().ToArray(); long tongluongsp = arrlsp.Sum();} @tongluongsp</p>
+                                <p style="font-weight:700">Tổng sản lượng: @{long[] arrsl = arrsanluong.Distinct().ToArray(); long tongsanluong = arrsl.Sum();} @tongsanluong</p>
                             </div>
 
                         </div>

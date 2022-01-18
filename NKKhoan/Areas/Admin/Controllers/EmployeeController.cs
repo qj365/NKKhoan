@@ -37,6 +37,7 @@ namespace NKKhoan.Areas.Admin.Controllers
 
             if (!String.IsNullOrWhiteSpace(sb))
                 employeeQuery = employeeQuery.Where(c => c.HoTen.Contains(sb));
+            var a = employeeQuery.ToList();
 
             if (!String.IsNullOrWhiteSpace(sgt))
                 employeeQuery = employeeQuery.Where(c => c.GioiTinh == sgt);
@@ -58,25 +59,25 @@ namespace NKKhoan.Areas.Admin.Controllers
                 var t = DateTime.ParseExact(tuan, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                 ViewBag.Ndt = _context.Database.SqlQuery<DateTime>("select dbo.getFirstDateOfWeek({0})", new object[] { t }).First().ToString("dd/MM/yyyy");
-                ViewBag.Ncc = _context.Database.SqlQuery<DateTime>("select dbo.getFirstDateOfWeek({0})", new object[] { t }).First().ToString("dd/MM/yyyy");
+                ViewBag.Ncc = _context.Database.SqlQuery<DateTime>("select dbo.getLastDateOfWeek({0})", new object[] { t }).First().ToString("dd/MM/yyyy");
 
                 int gioccongchuan = _context.Database.SqlQuery<int>("select dbo.GioCongChuan({0})", new object[] { t }).First();
+                ViewBag.Giochuan = gioccongchuan;
                 var list = _context.Database.SqlQuery<WorkTimeViewModel>("select * from dbo.NhanVienLamVuotGio ({0}); ", new object[] { t }).ToList();   
                 
-                var e = new WorkTimeViewModel()
-                {
-                    MaCN=2,
-                    TenCN="",
-                    GioLam=5
-                };
-                list.Add(e);
+                //var e = new WorkTimeViewModel()
+                //{
+                //    MaCN=2,
+                //    TenCN="",
+                //    GioLam=5
+                //};
+                //list.Add(e);
                 ViewBag.List = list;
                 if (list.Count() > 0)
                 {
-                    foreach (var item in list)
-                    {
-                        employeeQuery = employeeQuery.Where(c => c.MaNhanCong == item.MaCN);
-                    }
+                    var idList = list.Select(c => c.MaCN).ToList();
+                    employeeQuery = employeeQuery.Where(c => idList.Contains(c.MaNhanCong));
+                    
                 }
                 else
                 {

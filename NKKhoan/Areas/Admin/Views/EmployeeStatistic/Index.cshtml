@@ -163,12 +163,13 @@
                 $("#reservationdatetime2").on("change.datetimepicker", function (e) {
                     $('#reservationdatetime1').datetimepicker('maxDate', e.date);
                 });
+                console.log(1)
 
             }
             else {
-                console.log(typeof (urlParams.get('ngaybatdau')))
 
                 $('#reservationdatetime1').datetimepicker({
+                    useCurrent: false,
                     icons: { time: 'far fa-clock' },
                     format: 'DD/MM/yyyy',
                     locale: 'vi'
@@ -180,8 +181,10 @@
                 $("#reservationdatetime2").on("change.datetimepicker", function (e) {
                     $('#reservationdatetime1').datetimepicker('maxDate', e.date);
                 });
+                console.log(2)
+
             }
-            
+
             if (urlParams.get('ngayketthuc')) {
                 var s2 = urlParams.get('ngayketthuc').split('/');
                 var date2 = new Date(s2[2], s2[1] - 1, s2[0]);
@@ -201,6 +204,8 @@
                 $("#reservationdatetime2").on("change.datetimepicker", function (e) {
                     $('#reservationdatetime1').datetimepicker('maxDate', e.date);
                 });
+                console.log(3)
+
             }
             else {
                 $('#reservationdatetime2').datetimepicker({
@@ -216,6 +221,8 @@
                 $("#reservationdatetime2").on("change.datetimepicker", function (e) {
                     $('#reservationdatetime1').datetimepicker('maxDate', e.date);
                 });
+                console.log(4)
+
             }
 
 
@@ -223,11 +230,15 @@
             console.log(btns)
             btns.forEach(e => e.href = e.href + document.location.search)
 
-            
+
         }
 
         else {
+            console.log(5)
+
             $('#reservationdatetime1').datetimepicker({
+                useCurrent: false,
+
                 icons: { time: 'far fa-clock' },
                 format: 'DD/MM/yyyy',
                 locale: 'vi'

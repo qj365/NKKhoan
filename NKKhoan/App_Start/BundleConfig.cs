@@ -58,10 +58,6 @@ namespace NKKhoan
                        //Gallery
                        "~/Areas/Admin/Data/plugins/filterizr/jquery.filterizr.min.js"
 
-
-
-
-
                        ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

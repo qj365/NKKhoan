@@ -26,10 +26,10 @@
                     <div class="inner">
                         <h3>@ViewBag.Cv</h3>
 
-                        <p>Công việc</p>
+                        <p>Bác sĩ</p>
                     </div>
                     <div class="icon">
-                        <i class="fas fa-hand-holding-usd"></i>
+                        <i class="fas fa-user-nurse"></i>
                     </div>
                     <a href="/Admin/Job" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -39,12 +39,12 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>@ViewBag.Sp</h3>
+                        <h3>5</h3>
 
-                        <p>Sản phẩm</p>
+                        <p>Nhân viên</p>
                     </div>
                     <div class="icon">
-                        <i class="fab fa-product-hunt"></i>
+                        <i class="ion ion-person-add"></i>
                     </div>
                     <a href="/Admin/Product" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -54,12 +54,12 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>@ViewBag.Cn</h3>
+                        <h3>20</h3>
 
-                        <p>Công nhân</p>
+                        <p>Vắc xin</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="fas fa-syringe"></i>
                     </div>
                     <a href="/Admin/Employee" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -69,12 +69,12 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>@ViewBag.Chuaht</h3>
+                        <h3>22</h3>
 
-                        <p>Chưa hoàn thành</p>
+                        <p>Số phiếu tiêm</p>
                     </div>
                     <div class="icon">
-                        <i class="far fa-times-circle"></i>
+                        <i class="fas fa-notes-medical"></i>
                     </div>
                     <a href="/Admin/Task" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
@@ -105,7 +105,7 @@
             <div class="col-md-6">
                 <div class="card card-success">
                     <div class="card-header">
-                        <h3 class="card-title">Top nhân viên làm việc nhiều nhất</h3>
+                        <h3 class="card-title">Top vắc xin được tiêm nhiều nhất trong tháng</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -121,8 +121,8 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Tên nhân viên</th>
-                                    <th>Số ngày công</th>
+                                    <th>Tên vắc xin</th>
+                                    <th>Số lần tiêm</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -131,7 +131,8 @@
                                     <tr>
                                         <td>@item.MaNhanCong</td>
                                         <td>@item.HoTen</td>
-                                        <td><span class="badge bg-success">@item.NgayCong</span></td>
+                                        @{var nc = String.Format("{0:0.00}", item.NgayCong); }
+                                        <td><span class="badge bg-success">@nc</span></td>
                                     </tr>
                                 }
                                 
@@ -152,8 +153,8 @@
     var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
     var pieData        = {
         labels: [
-            'Chưa hoàn thành',
-            'Hoàn thành'
+            'Chi',
+            'Thu'
 
         ],
         datasets: [
